@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
@@ -58,7 +59,13 @@ namespace WebApp
                     Id = Guid.NewGuid(),
                     Key = "Dell",
                     Path = httpContext.Request.Path.Value.ToLowerInvariant(),
-                    Layout  = "/Views/Layout.cshtml"
+                    Language = context.Language,
+                    Layout = "/Views/Layout.cshtml",
+                    Renderings = new Dictionary<string, string>
+                    {
+                        ["content"] = "Article",
+                        ["footer"] = "Footer"
+                    }
                 };
 
                 await next();
@@ -78,7 +85,7 @@ namespace WebApp
             app.UseMvc(routes =>
             {
                 // Route to handle controller that invokes item layout
-                routes.MapRoute("default", "{*contentPath}", new
+                routes.MapRoute("default", "{*path}", new
                 {
                     controller = "Lightcore",
                     action = "Render"

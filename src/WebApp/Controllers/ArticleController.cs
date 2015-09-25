@@ -2,11 +2,11 @@
 
 namespace WebApp.Controllers
 {
-    public class FooterController : Controller
+    public class ArticleController : Controller
     {
         public ActionResult Index()
         {
-            return View("/Views/Footer/Index.cshtml");
+            return View("/Views/Article/Index.cshtml");
         }
     }
 }

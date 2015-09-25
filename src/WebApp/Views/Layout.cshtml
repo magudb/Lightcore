@@ -1,12 +1,12 @@
 ﻿@using WebApp.Kernel
-@model WebApp.Models.HomeModel
+@model Item
 <html>
 <head>
     <title>@Model.Path - Lightcore</title>
 </head>
 <body>
     <div>
-        <p>Controller.Action: HomeController.Index</p>
+        <p>Model.Type: @Model.GetType()</p>
         <p>Model.Language.Name: @Model.Language.Name</p>
         <p>Model.Path: @Model.Path</p>
     </div>
