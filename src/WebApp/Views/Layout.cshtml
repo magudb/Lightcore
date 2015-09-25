@@ -1,5 +1,20 @@
-﻿@model WebApp.Models.HomeModel
-
-<p>Controller.Action: HomeController.Index</p>
-<p>Model.Language.Name: @Model.Language.Name</p>
-<p>Model.Path: @Model.Path</p>
+﻿@using WebApp.Kernel
+@model WebApp.Models.HomeModel
+<html>
+<head>
+    <title>@Model.Path - Lightcore</title>
+</head>
+<body>
+    <div>
+        <p>Controller.Action: HomeController.Index</p>
+        <p>Model.Language.Name: @Model.Language.Name</p>
+        <p>Model.Path: @Model.Path</p>
+    </div>
+    <div>
+        @Html.Lightcore().Placeholder("content")
+    </div>
+    <footer>
+        @Html.Lightcore().Placeholder("footer")
+    </footer>
+</body>
+</html>

@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.Framework.DependencyInjection;
+using WebApp.Kernel;
 
 namespace WebApp
 {
@@ -18,51 +19,53 @@ namespace WebApp
             var languages = new[] { "en-US", "da-DK" };
 
             // Create context
-            app.Use(async (ctx, next) =>
+            app.Use(async (httpContext, next) =>
             {
-                ctx.Items["LCC"] = new LightcoreContext();
+                httpContext.Items["LCC"] = new Context();
 
                 await next();
             });
 
             // Resolve language
-            app.Use(async (ctx, next) =>
+            app.Use(async (httpContext, next) =>
             {
-                var light = ctx.LightcoreContext();
-                var languageSegment = ctx.Request.Path.Value.ToLowerInvariant().Split('/').Skip(1).FirstOrDefault();
+                var context = httpContext.LightcoreContext();
+                var languageSegment = httpContext.Request.Path.Value.ToLowerInvariant().Split('/').Skip(1).FirstOrDefault();
 
                 // Get current language from path
                 if (!string.IsNullOrWhiteSpace(languageSegment) && languages.Contains(languageSegment, StringComparer.OrdinalIgnoreCase))
                 {
-                    light.Language = new Language(languageSegment);
+                    context.Language = new Language(languageSegment);
 
-                    ctx.Request.Path = new PathString(ctx.Request.Path.Value.Replace("/" + languageSegment, ""));
+                    httpContext.Request.Path = new PathString(httpContext.Request.Path.Value.Replace("/" + languageSegment, ""));
                 }
                 else
                 {
                     // Or use the default language
-                    light.Language = Language.Default;
+                    context.Language = Language.Default;
                 }
 
                 await next();
             });
 
-            // Set some headers
-            app.Use(async (ctx, next) =>
+            // Test
+            app.Use(async (httpContext, next) =>
             {
-                var light = ctx.LightcoreContext();
+                var context = httpContext.LightcoreContext();
 
-                ctx.Response.Headers.Append("X-Language", light.Language.Name);
+                httpContext.Response.Headers.Append("X-Language", context.Language.Name);
 
                 await next();
             });
 
+            // Route to handle controller to invoke layout
             app.UseMvc(routes =>
             {
-                routes.MapRoute("default", "{*path}", new
+                routes.MapRoute("default", "{*contentPath}", new
                 {
-                    controller = "Home",
-                    action = "Index"
+                    controller = "Lightcore",
+                    action = "Render",
+                    layoutPath = "/Views/Layout.cshtml"
                 });
             });
         }

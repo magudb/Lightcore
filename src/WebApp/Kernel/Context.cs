@@ -1,6 +1,6 @@
-﻿namespace WebApp
+﻿namespace WebApp.Kernel
 {
-    public class LightcoreContext
+    public class Context
     {
         public Language Language { get; set; }
     }

@@ -1,4 +1,4 @@
-namespace WebApp
+namespace WebApp.Kernel
 {
     public class Language
     {

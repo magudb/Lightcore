@@ -1,4 +1,6 @@
-﻿namespace WebApp.Models
+﻿using WebApp.Kernel;
+
+namespace WebApp.Models
 {
     public class HomeModel
     {

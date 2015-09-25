@@ -3,7 +3,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "/da-dk/products/computers/dell",
+      "launchUrl": "da-dk/products/computers/dell",
       "environmentVariables": {
         "ASPNET_ENV": "Development"
       }
