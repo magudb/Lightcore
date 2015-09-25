@@ -16,7 +16,7 @@ namespace WebApp
 
         public void Configure(IApplicationBuilder app)
         {
-            var languages = new[] { "en-US", "da-DK" };
+            var languages = new[] {"en-US", "da-DK"};
 
             // Create context
             app.Use(async (httpContext, next) =>
@@ -48,7 +48,23 @@ namespace WebApp
                 await next();
             });
 
-            // Test
+            // Resolve item
+            app.Use(async (httpContext, next) =>
+            {
+                var context = httpContext.LightcoreContext();
+
+                context.Item = new Item
+                {
+                    Id = Guid.NewGuid(),
+                    Key = "Dell",
+                    Path = httpContext.Request.Path.Value.ToLowerInvariant(),
+                    Layout  = "/Views/Layout.cshtml"
+                };
+
+                await next();
+            });
+
+            // Add some headers, just for fun...
             app.Use(async (httpContext, next) =>
             {
                 var context = httpContext.LightcoreContext();
@@ -58,14 +74,14 @@ namespace WebApp
                 await next();
             });
 
-            // Route to handle controller to invoke layout
+            // Enabled MVC
             app.UseMvc(routes =>
             {
+                // Route to handle controller that invokes item layout
                 routes.MapRoute("default", "{*contentPath}", new
                 {
                     controller = "Lightcore",
-                    action = "Render",
-                    layoutPath = "/Views/Layout.cshtml"
+                    action = "Render"
                 });
             });
         }

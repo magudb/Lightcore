@@ -8,13 +8,14 @@ namespace WebApp.Kernel
         public ActionResult Render(string contentPath, string layoutPath)
         {
             var context = Context.LightcoreContext();
+
             var model = new HomeModel
             {
                 Path = contentPath,
                 Language = context.Language
             };
 
-            return View(layoutPath, model);
+            return View(context.Item.Layout, model);
         }
     }
 }

@@ -8,7 +8,8 @@ namespace WebApp.Kernel
 
         public static LightcoreHtmlHelper Lightcore(this IHtmlHelper helper)
         {
-            return _helper ?? (_helper = new LightcoreHtmlHelper());
+            
+            return _helper ?? (_helper = new LightcoreHtmlHelper(helper));
         }
     }
 }
