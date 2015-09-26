@@ -4,7 +4,7 @@ using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Routing;
 
-namespace WebApp.Kernel
+namespace Lightcore.Kernel
 {
     public class ControllerRunner
     {

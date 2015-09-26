@@ -1,7 +1,7 @@
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc.Rendering;
 
-namespace WebApp.Kernel
+namespace Lightcore.Kernel
 {
     public static class AspExtensions
     {

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.Mvc;
-
-namespace WebApp.Kernel
+﻿namespace Lightcore.Kernel
 {
     public class Context
     {

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc.Rendering;
 
-namespace WebApp.Kernel
+namespace Lightcore.Kernel
 {
     public class LightcoreHtmlHelper
     {

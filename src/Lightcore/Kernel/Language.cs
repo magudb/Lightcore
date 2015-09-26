@@ -1,4 +1,4 @@
-namespace WebApp.Kernel
+namespace Lightcore.Kernel
 {
     public class Language
     {
