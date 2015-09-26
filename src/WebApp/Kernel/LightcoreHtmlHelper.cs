@@ -31,6 +31,7 @@ namespace WebApp.Kernel
                 }
 
                 // TODO: Item.Rendering and Item.Layout should be types
+
                 var controller = context.Item.Renderings[key];
                 var runner = new ControllerRunner(controller, "Index", _htmlHelper.ViewContext.HttpContext, _htmlHelper.ViewContext.RouteData);
                 var output = await runner.Execute();
