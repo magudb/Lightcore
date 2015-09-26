@@ -4,10 +4,11 @@ namespace Lightcore.Kernel.Data
     {
         public Language(string name)
         {
-            Name = name;
+            Name = name.ToLowerInvariant();
         }
 
         public string Name { get; }
-        public static Language Default => new Language("en-us");
+
+        public static Language Default => new Language("en-US");
     }
 }

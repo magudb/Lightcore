@@ -6,7 +6,6 @@
     <style>
         html {
             background-color: rgb(12, 36, 53);
-            overflow-y: scroll;
         }
 
         body {
@@ -23,24 +22,57 @@
             color: #d4d4c9;
         }
 
-            a:hover {
-                color: rgb(250, 244, 10);
-            }
+        a:hover {
+            color: rgb(250, 244, 10);
+        }
+
+        footer {
+            border-top  : 1px solid gray;
+            border-bottom  : 1px solid gray;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        nav {
+            border-bottom  : 1px solid gray;
+        }
+        nav ul {padding: 0px;}
+        nav li {
+            list-style: none;
+            display: inline;
+            
+        }
+        article {
+            height: 300px;
+        }
+        #debug {
+            color: darkgrey;
+        }
     </style>
 </head>
 <body>
     <h1>Lightcore</h1>
     @await Html.Lightcore().Placeholder("dummy")
     <div>
-        <p>Model.Type: @Model.GetType()</p>
-        <p>Model.Language.Name: @Model.Language.Name</p>
-        <p>Model.Path: @Model.Path</p>
-    </div>
-    <div>
         @await Html.Lightcore().Placeholder("content")
     </div>
-    <footer>
-        @await Html.Lightcore().Placeholder("footer")
-    </footer>
+<footer>
+    @await Html.Lightcore().Placeholder("footer")
+</footer>
+<div id="debug">
+    <code>
+        Model.Type: @Model.GetType()<br/>
+        Model.Trace: <strong>@Model.Trace</strong><br/>
+
+        Model.Id: @Model.Id<br />
+        Model.Language.Name: @Model.Language.Name<br />
+        Model.Path: @Model.Path<br />
+        Model.Key: @Model.Key<br/>
+        Model.Name: @Model.Name<br/>
+        Model.Url: @Model.Url<br/>
+        Model.Fields.Count: @Model.Fields.Count()<br/>
+        Model.Children.Count: @Model.Children.Count()<br />
+    </code>
+</div>
 </body>
 </html>

@@ -7,6 +7,13 @@ namespace Lightcore.Kernel.MVC
     {
         public ActionResult Render(string path)
         {
+            // TODO: What to do about favico.ico?
+
+            if (!string.IsNullOrEmpty(path) && path.Contains("."))
+            {
+                return null;
+            }
+
             var context = Context.LightcoreContext();
 
             // TODO: Full Item could be mapped to ItemModel to keep it simple?

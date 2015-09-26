@@ -1,12 +1,15 @@
-﻿@using Lightcore.Kernel.Http
+﻿@using Lightcore.Kernel.Data
+@model Item
 <nav>
     <ul>
-        <li><a href="/@Html.LightcoreContext().Language.Name">Home</a></li>
-        <li><a href="/@Html.LightcoreContext().Language.Name/products">Products</a></li>
-        <li><a href="/@Html.LightcoreContext().Language.Name/contact">Contact</a></li>
+        <li><a href="@Model.Url">@Model.Name</a></li>
+        @foreach (var item in @Model.Children)
+        {
+            <li><a href="@item.Url">@item.Name</a></li>
+        }
     </ul>
     <ul>
-        <li><a href="/en-us">en-US</a></li>
+        <li><a href="/en">en</a></li>
         <li><a href="/da-dk">da-DK</a></li>
     </ul>
 </nav>

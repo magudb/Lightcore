@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Lightcore.Kernel.Http;
+using Microsoft.AspNet.Mvc;
 
 namespace WebApp.Controllers
 {
@@ -6,7 +7,9 @@ namespace WebApp.Controllers
     {
         public ActionResult Index()
         {
-            return View("/Views/Article/Index.cshtml");
+            var context = Context.LightcoreContext();
+
+            return View("/Views/Article/Index.cshtml", context.Item);
         }
     }
 }

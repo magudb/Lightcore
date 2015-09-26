@@ -21,8 +21,9 @@ namespace WebApp
         {
             var languages = new List<Language>
             {
-                new Language("en-us"),
-                new Language("da-dk")
+                new Language("en"),
+                new Language("en-US"),
+                new Language("da-DK")
             };
 
             // Create context
@@ -55,29 +56,6 @@ namespace WebApp
                 await next();
             });
 
-            // Resolve item
-            app.Use(async (httpContext, next) =>
-            {
-                var context = httpContext.LightcoreContext();
-
-                context.Item = new Item
-                {
-                    Id = Guid.NewGuid(),
-                    Key = "Dell",
-                    Path = httpContext.Request.Path.Value.ToLowerInvariant(),
-                    Language = context.Language,
-                    Layout = "/Views/Layout.cshtml",
-                    Renderings = new List<Rendering>
-                    {
-                        new Rendering("content", "Menu"),
-                        new Rendering("content", "Article"),
-                        new Rendering("footer", "Footer")
-                    }
-                };
-
-                await next();
-            });
-
             // Add some headers, just for fun...
             app.Use(async (httpContext, next) =>
             {
@@ -86,6 +64,27 @@ namespace WebApp
                 httpContext.Response.Headers.Append("X-Language", context.Language.Name);
 
                 await next();
+            });
+
+            var itemProvider = new ItemProvider();
+
+            // Resolve item
+            app.Use(async (httpContext, next) =>
+            {
+                var context = httpContext.LightcoreContext();
+
+                var item = await itemProvider.GetItem(httpContext.Request.Path.Value, context.Language);
+
+                if (item != null)
+                {
+                    context.Item = item;
+
+                    await next();
+                }
+                else
+                {
+                    httpContext.Response.StatusCode = 404;
+                }
             });
 
             // Enabled MVC
