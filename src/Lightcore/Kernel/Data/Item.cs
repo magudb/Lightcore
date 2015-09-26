@@ -10,6 +10,6 @@ namespace Lightcore.Kernel.Data
         public Guid Id { get; set; }
         public string Layout { get; set; }
         public Language Language { get; set; }
-        public Dictionary<string, string> Renderings { get; set; }
+        public IEnumerable<Rendering> Renderings { get; set; }
     }
 }

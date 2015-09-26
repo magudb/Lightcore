@@ -19,7 +19,11 @@ namespace WebApp
 
         public void Configure(IApplicationBuilder app)
         {
-            var languages = new[] {"en-US", "da-DK"};
+            var languages = new List<Language>
+            {
+                new Language("en-us"),
+                new Language("da-dk")
+            };
 
             // Create context
             app.Use(async (httpContext, next) =>
@@ -36,7 +40,7 @@ namespace WebApp
                 var languageSegment = httpContext.Request.Path.Value.ToLowerInvariant().Split('/').Skip(1).FirstOrDefault();
 
                 // Get current language from path
-                if (!string.IsNullOrWhiteSpace(languageSegment) && languages.Contains(languageSegment, StringComparer.OrdinalIgnoreCase))
+                if (!string.IsNullOrWhiteSpace(languageSegment) && languages.Any(l => l.Name.Equals(languageSegment, StringComparison.OrdinalIgnoreCase)))
                 {
                     context.Language = new Language(languageSegment);
 
@@ -63,10 +67,11 @@ namespace WebApp
                     Path = httpContext.Request.Path.Value.ToLowerInvariant(),
                     Language = context.Language,
                     Layout = "/Views/Layout.cshtml",
-                    Renderings = new Dictionary<string, string>
+                    Renderings = new List<Rendering>
                     {
-                        ["content"] = "Article",
-                        ["footer"] = "Footer"
+                        new Rendering("content", "Menu"),
+                        new Rendering("content", "Article"),
+                        new Rendering("footer", "Footer")
                     }
                 };
 

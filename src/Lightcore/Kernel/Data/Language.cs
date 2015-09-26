@@ -8,6 +8,6 @@ namespace Lightcore.Kernel.Data
         }
 
         public string Name { get; }
-        public static Language Default => new Language("en-US");
+        public static Language Default => new Language("en-us");
     }
 }

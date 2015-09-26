@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Http;
 using Microsoft.AspNet.Mvc.Rendering;
@@ -21,26 +23,13 @@ namespace Lightcore.Kernel.MVC
             var builder = new StringBuilder();
             var context = _htmlHelper.LightcoreContext();
 
-            builder.Append("<div style=\"border: 1px solid red; padding:5px; margin:5px;\">");
-            builder.Append($"<p>PLACEHOLDER:{name} ({context.Item.Key}, {context.Item.Id})</p>");
-
-            foreach (var key in context.Item.Renderings.Keys)
+            foreach (var rendering in context.Item.Renderings.Where(r => r.Placeholder.Equals(name, StringComparison.OrdinalIgnoreCase)))
             {
-                if (!key.EndsWith(name))
-                {
-                    continue;
-                }
-
-                // TODO: Item.Rendering and Item.Layout should be types
-
-                var controller = context.Item.Renderings[key];
-                var runner = new ControllerRunner(controller, "Index", _htmlHelper.ViewContext.HttpContext, _htmlHelper.ViewContext.RouteData);
+                var runner = new ControllerRunner(rendering.Controller, rendering.Action, _htmlHelper.ViewContext.HttpContext, _htmlHelper.ViewContext.RouteData);
                 var output = await runner.Execute();
 
                 builder.Append(output);
             }
-
-            builder.Append("</div>");
 
             return new HtmlString(builder.ToString());
         }

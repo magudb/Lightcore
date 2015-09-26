@@ -1,22 +1,46 @@
-﻿@using Lightcore.Kernel
-@using Lightcore.Kernel.Data
-@using Lightcore.Kernel.MVC
+﻿@using Lightcore.Kernel.MVC
 @model Lightcore.Kernel.Data.Item
 <html>
 <head>
     <title>@Model.Path - Lightcore</title>
+    <style>
+        html {
+            background-color: rgb(12, 36, 53);
+            overflow-y: scroll;
+        }
+
+        body {
+            color: #d4d4c9;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.2em;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 0.5em;
+            width: 92%;
+        }
+
+        a {
+            color: #d4d4c9;
+        }
+
+            a:hover {
+                color: rgb(250, 244, 10);
+            }
+    </style>
 </head>
 <body>
+    <h1>Lightcore</h1>
+    @await Html.Lightcore().Placeholder("dummy")
     <div>
         <p>Model.Type: @Model.GetType()</p>
         <p>Model.Language.Name: @Model.Language.Name</p>
         <p>Model.Path: @Model.Path</p>
     </div>
     <div>
-       @await Html.Lightcore().Placeholder("content")
+        @await Html.Lightcore().Placeholder("content")
     </div>
-<footer>
-    @await Html.Lightcore().Placeholder("footer")
-</footer>
+    <footer>
+        @await Html.Lightcore().Placeholder("footer")
+    </footer>
 </body>
 </html>
