@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Lightcore.Kernel
+namespace Lightcore.Kernel.Data
 {
     public class Item
     {

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Lightcore.Kernel.Http;
+using Microsoft.AspNet.Mvc;
 
-namespace Lightcore.Kernel
+namespace Lightcore.Kernel.MVC
 {
     public class LightcoreController : Controller
     {

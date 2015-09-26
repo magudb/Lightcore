@@ -1,4 +1,6 @@
-﻿namespace Lightcore.Kernel
+﻿using Lightcore.Kernel.Data;
+
+namespace Lightcore.Kernel
 {
     public class Context
     {

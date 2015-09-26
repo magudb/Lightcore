@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lightcore.Kernel;
+using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Http;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.Framework.DependencyInjection;
