@@ -1,10 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
+﻿using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
+using Microsoft.Net.Http.Server;
 
 namespace WebApp.Kernel
 {
@@ -17,7 +17,7 @@ namespace WebApp.Kernel
             _htmlHelper = htmlHelper;
         }
 
-        public HtmlString Placeholder(string name)
+        public async Task<HtmlString> Placeholder(string name)
         {
             // TODO: Run pipeline...
 
@@ -36,36 +36,47 @@ namespace WebApp.Kernel
 
                 var httpContext = _htmlHelper.ViewContext.HttpContext;
                 var rendering = context.Item.Renderings[key];
-                var controllerType = Type.GetType($"WebApp.Controllers.{rendering}Controller");
-                string text;
+                var renderingOutput = "";
 
-                builder.Append($"<p>Adding rendering '{controllerType.FullName}'...</p>");
+                builder.Append($"<p>Adding rendering '{rendering}'...</p>");
 
-                var controllerInstance = (Controller)Activator.CreateInstance(controllerType);
-                MethodInfo actionMethod = controllerType.GetMethod("Index");
+                var currentOutput = httpContext.Response.Body;
+                var routeContext = new RouteContext(httpContext)
+                {
+                    RouteData = new RouteData(_htmlHelper.ViewContext.RouteData)
+                };
 
-                var actionResult = (ActionResult)actionMethod.Invoke(controllerInstance, new object[0]);
+                var currentController = routeContext.RouteData.Values["controller"];
+                var currentAction = routeContext.RouteData.Values["action"];
 
                 using (var responseStream = new MemoryStream())
                 {
-                    var oldBody = httpContext.Response.Body;
+                    var handler = new MvcRouteHandler();
 
-                    // TODO: This is some nasty shit.. and only works on first request :)
                     httpContext.Response.Body = responseStream;
+                    routeContext.RouteData.Values["controller"] = rendering;
+                    routeContext.RouteData.Values["action"] = "Index";
 
-                    actionResult.ExecuteResultAsync(new ActionContext(httpContext, new RouteData(), null));
-
-                    responseStream.Position = 0;
-
-                    using (var reader = new StreamReader(responseStream))
+                    try
                     {
-                        text = reader.ReadToEnd();
-                    }
+                        await handler.RouteAsync(routeContext); // Second request throws an exception!?!?!
 
-                    httpContext.Response.Body = oldBody;
+                        responseStream.Position = 0;
+
+                        using (var reader = new StreamReader(responseStream))
+                        {
+                            renderingOutput = reader.ReadToEnd();
+                        }
+                    }
+                    finally
+                    {
+                        routeContext.RouteData.Values["controller"] = currentController;
+                        routeContext.RouteData.Values["action"] = currentAction;
+                        httpContext.Response.Body = currentOutput;
+                    }
                 }
 
-                builder.Append(text);
+                builder.Append(renderingOutput);
             }
 
             builder.Append("</div>");

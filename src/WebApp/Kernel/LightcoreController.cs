@@ -49,20 +49,22 @@ namespace WebApp.Kernel
             //StreamReader reader = new StreamReader(mem);
             //string text = reader.ReadToEnd();
 
+            //---- Works
+            // MvcRouteHandler
 
             //---- Fails
-           //var data = new RouteData();
-           // data.Values["controller"] = "Footer";
-           // data.Values["action"] = "Index";
+            //var data = new RouteData();
+            // data.Values["controller"] = "Footer";
+            // data.Values["action"] = "Index";
 
-           // var ctx = new ActionContext(Context, data, new ActionDescriptor
-           // {
-           //     Name = "Index"
-           // });
-           // var t = _test2.CreateInvoker(ctx);
-           // await t.InvokeAsync();
+            // var ctx = new ActionContext(Context, data, new ActionDescriptor
+            // {
+            //     Name = "Index"
+            // });
+            // var t = _test2.CreateInvoker(ctx);
+            // await t.InvokeAsync();
 
-            //---- Works I guess, if we copy response...
+            //---- Fails
             //Controller controller = new FooterController();
             //controller.ActionContext = new ActionContext(Context, new RouteData(), null);
             //MethodInfo action = controller.GetType().GetMethod("Index");
