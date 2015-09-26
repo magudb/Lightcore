@@ -42,11 +42,12 @@ namespace Lightcore.Kernel.Data
 
             var watch = Stopwatch.StartNew();
 
+            // TODO: How to handle fields... can't combine payload=content + __renderings field
             var response =
                 await
                     _client.GetAsync("http://sc72-141226.ad.codehouse.com/-/item/v1" + query +
                                      "&language=" + language.Name +
-                                     "&payload=min&fields=Title|Text|__Renderings&scope=s|c");
+                                     "&payload=full&fields=Title|Text|__Renderings&scope=s|c");
 
             if (response.IsSuccessStatusCode)
             {
@@ -79,11 +80,15 @@ namespace Lightcore.Kernel.Data
 
         private Item Map(SitecoreApiItem sitecoreApiItem)
         {
+            // TODO: Parse __Renderings for real
+
             var item = new Item
             {
                 Id = sitecoreApiItem.Id,
                 Key = sitecoreApiItem.Name.ToLowerInvariant(),
                 Name = sitecoreApiItem.Name,
+
+                // TODO: Some url provider...
                 Url = "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home",""),
                 Path = sitecoreApiItem.Path,
                 Language = new Language(sitecoreApiItem.Language),
