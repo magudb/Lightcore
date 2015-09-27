@@ -1,6 +1,5 @@
 ﻿using Lightcore.Hosting;
 using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Routing;
 using Microsoft.Framework.DependencyInjection;
 
 namespace WebApp
@@ -21,7 +20,7 @@ namespace WebApp
         {
             // Enable Lightcore
             app.UseLightcore();
-            
+
             // Enabled MVC
             app.UseMvc(routes =>
             {

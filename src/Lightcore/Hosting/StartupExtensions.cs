@@ -1,8 +1,11 @@
-﻿using Lightcore.Kernel.Data;
+﻿using System.Collections.Generic;
+using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipeline;
 using Lightcore.Kernel.Pipeline.Request;
 using Microsoft.AspNet.Builder;
+using Microsoft.Framework.Caching.Memory;
 using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.OptionsModel;
 
 namespace Lightcore.Hosting
 {

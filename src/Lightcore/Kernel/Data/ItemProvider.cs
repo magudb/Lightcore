@@ -4,17 +4,23 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Framework.Caching.Memory;
 using Newtonsoft.Json;
 
 namespace Lightcore.Kernel.Data
 {
     public class ItemProvider : IItemProvider, IDisposable
     {
+        private readonly MemoryCache _cache;
         private readonly HttpClient _client;
 
         public ItemProvider()
         {
             _client = new HttpClient();
+
+            // TODO: Cache implementation should be injected
+
+            _cache = new MemoryCache(new MemoryCacheOptions());
         }
 
         public void Dispose()
@@ -24,7 +30,7 @@ namespace Lightcore.Kernel.Data
 
         public async Task<Item> GetItem(string pathOrId, Language language)
         {
-            // TODO: Crappy path "handling", static files also comes by here... ewwww
+            // TODO: Crappy path "handling", static files also comes by here... ewwww, hmm what to do...
             if (pathOrId.Contains("."))
             {
                 return null;
@@ -47,12 +53,22 @@ namespace Lightcore.Kernel.Data
 
             var watch = Stopwatch.StartNew();
 
+            var url = "http://sc72-141226.ad.codehouse.com/-/item/v1" + query +
+                      "&language=" + language.Name +
+                      "&payload=full&fields=Title|Text|__Renderings&scope=s|c";
+
+            Item item;
+
+            if (_cache.TryGetValue(url, out item))
+            {
+                item.Trace = "Loaded from cache...";
+
+                return item;
+            }
+
             // TODO: How to handle fields... can't combine payload=content + __renderings field
-            var response =
-                await
-                    _client.GetAsync("http://sc72-141226.ad.codehouse.com/-/item/v1" + query +
-                                     "&language=" + language.Name +
-                                     "&payload=full&fields=Title|Text|__Renderings&scope=s|c");
+
+            var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
             {
@@ -63,19 +79,30 @@ namespace Lightcore.Kernel.Data
 
                 if (sitecoreApiReponse.StatusCode != 200 || sitecoreApiReponse.Result.ResultCount <= 0)
                 {
+                    _cache.Set(url, null, new MemoryCacheEntryOptions
+                    {
+                        AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(30)
+                    });
+
                     return null;
                 }
 
                 var sitecoreApiItem = sitecoreApiReponse.Result.Items.First();
-                var item = Map(sitecoreApiItem);
+
+                item = Map(sitecoreApiItem);
+
                 var sitecoreApiItems = sitecoreApiReponse.Result.Items.Skip(1);
                 var items = new List<Item>(sitecoreApiReponse.Result.Items.Length - 1);
 
                 items.AddRange(sitecoreApiItems.Select(Map));
+                item.Children = items;
 
                 item.Trace = $"Load took {watch.ElapsedMilliseconds} ms";
 
-                item.Children = items;
+                _cache.Set(url, item, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(10)
+                });
 
                 return item;
             }
@@ -85,7 +112,7 @@ namespace Lightcore.Kernel.Data
 
         private Item Map(SitecoreApiItem sitecoreApiItem)
         {
-            // TODO: Parse __Renderings for real
+            // TODO: Parse __Renderings for reals
 
             var item = new Item
             {
