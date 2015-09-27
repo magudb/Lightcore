@@ -2,15 +2,14 @@ TODO's
 
 Kernel
 
-- OWIN extensions to enable Lightcore, add services etc. like app.UseMvc
-- Request pipeline
 - Rendering pipeline
 - "LinkManager"
 - Item.Fields["Text"] and Item["Text"]
 
 MVC
 
-- OutputCache?
+- Can OutputCache be supported? 
+- Or make Html cache (so we can read it from renderings)
 - UrlHelper
 
 Data
@@ -23,4 +22,4 @@ Data
 			- Pros: OOTB since Sitecore 7.2
 	- Use Solr directly?
 	- Use custom Web API?
-	- Use some document db and pubulate on publish?
+	- Use some document db and populate on publish?
