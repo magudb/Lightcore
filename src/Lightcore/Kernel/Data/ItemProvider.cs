@@ -8,13 +8,18 @@ using Newtonsoft.Json;
 
 namespace Lightcore.Kernel.Data
 {
-    public class ItemProvider : IItemProvider
+    public class ItemProvider : IItemProvider, IDisposable
     {
         private readonly HttpClient _client;
 
         public ItemProvider()
         {
             _client = new HttpClient();
+        }
+
+        public void Dispose()
+        {
+            _client?.Dispose();
         }
 
         public async Task<Item> GetItem(string pathOrId, Language language)
@@ -89,7 +94,7 @@ namespace Lightcore.Kernel.Data
                 Name = sitecoreApiItem.Name,
 
                 // TODO: Some url provider...
-                Url = "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home",""),
+                Url = "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home", ""),
                 Path = sitecoreApiItem.Path,
                 Language = new Language(sitecoreApiItem.Language),
                 Layout = "/Views/Layout.cshtml",
