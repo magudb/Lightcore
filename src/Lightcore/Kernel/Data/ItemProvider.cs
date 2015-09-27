@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Lightcore.Kernel.Data
 {
-    public class ItemProvider
+    public class ItemProvider : IItemProvider
     {
         private readonly HttpClient _client;
 

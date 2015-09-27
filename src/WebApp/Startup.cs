@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lightcore.Hosting;
 using Lightcore.Kernel;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Http;
@@ -14,6 +15,7 @@ namespace WebApp
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLightcore();
             services.AddMvc();
         }
 
@@ -52,16 +54,6 @@ namespace WebApp
                     // Or use the default language
                     context.Language = Language.Default;
                 }
-
-                await next();
-            });
-
-            // Add some headers, just for fun...
-            app.Use(async (httpContext, next) =>
-            {
-                var context = httpContext.LightcoreContext();
-
-                httpContext.Response.Headers.Append("X-Language", context.Language.Name);
 
                 await next();
             });
