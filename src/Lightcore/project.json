@@ -7,11 +7,6 @@
   "licenseUrl": "",
 
   "frameworks": {
-    "dnx451": {
-      "dependencies": {
-         "Microsoft.Net.Http.Client":  "1.0.0-beta7-10104"
-      }
-    },
     "dnxcore50": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-beta-23225",
