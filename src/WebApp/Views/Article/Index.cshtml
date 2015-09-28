@@ -3,7 +3,7 @@
 @using Lightcore.Kernel.MVC
 @model Item
 <article>
-    <h2>@Model.Fields.FirstOrDefault(f => f.Name.Equals("Title", StringComparison.OrdinalIgnoreCase)).Value</h2>
-    @Html.Raw(Model.Fields.FirstOrDefault(f => f.Name.Equals("Text", StringComparison.OrdinalIgnoreCase)).Value)
+    <h2>@Model["Title"]</h2>
+    @Html.Raw(Model["Text"])
 </article>
 @await Html.Lightcore().Placeholder("sidebar")

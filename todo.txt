@@ -3,13 +3,14 @@ TODO's
 Kernel
 
 - Rendering pipeline
+- Init pipeline (fx get system/languages)
 - "LinkManager"
-- Item.Fields["Text"] and Item["Text"]
+- Item.Fields["Text"]
 
 MVC
 
 - Can OutputCache be supported? 
-- Or make Html cache (so we can read it from renderings)
+	- Or make Html cache (so we can read it from renderings)
 - UrlHelper
 
 Data

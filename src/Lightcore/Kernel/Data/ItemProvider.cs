@@ -30,12 +30,6 @@ namespace Lightcore.Kernel.Data
 
         public async Task<Item> GetItem(string pathOrId, Language language)
         {
-            // TODO: Crappy path "handling", static files also comes by here... ewwww, hmm what to do...
-            if (pathOrId.Contains("."))
-            {
-                return null;
-            }
-
             string query;
 
             if (pathOrId.Equals("/") || string.IsNullOrEmpty(pathOrId))
@@ -53,6 +47,7 @@ namespace Lightcore.Kernel.Data
 
             var watch = Stopwatch.StartNew();
 
+            // TODO: How to handle fields... can't combine payload=content + __renderings field
             var url = "http://sc72-141226.ad.codehouse.com/-/item/v1" + query +
                       "&language=" + language.Name +
                       "&payload=full&fields=Title|Text|__Renderings&scope=s|c";
@@ -66,8 +61,6 @@ namespace Lightcore.Kernel.Data
                 return item;
             }
 
-            // TODO: How to handle fields... can't combine payload=content + __renderings field
-
             var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -79,6 +72,7 @@ namespace Lightcore.Kernel.Data
 
                 if (sitecoreApiReponse.StatusCode != 200 || sitecoreApiReponse.Result.ResultCount <= 0)
                 {
+                    // Also cache not found items
                     _cache.Set(url, null, new MemoryCacheEntryOptions
                     {
                         AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(30)
@@ -89,8 +83,10 @@ namespace Lightcore.Kernel.Data
 
                 var sitecoreApiItem = sitecoreApiReponse.Result.Items.First();
 
+                // Map item
                 item = Map(sitecoreApiItem);
 
+                // Map item children
                 var sitecoreApiItems = sitecoreApiReponse.Result.Items.Skip(1);
                 var items = new List<Item>(sitecoreApiReponse.Result.Items.Length - 1);
 
@@ -112,8 +108,6 @@ namespace Lightcore.Kernel.Data
 
         private Item Map(SitecoreApiItem sitecoreApiItem)
         {
-            // TODO: Parse __Renderings for reals
-
             var item = new Item
             {
                 Id = sitecoreApiItem.Id,
@@ -124,6 +118,8 @@ namespace Lightcore.Kernel.Data
                 Url = "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home", ""),
                 Path = sitecoreApiItem.Path,
                 Language = new Language(sitecoreApiItem.Language),
+                
+                // TODO: Parse __Renderings for reals
                 Layout = "/Views/Layout.cshtml",
                 Renderings = new List<Rendering>
                 {

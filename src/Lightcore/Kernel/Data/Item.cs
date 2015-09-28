@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lightcore.Kernel.Data
 {
@@ -16,5 +17,15 @@ namespace Lightcore.Kernel.Data
         public IEnumerable<Rendering> Renderings { get; set; }
         public IEnumerable<Item> Children { get; set; }
         public IEnumerable<Field> Fields { get; set; }
+
+        public string this[string fieldName]
+        {
+            get
+            {
+                var field = Fields.FirstOrDefault(f => f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase));
+
+                return field?.Value;
+            }
+        }
     }
 }

@@ -27,26 +27,40 @@
         }
 
         footer {
-            border-top  : 1px solid gray;
-            border-bottom  : 1px solid gray;
+            border-top: 1px solid gray;
+            border-bottom: 1px solid gray;
             margin-bottom: 10px;
             text-align: center;
         }
 
         nav {
-            border-bottom  : 1px solid gray;
+            border-bottom: 1px solid gray;
+            height: 70px;
         }
-        nav ul {padding: 0px;}
+
+        nav ul {
+            padding: 0px;
+        }
+
         nav li {
             list-style: none;
             display: inline;
-            
         }
+
         article {
             height: 300px;
         }
+
         #debug {
             color: darkgrey;
+        }
+
+        #menu {
+            float: left;
+        }
+
+        #languages {
+            float: right;
         }
     </style>
 </head>
@@ -56,23 +70,22 @@
     <div>
         @await Html.Lightcore().Placeholder("content")
     </div>
-<footer>
-    @await Html.Lightcore().Placeholder("footer")
-</footer>
-<div id="debug">
-    <code>
-        Model.Type: @Model.GetType()<br/>
-        Model.Trace: <strong>@Model.Trace</strong><br/>
-
-        Model.Id: @Model.Id<br />
-        Model.Language.Name: @Model.Language.Name<br />
-        Model.Path: @Model.Path<br />
-        Model.Key: @Model.Key<br/>
-        Model.Name: @Model.Name<br/>
-        Model.Url: @Model.Url<br/>
-        Model.Fields.Count: @Model.Fields.Count()<br/>
-        Model.Children.Count: @Model.Children.Count()<br />
-    </code>
-</div>
+    <footer>
+        @await Html.Lightcore().Placeholder("footer")
+    </footer>
+    <div id="debug">
+        <code>
+            Model.Type: @Model.GetType()<br />
+            Model.Trace: <strong>@Model.Trace</strong><br />
+            Model.Id: @Model.Id<br />
+            Model.Language.Name: @Model.Language.Name<br />
+            Model.Path: @Model.Path<br />
+            Model.Key: @Model.Key<br />
+            Model.Name: @Model.Name<br />
+            Model.Url: @Model.Url<br />
+            Model.Fields.Count: @Model.Fields.Count()<br />
+            Model.Children.Count: @Model.Children.Count()<br />
+        </code>
+    </div>
 </body>
 </html>

@@ -6,6 +6,7 @@ namespace Lightcore.Kernel.Pipeline.Request
     {
         public RequestPipeline()
         {
+            Add(new FilterRequestProcessor());
             Add(new CreateContextProcessor());
             Add(new ResolveLanguageProcessor());
             Add(new ResolveItemProcessor());
