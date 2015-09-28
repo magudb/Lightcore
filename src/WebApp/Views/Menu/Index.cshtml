@@ -2,14 +2,15 @@
 @model Item
 <nav>
     <ul id="menu">
-        <li><a href="@Model.Url">@Model.Name</a></li>
+        <li><a href="@Model.Url">@Model["Title"]</a></li>
         @foreach (var item in @Model.Children)
         {
-            <li><a href="@item.Url">@item.Name</a></li>
+            <li><a href="@item.Url">@item["Title"]</a></li>
         }
     </ul>
     <ul id="languages">
         <li><a href="/en">en</a></li>
+        <li><a href="/en-us">en-US</a></li>
         <li><a href="/da-dk">da-DK</a></li>
     </ul>
 </nav>

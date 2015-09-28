@@ -21,6 +21,10 @@ Data
 			- https://github.com/thinkfreshnick/SitecoreSharedSource/blob/master/Sitecore.SharedSource.WebApiClient
 			- Cons: Cant combine payload=content + __renderings fields, some meta fields not needed.
 			- Pros: OOTB since Sitecore 7.2
+	- Use Sitecore.Services.Client?
+		- http://sc80-150812.ad.codehouse.com/sitecore/api/ssc/item/110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9?includeMetadata=true
+		- https://sdn.sitecore.net/upload/sitecore7/75/developer's_guide_to_sitecore.services.client_sc75-a4.pdf
+		- http://docs.itemserviceapi.apiary.io/
 	- Use Solr directly?
 	- Use custom Web API?
 	- Use some document db and populate on publish?

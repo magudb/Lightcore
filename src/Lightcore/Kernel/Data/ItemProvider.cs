@@ -48,7 +48,7 @@ namespace Lightcore.Kernel.Data
             var watch = Stopwatch.StartNew();
 
             // TODO: How to handle fields... can't combine payload=content + __renderings field
-            var url = "http://sc72-141226.ad.codehouse.com/-/item/v1" + query +
+            var url = "http://sc80-150812.ad.codehouse.com/-/item/v1" + query +
                       "&language=" + language.Name +
                       "&payload=full&fields=Title|Text|__Renderings&scope=s|c";
 
@@ -95,10 +95,10 @@ namespace Lightcore.Kernel.Data
 
                 item.Trace = $"Load took {watch.ElapsedMilliseconds} ms";
 
-                _cache.Set(url, item, new MemoryCacheEntryOptions
-                {
-                    AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(10)
-                });
+                //_cache.Set(url, item, new MemoryCacheEntryOptions
+                //{
+                //    AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(10)
+                //});
 
                 return item;
             }

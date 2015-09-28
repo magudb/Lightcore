@@ -16,6 +16,7 @@ namespace Lightcore.Kernel.Pipeline.Request.Processor
             _suportedLanguages = new List<Language>
             {
                 new Language("en"),
+                new Language("en-US"),
                 new Language("da-DK")
             };
         }
