@@ -9,7 +9,7 @@ namespace Lightcore.Kernel.Pipeline.Request.Processor
         {
             var context = args.Context.LightcoreContext();
 
-            var item = await args.ItemProvider.GetItem(args.Context.Request.Path.Value, context.Language);
+            var item = await args.ItemProvider.GetItemAsync(args.Context.Request.Path.Value, context.Language);
 
             if (item != null)
             {

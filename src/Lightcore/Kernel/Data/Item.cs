@@ -22,7 +22,7 @@ namespace Lightcore.Kernel.Data
         {
             get
             {
-                var field = Fields.FirstOrDefault(f => f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase));
+                var field = Fields.FirstOrDefault(f => f.Key.Equals(fieldName, StringComparison.OrdinalIgnoreCase));
 
                 return field?.Value;
             }

@@ -4,23 +4,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Framework.Caching.Memory;
 using Newtonsoft.Json;
 
 namespace Lightcore.Kernel.Data
 {
-    public class ItemProvider : IItemProvider, IDisposable
+    public class ItemWebApiItemProvider : IItemProvider, IDisposable
     {
-        private readonly MemoryCache _cache;
         private readonly HttpClient _client;
 
-        public ItemProvider()
+        public ItemWebApiItemProvider()
         {
             _client = new HttpClient();
-
-            // TODO: Cache implementation should be injected
-
-            _cache = new MemoryCache(new MemoryCacheOptions());
         }
 
         public void Dispose()
@@ -28,7 +22,7 @@ namespace Lightcore.Kernel.Data
             _client?.Dispose();
         }
 
-        public async Task<Item> GetItem(string pathOrId, Language language)
+        public async Task<Item> GetItemAsync(string pathOrId, Language language)
         {
             string query;
 
@@ -45,60 +39,45 @@ namespace Lightcore.Kernel.Data
                 query = "/?sc_itemid=" + pathOrId + "&sc_database=web";
             }
 
-            var watch = Stopwatch.StartNew();
+            var getWatch = Stopwatch.StartNew();
 
             // TODO: How to handle fields... can't combine payload=content + __renderings field
             var url = "http://sc80-150812.ad.codehouse.com/-/item/v1" + query +
                       "&language=" + language.Name +
                       "&payload=full&fields=Title|Text|__Renderings&scope=s|c";
 
-            Item item;
-
-            if (_cache.TryGetValue(url, out item))
-            {
-                item.Trace = "Loaded from cache...";
-
-                return item;
-            }
-
             var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
+
+                getWatch.Stop();
+
+                var parseWatch = Stopwatch.StartNew();
                 var sitecoreApiReponse = JsonConvert.DeserializeObject<SitecoreApiReponse>(content);
-
-                watch.Stop();
-
+                
                 if (sitecoreApiReponse.StatusCode != 200 || sitecoreApiReponse.Result.ResultCount <= 0)
                 {
-                    // Also cache not found items
-                    _cache.Set(url, null, new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(30)
-                    });
-
                     return null;
                 }
 
                 var sitecoreApiItem = sitecoreApiReponse.Result.Items.First();
 
                 // Map item
-                item = Map(sitecoreApiItem);
+                var item = Map(sitecoreApiItem);
 
                 // Map item children
                 var sitecoreApiItems = sitecoreApiReponse.Result.Items.Skip(1);
                 var items = new List<Item>(sitecoreApiReponse.Result.Items.Length - 1);
 
                 items.AddRange(sitecoreApiItems.Select(Map));
+
                 item.Children = items;
 
-                item.Trace = $"Load took {watch.ElapsedMilliseconds} ms";
+                parseWatch.Stop();
 
-                //_cache.Set(url, item, new MemoryCacheEntryOptions
-                //{
-                //    AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(10)
-                //});
+                item.Trace = $"Loaded in {getWatch.ElapsedMilliseconds} ms, mapped in {parseWatch.ElapsedMilliseconds} ms";
 
                 return item;
             }
@@ -118,7 +97,7 @@ namespace Lightcore.Kernel.Data
                 Url = "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home", ""),
                 Path = sitecoreApiItem.Path,
                 Language = new Language(sitecoreApiItem.Language),
-                
+
                 // TODO: Parse __Renderings for reals
                 Layout = "/Views/Layout.cshtml",
                 Renderings = new List<Rendering>
@@ -138,7 +117,7 @@ namespace Lightcore.Kernel.Data
             {
                 fields.Add(new Field
                 {
-                    Name = keyValuePair.Value.Name,
+                    Key = keyValuePair.Value.Name,
                     Value = keyValuePair.Value.Value,
                     Type = keyValuePair.Value.Type
                 });

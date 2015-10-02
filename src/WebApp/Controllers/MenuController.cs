@@ -17,7 +17,7 @@ namespace WebApp.Controllers
         public async Task<ActionResult> Index()
         {
             var context = Context.LightcoreContext();
-            var home = await _itemProvider.GetItem("/sitecore/content/home", context.Language);
+            var home = await _itemProvider.GetItemAsync("/sitecore/content/home", context.Language);
 
             return View("/Views/Menu/Index.cshtml", home);
         }

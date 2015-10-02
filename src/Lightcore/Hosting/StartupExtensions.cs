@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using Lightcore.Kernel.Data;
+﻿using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipeline;
 using Lightcore.Kernel.Pipeline.Request;
 using Microsoft.AspNet.Builder;
-using Microsoft.Framework.Caching.Memory;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.OptionsModel;
 
 namespace Lightcore.Hosting
 {
@@ -13,7 +10,8 @@ namespace Lightcore.Hosting
     {
         public static void AddLightcore(this IServiceCollection services)
         {
-            services.AddInstance<IItemProvider>(new ItemProvider());
+            //services.AddInstance<IItemProvider>(new ItemWebApiItemProvider());
+            services.AddInstance<IItemProvider>(new LightcoreApiItemProvider());
             services.AddTransient<RequestPipeline>();
         }
 
