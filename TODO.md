@@ -4,7 +4,8 @@
 
 - Can Sitecore API module live is this solution?
 - Rename databases
-- Move Azure website and SQL to eu-west
+- Move Azure website and SQL to eu-west (Lightcore resource group)
+- Sync Azure SQL with git
 
 ## Kernel ##
 
