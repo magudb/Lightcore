@@ -94,6 +94,7 @@
     <Compile Include="..\Lightcore\Server\Models\ServerResponseModel.cs">
       <Link>Models\ServerResponseModel.cs</Link>
     </Compile>
+    <Compile Include="Api\HelpModule.cs" />
     <Compile Include="Api\ItemModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

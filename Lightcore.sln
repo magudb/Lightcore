@@ -21,6 +21,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lightcore.Server.Sitecore", "src\Lightcore.Server.Sitecore\Lightcore.Server.Sitecore.csproj", "{E44DEE6B-E8A7-4E30-87A7-47CEEECCD5BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lightcore.Server.Sitecore.TestServer", "src\Lightcore.Server.Sitecore.TestServer\Lightcore.Server.Sitecore.TestServer.csproj", "{FB8F57CB-8A55-48D0-8528-F9BC222C67D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E44DEE6B-E8A7-4E30-87A7-47CEEECCD5BF} = {E44DEE6B-E8A7-4E30-87A7-47CEEECCD5BF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

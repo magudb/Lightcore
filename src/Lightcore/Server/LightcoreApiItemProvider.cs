@@ -42,7 +42,7 @@ namespace Lightcore.Server
             }
 
             var getWatch = Stopwatch.StartNew();
-            var url = "http://sc80-150812.ad.codehouse.com/-/lightcore/item/" + query + "?sc_database=web&sc_lang=" + language.Name + "&sc_device=default";
+            var url = "http://lightcore-testserver.ad.codehouse.com/-/lightcore/item/" + query + "?sc_database=web&sc_lang=" + language.Name + "&sc_device=default";
             var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)

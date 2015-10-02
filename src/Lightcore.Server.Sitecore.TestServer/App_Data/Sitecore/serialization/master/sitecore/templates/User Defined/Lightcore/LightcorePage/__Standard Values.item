@@ -1,0 +1,79 @@
+----item----
+version: 1
+id: {F5D370CD-E283-45F7-B355-370AA8E1CF45}
+database: master
+path: /sitecore/templates/User Defined/Lightcore/LightcorePage/__Standard Values
+parent: {70E9B44E-70DA-401F-83AB-ACB776A5DE1C}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {70E9B44E-70DA-401F-83AB-ACB776A5DE1C}
+templatekey: LightcorePage
+
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 38
+
+{70E9B44E-70DA-401F-83AB-ACB776A5DE1C}
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 505
+
+<r xmlns:xsd="http://www.w3.org/2001/XMLSchema" ><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{9B66785B-80C1-4A18-BEFF-989419E37076}"><r id="{3E37A8BF-9E33-48CA-AACB-B50CC510D21D}" ph="content" uid="{08F18DA3-AAB4-4492-8CF2-4395B7565B7E}" /><r id="{7095883A-7F93-4559-9650-A950F8BE8C31}" ph="content" uid="{51AE8D89-9102-4E8F-AF29-EFCF6C471906}" /><r cac="1" ds="" id="{2D66AC4B-96FA-4F57-85BB-69BD5A9995CD}" par="" ph="footer" uid="{3EA6E09F-3D4A-48F8-835B-8100C6782EB6}" vbd="1" vbqs="1" /></d></r>
+----version----
+language: en
+version: 1
+revision: 1882a827-a7dd-4e59-9287-d92d515caad8
+
+----field----
+field: {02AA436B-FC11-4040-8DA2-1E93A9C7B620}
+name: Title
+key: title
+content-length: 5
+
+$name
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20150928T183334Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+1882a827-a7dd-4e59-9287-d92d515caad8
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20151001T163708Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

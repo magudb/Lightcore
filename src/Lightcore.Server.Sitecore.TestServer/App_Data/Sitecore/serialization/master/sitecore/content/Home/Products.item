@@ -1,0 +1,188 @@
+----item----
+version: 1
+id: {7B7F2722-F41A-4158-8F8B-C6900125950F}
+database: master
+path: /sitecore/content/Home/Products
+parent: {110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}
+name: Products
+master: {00000000-0000-0000-0000-000000000000}
+template: {70E9B44E-70DA-401F-83AB-ACB776A5DE1C}
+templatekey: LightcorePage
+
+----version----
+language: da-DK
+version: 1
+revision: c6375a3a-8f12-427f-b1c3-74799b58ef26
+
+----field----
+field: {02AA436B-FC11-4040-8DA2-1E93A9C7B620}
+name: Title
+key: title
+content-length: 9
+
+Produkter
+----field----
+field: {61FB502F-AFA7-4C9D-8327-5D070BEB27EB}
+name: Text
+key: text
+content-length: 27
+
+<p>Massere af produkter</p>
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20150928T183250Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+c6375a3a-8f12-427f-b1c3-74799b58ef26
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20150928T183300Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: en
+version: 1
+revision: 5adae799-8335-41c4-a333-a4831baae858
+
+----field----
+field: {02AA436B-FC11-4040-8DA2-1E93A9C7B620}
+name: Title
+key: title
+content-length: 8
+
+Products
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20150928T183313Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+5adae799-8335-41c4-a333-a4831baae858
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20150928T183317Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: en-US
+version: 1
+revision: 30988ed8-a152-4050-b53d-718b16524c0c
+
+----field----
+field: {02AA436B-FC11-4040-8DA2-1E93A9C7B620}
+name: Title
+key: title
+content-length: 8
+
+Products
+----field----
+field: {61FB502F-AFA7-4C9D-8327-5D070BEB27EB}
+name: Text
+key: text
+content-length: 12
+
+<p><br>
+</p>
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20150928T183108Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+30988ed8-a152-4050-b53d-718b16524c0c
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20150928T183310Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

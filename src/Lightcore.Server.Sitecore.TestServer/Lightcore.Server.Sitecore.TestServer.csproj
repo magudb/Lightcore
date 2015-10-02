@@ -828,6 +828,21 @@
     <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\content\Home.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\content\Home\Contact.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\content\Home\Products.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\layout\Layouts\Lightcore.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\layout\Layouts\Lightcore\Layout.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\layout\Renderings\Lightcore.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\layout\Renderings\Lightcore\Article.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\layout\Renderings\Lightcore\Footer.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\layout\Renderings\Lightcore\Menu.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\Data.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\Data\Text.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\Data\Title.item" />
+    <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\__Standard Values.item" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
