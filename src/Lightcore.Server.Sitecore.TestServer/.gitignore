@@ -17,6 +17,7 @@ default.htm.sitedown
 default.js
 webedit.css
 Global.asax
+Web.Release.config
 
 # Ignores
 !App_Config/Include/Zoro/Common.config

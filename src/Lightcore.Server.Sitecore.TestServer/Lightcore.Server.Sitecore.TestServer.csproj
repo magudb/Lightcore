@@ -843,9 +843,6 @@
     <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\Data\Text.item" />
     <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\Data\Title.item" />
     <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\__Standard Values.item" />
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
