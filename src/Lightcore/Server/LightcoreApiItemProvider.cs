@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Lightcore.Kernel.Data;
+using Lightcore.Server.Models;
 using Newtonsoft.Json;
 
-namespace Lightcore.Kernel.Data
+namespace Lightcore.Server
 {
     public class LightcoreApiItemProvider : IItemProvider, IDisposable
     {
@@ -50,7 +52,7 @@ namespace Lightcore.Kernel.Data
                 getWatch.Stop();
 
                 var parseWatch = Stopwatch.StartNew();
-                var apiResponse = JsonConvert.DeserializeObject<LightcoreApiResponse>(content);
+                var apiResponse = JsonConvert.DeserializeObject<ServerResponseModel>(content);
                 var item = Map(apiResponse.Item, apiResponse.Fields, apiResponse.Presentation, language);
 
                 item.Children = apiResponse.Children.Select(child => Map(child.Item, child.Fields, child.Presentation, language));
@@ -65,7 +67,7 @@ namespace Lightcore.Kernel.Data
             return null;
         }
 
-        private Item Map(LightcoreApiItem apiItem, IEnumerable<LightcoreApiField> apiFields, LightcoreApiPresentation apiPresentation, Language language)
+        private Item Map(ItemModel apiItem, IEnumerable<FieldModel> apiFields, PresentationModel apiPresentation, Language language)
         {
             var item = new Item
             {
@@ -91,49 +93,6 @@ namespace Lightcore.Kernel.Data
             }
 
             return item;
-        }
-
-        public class LightcoreApiResponse
-        {
-            public LightcoreApiItem Item { get; set; }
-            public LightcoreApiPresentation Presentation { get; set; }
-            public IEnumerable<LightcoreApiField> Fields { get; set; }
-            public IEnumerable<LightcoreApiResponse> Children { get; set; }
-        }
-
-        public class LightcoreApiItem
-        {
-            public string Name { get; set; }
-            public string FullPath { get; set; }
-            public Guid Id { get; set; }
-            public Guid ParentId { get; set; }
-            public Guid TemplateId { get; set; }
-            public string TemplateName { get; set; }
-        }
-
-        public class LightcoreApiField
-        {
-            public Guid Id { get; set; }
-            public string Key { get; set; }
-            public string Value { get; set; }
-            public string Type { get; set; }
-        }
-
-        public class LightcoreApiLayout
-        {
-            public string Path { get; set; }
-        }
-
-        public class LightcoreApiRendering
-        {
-            public string Placeholder { get; set; }
-            public string Controller { get; set; }
-        }
-
-        public class LightcoreApiPresentation
-        {
-            public LightcoreApiLayout Layout { get; set; }
-            public IEnumerable<LightcoreApiRendering> Renderings { get; set; }
         }
     }
 }

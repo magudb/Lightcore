@@ -1,6 +1,7 @@
 ﻿using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipeline;
 using Lightcore.Kernel.Pipeline.Request;
+using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
 

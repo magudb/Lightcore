@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Lightcore.Kernel.Data;
 using Newtonsoft.Json;
 
-namespace Lightcore.Kernel.Data
+namespace Lightcore.Server
 {
     public class ItemWebApiItemProvider : IItemProvider, IDisposable
     {

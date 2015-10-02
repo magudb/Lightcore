@@ -1,0 +1,23 @@
+# Sitescore
+App_Browsers/**/*
+App_Data/**/*
+App_Config/**/*
+Areas/**/*
+layouts/**/*
+sitecore/**/*
+sitecore modules/**/*
+sitecore_files/**/*
+temp/**/*
+upload/**/*
+Views/Shared/ExperienceExplorerView.cshtml
+xsl/**/*
+Default.aspx
+default.css
+default.htm.sitedown
+default.js
+webedit.css
+Global.asax
+
+# Ignores
+!App_Config/Include/Zoro/Common.config
+!App_Config/ConnectionStrings.config

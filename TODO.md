@@ -1,8 +1,10 @@
-TODO's
+# TODO's #
+
+## Solution ##
 
 - Can Sitecore API module live is this solution?
 
-Kernel
+## Kernel ##
 
 - Rendering pipeline
 - Init pipeline (fx get system/languages)
@@ -13,18 +15,18 @@ Kernel
 	- Children only meta?
 - Gzip module output.
 
-MVC
+## MVC ##
 
 - Can OutputCache be supported? 
 	- Or make Html cache (so we can read it from renderings)
 - UrlHelper
 
-Media library
+## Media ##
 
 - Switch between CDN (or directly to endpoint) and streaming pipeline calling endpoint
 - Make "handler" for media requests that stream blobs from endpoint
 
-Data
+## Data ##
 
 - Parse layout / rendering data
 - Getting Sitecore Items...
@@ -45,7 +47,7 @@ Data
 	- Use custom Web API?
 	- Use some document db and populate on publish?
 
-Misc Ideas
+## Misc Ideas ##
 	
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
