@@ -3,6 +3,7 @@
 ## Solution ##
 
 - Can Sitecore API module live is this solution?
+- Rename databases
 
 ## Kernel ##
 
