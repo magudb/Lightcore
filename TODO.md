@@ -28,10 +28,6 @@
 - Switch between CDN (or directly to endpoint) and streaming pipeline calling endpoint
 - Make "handler" for media requests that stream blobs from endpoint
 
-## Data ##
-
-- Parse layout / rendering data
-
 ## Ideas ##
 	
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache

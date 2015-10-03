@@ -26,9 +26,6 @@ namespace WebApp
         {
             // Add Lightcore services
             services.AddLightcore(Configuration);
-
-            // Add MVC services
-            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)
@@ -39,17 +36,6 @@ namespace WebApp
 
             // Enable Lightcore
             app.UseLightcore();
-
-            // Enabled MVC
-            app.UseMvc(routes =>
-            {
-                // Enable Lightcore, replace default route
-                routes.MapRoute("default", "{*path}", new
-                {
-                    controller = "Lightcore",
-                    action = "Render"
-                });
-            });
         }
     }
 }

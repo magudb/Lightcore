@@ -83,17 +83,23 @@ namespace Lightcore.Server.Sitecore.Api
 
         private PresentationModel MapPresentation(Item item)
         {
+            // TODO: Looking to Sitecore.MVC ProcessXmlBasedLayoutDefinition
+            // var x = new ProcessXmlBasedLayoutDefinition()
+            // x.GetRenderings("xml from __Renderings field", null;
+
+
             // TODO: Look into why is this so slow? 
 
             //if (item.Visualization.Layout != null)
             //{
-            //    var renderings = item.Visualization.GetRenderings(item.Database.Resources.Devices["/sitecore/layout/devices/default"], false);
+            //    var device = item.Database.Resources.Devices["/sitecore/layout/devices/default"];
+            //    var renderings = item.Visualization.GetRenderings(device, false);
 
             //    return new LightcoreApiPresentation
             //    {
             //        Layout = new LightcoreApiLayout
             //        {
-            //            Path = item.Visualization.Layout.FilePath
+            //            Path = item.Visualization.GetLayout(device).FilePath
             //        },
             //        Renderings = renderings.Select(rendering => new LightcoreApiRendering
             //        {
