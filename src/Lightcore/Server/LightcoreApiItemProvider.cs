@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Configuration;
@@ -23,7 +24,10 @@ namespace Lightcore.Server
         {
             _cache = cache;
             _config = config.Options;
-            _client = new HttpClient();
+            _client = new HttpClient(new HttpClientHandler
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            });
         }
 
         public void Dispose()
