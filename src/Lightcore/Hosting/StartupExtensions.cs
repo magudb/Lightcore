@@ -1,6 +1,5 @@
 ﻿using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Pipeline;
 using Lightcore.Kernel.Pipeline.Request;
 using Lightcore.Server;
 using Microsoft.AspNet.Builder;
@@ -38,12 +37,11 @@ namespace Lightcore.Hosting
         {
             // TODO: Throw if services not added...
 
-            var itemProvider = app.ApplicationServices.GetService<IItemProvider>();
             var requestPipeline = app.ApplicationServices.GetService<RequestPipeline>();
 
             app.Use(async (httpContext, next) =>
             {
-                await requestPipeline.RunAsync(new PipelineArgs(httpContext, itemProvider));
+                await requestPipeline.RunAsync(requestPipeline.GetArgs(httpContext));
 
                 if (!requestPipeline.IsAborted)
                 {

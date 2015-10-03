@@ -7,9 +7,9 @@ namespace Lightcore.Kernel.Pipeline.Request.Processor
     {
         public override async Task ProcessAsync(PipelineArgs args)
         {
+            var requestArgs = (RequestArgs)args;
             var context = args.Context.LightcoreContext();
-
-            var item = await args.ItemProvider.GetItemAsync(args.Context.Request.Path.Value, context.Language);
+            var item = await requestArgs.ItemProvider.GetItemAsync(args.Context.Request.Path.Value, context.Language);
 
             if (item != null)
             {

@@ -1,17 +1,14 @@
-﻿using Lightcore.Kernel.Data;
-using Microsoft.AspNet.Http;
+﻿using Microsoft.AspNet.Http;
 
 namespace Lightcore.Kernel.Pipeline
 {
     public class PipelineArgs
     {
-        public PipelineArgs(HttpContext httpContext, IItemProvider itemProvider)
+        public PipelineArgs(HttpContext httpContext)
         {
             Context = httpContext;
-            ItemProvider = itemProvider;
         }
 
-        public IItemProvider ItemProvider { get; }
         public HttpContext Context { get; }
         public bool IsAborted { get; private set; }
 
