@@ -1,9 +1,9 @@
 {
   "version": "1.0.0-*",
-  "description": "Lightcore Class Library",
+  "description": "Lightcore",
   "authors": [ "pmb" ],
   "tags": [ "" ],
-  "projectUrl": "",
+  "projectUrl": "https://github.com/pbering/lightcore",
   "licenseUrl": "",
 
   "frameworks": {
@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "Microsoft.AspNet.Mvc": "6.0.0-beta7",
+    "Microsoft.Framework.Configuration.EnvironmentVariables": "1.0.0-beta7",
+    "Microsoft.Framework.Configuration.Json": "1.0.0-beta7",
     "Newtonsoft.Json": "7.0.1"
   }
 }

@@ -4,18 +4,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Server.Models;
+using Microsoft.Framework.Caching.Memory;
+using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
 
 namespace Lightcore.Server
 {
     public class LightcoreApiItemProvider : IItemProvider, IDisposable
     {
+        private readonly IMemoryCache _cache;
         private readonly HttpClient _client;
+        private readonly LightcoreConfig _config;
 
-        public LightcoreApiItemProvider()
+        public LightcoreApiItemProvider(IOptions<LightcoreConfig> config, IMemoryCache cache)
         {
+            _cache = cache;
+            _config = config.Options;
             _client = new HttpClient();
         }
 
@@ -42,7 +49,7 @@ namespace Lightcore.Server
             }
 
             var getWatch = Stopwatch.StartNew();
-            var url = "http://lightcore-testserver.ad.codehouse.com/-/lightcore/item/" + query + "?sc_database=web&sc_lang=" + language.Name + "&sc_device=default";
+            var url = _config.ServerUrl + "/-/lightcore/item/" + query + "?sc_database=web&sc_lang=" + language.Name + "&sc_device=default";
             var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)

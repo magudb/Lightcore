@@ -14,6 +14,7 @@
 	- ItemProvider.GetMetaItem() returns light item with only name, path, url, id?
 	- Children only meta?
 - Gzip module output.
+- Should HttpContext be wrapped? Could open for possibility to run in Sitecore Experience Editor...
 
 ## MVC ##
 

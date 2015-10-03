@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
+using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
 
 namespace Lightcore.Server
@@ -12,9 +14,11 @@ namespace Lightcore.Server
     public class ItemWebApiItemProvider : IItemProvider, IDisposable
     {
         private readonly HttpClient _client;
+        private readonly LightcoreConfig _config;
 
-        public ItemWebApiItemProvider()
+        public ItemWebApiItemProvider(IOptions<LightcoreConfig> config)
         {
+            _config = config.Options;
             _client = new HttpClient();
         }
 
@@ -41,12 +45,7 @@ namespace Lightcore.Server
             }
 
             var getWatch = Stopwatch.StartNew();
-
-            // TODO: How to handle fields... can't combine payload=content + __renderings field
-            var url = "http://sc80-150812.ad.codehouse.com/-/item/v1" + query +
-                      "&language=" + language.Name +
-                      "&payload=full&fields=Title|Text|__Renderings&scope=s|c";
-
+            var url = _config.ServerUrl + "/-/item/v1" + query + "&language=" + language.Name + "&payload=full&fields=Title|Text|__Renderings&scope=s|c";
             var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -57,7 +56,7 @@ namespace Lightcore.Server
 
                 var parseWatch = Stopwatch.StartNew();
                 var sitecoreApiReponse = JsonConvert.DeserializeObject<SitecoreApiReponse>(content);
-                
+
                 if (sitecoreApiReponse.StatusCode != 200 || sitecoreApiReponse.Result.ResultCount <= 0)
                 {
                     return null;
@@ -93,13 +92,9 @@ namespace Lightcore.Server
                 Id = sitecoreApiItem.Id,
                 Key = sitecoreApiItem.Name.ToLowerInvariant(),
                 Name = sitecoreApiItem.Name,
-
-                // TODO: Some url provider...
                 Url = "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home", ""),
                 Path = sitecoreApiItem.Path,
                 Language = new Language(sitecoreApiItem.Language),
-
-                // TODO: Parse __Renderings for reals
                 Layout = "/Views/Layout.cshtml",
                 Renderings = new List<Rendering>
                 {

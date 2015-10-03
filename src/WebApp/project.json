@@ -7,6 +7,9 @@
     "Microsoft.AspNet.Mvc": "6.0.0-beta7",
     "Microsoft.AspNet.Server.IIS": "1.0.0-beta7",
     "Microsoft.AspNet.Server.WebListener": "1.0.0-beta7",
+    "Microsoft.Framework.Logging": "1.0.0-beta7",
+    "Microsoft.Framework.Logging.Console": "1.0.0-beta7",
+    "Microsoft.Framework.Logging.Debug" : "1.0.0-beta7",
     "System.Linq": "4.0.1-beta-23302"
   },
 
@@ -19,15 +22,11 @@
   },
 
   "publishExclude": [
-    "node_modules",
-    "bower_components",
     "**.xproj",
     "**.user",
     "**.vspscc"
   ],
   "exclude": [
-    "wwwroot",
-    "node_modules",
-    "bower_components"
+    "wwwroot"
   ]
 }
