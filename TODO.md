@@ -8,7 +8,7 @@
 
 - Rendering pipeline
 - Init pipeline (fx get system/languages)
-- "LinkManager"
+- "LinkManager" / UrlService
 - Item.Fields["Text"]
 - Always return direct children or split GetItem into two? 
 	- ItemProvider.GetMetaItem() returns light item with only name, path, url, id?
@@ -19,7 +19,9 @@
 
 - Can OutputCache be supported? 
 	- Or make Sitecore like Html cache (so we can read it from renderings)
-- UrlHelper
+- UrlHelper ("LinkManager" / UrlService)
+- FieldHelper
+- Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html, tink about potential issue if reusing in Sitecore Experience Editor.
 
 ## Media ##
 
@@ -29,7 +31,16 @@
 ## Data ##
 
 - Parse layout / rendering data
-- Getting Sitecore Items...
+
+## Ideas ##
+	
+- SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
+	- OR SingalR, broadcase published items and subscribe to refresh items in cache
+- SignalR to know if CM is offline or slow
+- Circut Breaker functionality in itemprovider
+- Backoff and retry in itemprovider, multiple api endpoints... fallback to serialized items on disk? 
+
+## Thoughts about getting Sitecore data... ##
 	- Use Item Web API directly? 
 			- https://sdn.sitecore.net/upload/sdn5/modules/sitecore%20item%20web%20api/sitecore_item_web_api_developer_guide_sc66-71-a4.pdf
 			- https://github.com/thinkfreshnick/SitecoreSharedSource/blob/master/Sitecore.SharedSource.WebApiClient
@@ -40,17 +51,11 @@
 		- https://sdn.sitecore.net/upload/sitecore7/75/developer's_guide_to_sitecore.services.client_sc75-a4.pdf
 		- http://docs.itemserviceapi.apiary.io/
 		- Cons: 
-			- hmm can get both item and children in one request
-			- get item twice as FAST as Item Web API...
+			- hmm can get both item and children in one request, bummer.
+			- get item twice as fast as Item Web API.
 		- Pros: OOTB since Sitecore 8.0
-	- Use Solr directly?
 	- Use custom Web API?
+		- Cons: custom vs. builtin...
+		- Pros: Can get data exactly as we want it.
 	- Use some document db and populate on publish?
-
-## Ideas ##
-	
-- SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
-	- OR SingalR, broadcase published items and subscribe to refresh items in cache
-- SignalR to know if CM is offline or slow
-- CircitBreaker functionality in itemprovider
-- Backoff and retry in itemprovider, multiple CM endpoints... fallback to serialized items on disk? 
+	- Use Solr directly?		
