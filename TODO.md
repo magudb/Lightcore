@@ -1,11 +1,8 @@
 # TODO's #
 
-## Solution ##
+## Solution / Projects ##
 
-- Can Sitecore API module live is this solution?
-- Rename databases
-- Move Azure website and SQL to eu-west (Lightcore resource group)
-- Sync Azure SQL with git
+- 
 
 ## Kernel ##
 
@@ -21,7 +18,7 @@
 ## MVC ##
 
 - Can OutputCache be supported? 
-	- Or make Html cache (so we can read it from renderings)
+	- Or make Sitecore like Html cache (so we can read it from renderings)
 - UrlHelper
 
 ## Media ##
@@ -50,7 +47,7 @@
 	- Use custom Web API?
 	- Use some document db and populate on publish?
 
-## Misc Ideas ##
+## Ideas ##
 	
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
