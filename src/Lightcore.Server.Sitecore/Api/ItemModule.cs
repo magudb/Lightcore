@@ -1,52 +1,67 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Lightcore.Server.Models;
 using Newtonsoft.Json;
 using Sitecore.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
+using Sitecore.Resources.Media;
 
 namespace Lightcore.Server.Sitecore.Api
 {
     public class ItemModule : IHttpModule
     {
+        public enum MediaUrlMode
+        {
+            Classic,
+            Lightcore
+        }
+
         private readonly ID _controllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
 
-        public void Init(HttpApplication context)
+        public void Init(HttpApplication app)
         {
-            context.BeginRequest += (sender, args) =>
+            app.BeginRequest += (sender, args) =>
             {
-                var path = HttpContext.Current.Request.Url.AbsolutePath.ToLowerInvariant();
+                var context = ((HttpApplication)sender).Context;
+
+                // ReSharper disable once PossibleNullReferenceException
+                var path = context.Server.UrlDecode(context.Request.Url.AbsolutePath).ToLowerInvariant();
 
                 if (!path.StartsWith("/-/lightcore/item/"))
                 {
                     return;
                 }
 
-                var pathOrId = path.Replace("/-/lightcore/item/", "/");
-                var database = HttpContext.Current.Request.QueryString["sc_database"] ?? "web";
-                var device = HttpContext.Current.Request.QueryString["sc_device"] ?? "default";
-                var language = HttpContext.Current.Request.QueryString["sc_lang"] ?? "en";
+                //// TODO: Should we use response codes or should we set it on json response object?
 
+                var pathOrId = path.Replace("/-/lightcore/item/", "/");
+                var database = context.Request.QueryString["sc_database"] ?? "web";
+                var device = context.Request.QueryString["sc_device"] ?? "default";
+                var language = context.Request.QueryString["sc_lang"] ?? "en";
                 var item = Factory.GetDatabase(database).Items.GetItem(pathOrId, Language.Parse(language));
 
                 if (item != null)
                 {
-                    var response = BuildResponseObject(item, device);
+                    // TODO: Set from querystring or configuration ...
+                    var mediaUrlMode = MediaUrlMode.Lightcore;
+                    var response = BuildResponseObject(item, device, mediaUrlMode);
                     var json = JsonConvert.SerializeObject(response);
 
-                    HttpContext.Current.Response.ContentType = "application/json";
-                    HttpContext.Current.Response.Write(json);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(json);
                 }
                 else
                 {
-                    HttpContext.Current.Response.StatusCode = 404;
+                    context.Response.StatusCode = 404;
                 }
 
-                HttpContext.Current.Items["SitecoreOn"] = false; // TODO: Needed?
-                HttpContext.Current.ApplicationInstance.CompleteRequest();
+                context.Items["SitecoreOn"] = false; // TODO: Check if needed?
+                context.ApplicationInstance.CompleteRequest();
             };
         }
 
@@ -54,17 +69,17 @@ namespace Lightcore.Server.Sitecore.Api
         {
         }
 
-        private ServerResponseModel BuildResponseObject(Item item, string deviceName)
+        private ServerResponseModel BuildResponseObject(Item item, string deviceName, MediaUrlMode mediaUrlMode)
         {
             return new ServerResponseModel
             {
                 Item = MapItem(item),
-                Fields = MapFields(item),
+                Fields = MapFields(item, mediaUrlMode),
                 Presentation = MapPresentation(item, deviceName),
                 Children = item.GetChildren().Select(child => new ServerResponseModel
                 {
                     Item = MapItem(child),
-                    Fields = MapFields(child),
+                    Fields = MapFields(child, mediaUrlMode),
                     Presentation = null,
                     Children = Enumerable.Empty<ServerResponseModel>()
                 })
@@ -125,22 +140,57 @@ namespace Lightcore.Server.Sitecore.Api
             return presentation;
         }
 
-        private IEnumerable<FieldModel> MapFields(BaseItem item)
+        private IEnumerable<FieldModel> MapFields(BaseItem item, MediaUrlMode mediaUrlMode)
         {
-            var fields = new List<FieldModel>();
-
             foreach (var field in item.Fields.Where(f => !f.Key.StartsWith("__")))
             {
-                fields.Add(new FieldModel
+                yield return MapField(field, mediaUrlMode);
+            }
+        }
+
+        private FieldModel MapField(Field field, MediaUrlMode mediaUrlMode)
+        {
+            var value = field.Value;
+            var type = field.TypeKey;
+
+            if (field.TypeKey.Equals("image"))
+            {
+                var media = (ImageField)field;
+
+                switch (mediaUrlMode)
                 {
-                    Id = field.ID.Guid,
-                    Type = field.TypeKey,
-                    Key = field.Key,
-                    Value = field.Value
-                });
+                    case MediaUrlMode.Classic:
+
+                        value = MediaManager.GetMediaUrl(media.MediaItem, new MediaUrlOptions
+                        {
+                            AlwaysIncludeServerUrl = true,
+                            IncludeExtension = true,
+                            LowercaseUrls = true,
+                            UseItemPath = true
+                        });
+
+                        break;
+
+                    case MediaUrlMode.Lightcore:
+
+                        value = ("/-/media" + media.MediaItem.Paths.MediaPath + "?sc_database=" + field.Database.Name).ToLowerInvariant();
+
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException("mediaUrlMode", mediaUrlMode, null);
+                }
+
+                type = field.TypeKey + "-" + mediaUrlMode.ToString().ToLowerInvariant();
             }
 
-            return fields;
+            return new FieldModel
+            {
+                Id = field.ID.Guid,
+                Type = type,
+                Key = field.Key,
+                Value = value
+            };
         }
     }
 }

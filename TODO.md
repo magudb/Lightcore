@@ -13,6 +13,8 @@
 - Rendering pipeline
 - Init pipeline (fx get system/languages)
 - "LinkManager" / UrlService
+- Link field types (with title and target)
+- Media field types (with alt text)
 - Always return direct children or split GetItem into two? 
 	- ItemProvider.GetMetaItem() returns light item with only name, path, url, id?
 	- Children only meta?
@@ -22,13 +24,12 @@
 - Can OutputCache be supported? 
 	- Or make Sitecore like Html cache (so we can read it from renderings)
 - UrlHelper ("LinkManager" / UrlService)
-- FieldHelper
+- FieldHelper (also for media fields, link fields)
 - Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
 
 ## Media ##
 
 - Switch between CDN (or directly to endpoint) and streaming pipeline calling endpoint
-- Make "handler" for media requests that stream blobs from endpoint
 
 ## Thoughts about getting Sitecore data... ##
 

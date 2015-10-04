@@ -113,7 +113,7 @@ sitecore\admin
 ----version----
 language: en-US
 version: 1
-revision: d2ceda65-1c44-4122-882e-764e7564a78a
+revision: 74fadd33-1d23-490d-883d-a62d30f926f7
 
 ----field----
 field: {02AA436B-FC11-4040-8DA2-1E93A9C7B620}
@@ -122,6 +122,13 @@ key: title
 content-length: 7
 
 Contact
+----field----
+field: {B5C7D6E9-91FB-485F-A8B3-E281247A734D}
+name: Image
+key: image
+content-length: 113
+
+<image mediaid="{DED33946-1593-4FFC-9B92-E9B014FF7EA0}" alt="Lightcore" height="" width="" hspace="" vspace="" />
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -149,14 +156,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-d2ceda65-1c44-4122-882e-764e7564a78a
+74fadd33-1d23-490d-883d-a62d30f926f7
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20150928T183130Z
+20151004T143835Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
