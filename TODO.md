@@ -13,7 +13,6 @@
 - Rendering pipeline
 - Init pipeline (fx get system/languages)
 - "LinkManager" / UrlService
-- Item.Fields["Text"]
 - Always return direct children or split GetItem into two? 
 	- ItemProvider.GetMetaItem() returns light item with only name, path, url, id?
 	- Children only meta?

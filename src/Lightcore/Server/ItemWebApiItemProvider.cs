@@ -108,7 +108,7 @@ namespace Lightcore.Server
                         new Rendering("footer", "Footer")
                     }
                 },
-                Fields = Enumerable.Empty<Field>(),
+                Fields = new FieldCollection(),
                 Children = Enumerable.Empty<Item>()
             };
 
@@ -125,7 +125,7 @@ namespace Lightcore.Server
                 });
             }
 
-            item.Fields = fields;
+            item.Fields = new FieldCollection(fields);
 
             return item;
         }
