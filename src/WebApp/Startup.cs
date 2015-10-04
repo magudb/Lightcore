@@ -30,7 +30,7 @@ namespace WebApp
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)
         {
-            loggerFactory.MinimumLevel = LogLevel.Information;
+            loggerFactory.MinimumLevel = LogLevel.Verbose;
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
 

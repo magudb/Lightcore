@@ -58,6 +58,7 @@ namespace Lightcore.Server
 
             if (response.IsSuccessStatusCode)
             {
+                var length = response.Content.Headers.ContentLength;
                 var content = await response.Content.ReadAsStringAsync();
 
                 getWatch.Stop();
@@ -70,7 +71,7 @@ namespace Lightcore.Server
 
                 parseWatch.Stop();
 
-                item.Trace = $"Loaded in {getWatch.ElapsedMilliseconds} ms, mapped in {parseWatch.ElapsedMilliseconds} ms";
+                item.Trace = $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, mapped in {parseWatch.ElapsedMilliseconds} ms";
 
                 return item;
             }
@@ -100,7 +101,7 @@ namespace Lightcore.Server
             if (apiPresentation != null)
             {
                 item.Layout = apiPresentation.Layout.Path;
-                item.Renderings = apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.Controller)).ToList();
+                item.Renderings = apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.Controller, r.Action)).ToList();
             }
 
             return item;

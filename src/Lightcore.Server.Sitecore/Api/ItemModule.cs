@@ -4,6 +4,7 @@ using System.Web;
 using Lightcore.Server.Models;
 using Newtonsoft.Json;
 using Sitecore.Configuration;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 
@@ -11,6 +12,8 @@ namespace Lightcore.Server.Sitecore.Api
 {
     public class ItemModule : IHttpModule
     {
+        private readonly ID _controllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
+
         public void Init(HttpApplication context)
         {
             context.BeginRequest += (sender, args) =>
@@ -31,7 +34,7 @@ namespace Lightcore.Server.Sitecore.Api
 
                 if (item != null)
                 {
-                    var response = BuildResponseObject(item);
+                    var response = BuildResponseObject(item, device);
                     var json = JsonConvert.SerializeObject(response);
 
                     HttpContext.Current.Response.ContentType = "application/json";
@@ -51,13 +54,13 @@ namespace Lightcore.Server.Sitecore.Api
         {
         }
 
-        private ServerResponseModel BuildResponseObject(Item item)
+        private ServerResponseModel BuildResponseObject(Item item, string deviceName)
         {
             return new ServerResponseModel
             {
                 Item = MapItem(item),
                 Fields = MapFields(item),
-                Presentation = MapPresentation(item),
+                Presentation = MapPresentation(item, deviceName),
                 Children = item.GetChildren().Select(child => new ServerResponseModel
                 {
                     Item = MapItem(child),
@@ -81,61 +84,43 @@ namespace Lightcore.Server.Sitecore.Api
             };
         }
 
-        private PresentationModel MapPresentation(Item item)
+        private PresentationModel MapPresentation(Item item, string deviceName)
         {
-            // TODO: Looking to Sitecore.MVC ProcessXmlBasedLayoutDefinition
-            // var x = new ProcessXmlBasedLayoutDefinition()
-            // x.GetRenderings("xml from __Renderings field", null;
+            var device = item.Database.Resources.Devices["/sitecore/layout/devices/" + deviceName];
 
+            if (device == null)
+            {
+                return null;
+            }
 
-            // TODO: Look into why is this so slow? 
+            var layout = item.Visualization.GetLayout(device);
 
-            //if (item.Visualization.Layout != null)
-            //{
-            //    var device = item.Database.Resources.Devices["/sitecore/layout/devices/default"];
-            //    var renderings = item.Visualization.GetRenderings(device, false);
-
-            //    return new LightcoreApiPresentation
-            //    {
-            //        Layout = new LightcoreApiLayout
-            //        {
-            //            Path = item.Visualization.GetLayout(device).FilePath
-            //        },
-            //        Renderings = renderings.Select(rendering => new LightcoreApiRendering
-            //        {
-            //            Placeholder = rendering.Placeholder,
-            //            Controller = rendering.RenderingItem.InnerItem["Controller"]
-            //        })
-            //    };
-            //}
-
-            //return null;
+            if (layout == null)
+            {
+                return null;
+            }
 
             var presentation = new PresentationModel
             {
                 Layout = new LayoutModel
                 {
-                    Path = item.Visualization.Layout.FilePath
-                },
-                Renderings = new List<RenderingModel>
-                {
-                    new RenderingModel
-                    {
-                        Placeholder = "content",
-                        Controller = "Menu"
-                    },
-                    new RenderingModel
-                    {
-                        Placeholder = "content",
-                        Controller = "Article"
-                    },
-                    new RenderingModel
-                    {
-                        Placeholder = "footer",
-                        Controller = "Footer"
-                    }
+                    Path = layout.FilePath
                 }
             };
+
+            var controllerRenderings = item.Visualization.GetRenderings(device, false).Where(r => r.RenderingItem.InnerItem.TemplateID == _controllerRenderingTemplateId);
+
+            presentation.Renderings = controllerRenderings.Select(rendering =>
+            {
+                var action = rendering.RenderingItem.InnerItem["Action"];
+
+                return new RenderingModel
+                {
+                    Placeholder = rendering.Placeholder,
+                    Controller = rendering.RenderingItem.InnerItem["Controller"],
+                    Action = !string.IsNullOrEmpty(action) ? action : "Index"
+                };
+            });
 
             return presentation;
         }

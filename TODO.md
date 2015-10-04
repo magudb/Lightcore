@@ -4,6 +4,10 @@
 
 - 
 
+## Server ##
+
+- Publish event to clear cache on complete or clear single entries?  
+
 ## Kernel ##
 
 - Rendering pipeline
@@ -13,7 +17,6 @@
 - Always return direct children or split GetItem into two? 
 	- ItemProvider.GetMetaItem() returns light item with only name, path, url, id?
 	- Children only meta?
-- Should HttpContext be wrapped? Could open for possibility to run in Sitecore Experience Editor...
 
 ## MVC ##
 
@@ -21,20 +24,12 @@
 	- Or make Sitecore like Html cache (so we can read it from renderings)
 - UrlHelper ("LinkManager" / UrlService)
 - FieldHelper
-- Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html, tink about potential issue if reusing in Sitecore Experience Editor.
+- Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
 
 ## Media ##
 
 - Switch between CDN (or directly to endpoint) and streaming pipeline calling endpoint
 - Make "handler" for media requests that stream blobs from endpoint
-
-## Ideas ##
-	
-- SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
-	- OR SingalR, broadcase published items and subscribe to refresh items in cache
-- SignalR to know if CM is offline or slow
-- Circut Breaker functionality in itemprovider
-- Backoff and retry in itemprovider, multiple api endpoints... fallback to serialized items on disk? 
 
 ## Thoughts about getting Sitecore data... ##
 
@@ -56,3 +51,12 @@
 	- Pros: Can get data exactly as we want it.
 - Use some document db and populate on publish?
 - Use Solr directly?		
+
+## Ideas ##
+	
+- SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
+	- OR SingalR, broadcase published items and subscribe to refresh items in cache
+- SignalR to know if CM is offline or slow
+- Circut Breaker functionality in itemprovider
+- Backoff and retry in itemprovider, multiple api endpoints... fallback to serialized items on disk?
+- Would it be possible to cross compile and use controllers/view in Sitecore to enable the use of the Page Editor?
