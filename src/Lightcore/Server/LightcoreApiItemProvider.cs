@@ -100,8 +100,14 @@ namespace Lightcore.Server
 
             if (apiPresentation != null)
             {
-                item.Layout = apiPresentation.Layout.Path;
-                item.Renderings = apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.Controller, r.Action)).ToList();
+                item.Visualization = new ItemVisualization
+                {
+                    Layout = new Layout
+                    {
+                        Path = apiPresentation.Layout.Path
+                    },
+                    Renderings = apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.Controller, r.Action))
+                };
             }
 
             return item;

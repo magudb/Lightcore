@@ -9,7 +9,7 @@ namespace Lightcore.Kernel.MVC
         {
             var context = Context.LightcoreContext();
 
-            return View(context.Item.Layout, context.Item);
+            return View(context.Item.Visualization.Layout.Path, context.Item);
         }
     }
 }

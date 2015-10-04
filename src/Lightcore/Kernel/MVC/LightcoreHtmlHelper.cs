@@ -23,7 +23,7 @@ namespace Lightcore.Kernel.MVC
             var builder = new StringBuilder();
             var context = _htmlHelper.LightcoreContext();
 
-            foreach (var rendering in context.Item.Renderings.Where(r => r.Placeholder.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            foreach (var rendering in context.Item.Visualization.Renderings.Where(r => r.Placeholder.Equals(name, StringComparison.OrdinalIgnoreCase)))
             {
                 var runner = new ControllerRunner(rendering.Controller, rendering.Action, _htmlHelper.ViewContext.HttpContext, _htmlHelper.ViewContext.RouteData);
                 var output = await runner.Execute();

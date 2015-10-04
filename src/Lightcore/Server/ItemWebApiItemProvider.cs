@@ -95,12 +95,18 @@ namespace Lightcore.Server
                 Url = "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home", ""),
                 Path = sitecoreApiItem.Path,
                 Language = new Language(sitecoreApiItem.Language),
-                Layout = "/Views/Layout.cshtml",
-                Renderings = new List<Rendering>
+                Visualization = new ItemVisualization
                 {
-                    new Rendering("content", "Menu"),
-                    new Rendering("content", "Article"),
-                    new Rendering("footer", "Footer")
+                    Layout = new Layout
+                    {
+                        Path = "/Views/Layout.cshtml"
+                    },
+                    Renderings = new List<Rendering>
+                    {
+                        new Rendering("content", "Menu"),
+                        new Rendering("content", "Article"),
+                        new Rendering("footer", "Footer")
+                    }
                 },
                 Fields = Enumerable.Empty<Field>(),
                 Children = Enumerable.Empty<Item>()
