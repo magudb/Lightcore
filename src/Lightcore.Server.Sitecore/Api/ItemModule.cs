@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Lightcore.Server.Models;
@@ -15,12 +14,6 @@ namespace Lightcore.Server.Sitecore.Api
 {
     public class ItemModule : IHttpModule
     {
-        public enum MediaUrlMode
-        {
-            Classic,
-            Lightcore
-        }
-
         private readonly ID _controllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
 
         public void Init(HttpApplication app)
@@ -48,8 +41,7 @@ namespace Lightcore.Server.Sitecore.Api
                 if (item != null)
                 {
                     // TODO: Set from querystring or configuration ...
-                    var mediaUrlMode = MediaUrlMode.Lightcore;
-                    var response = BuildResponseObject(item, device, mediaUrlMode);
+                    var response = BuildResponseObject(item, device);
                     var json = JsonConvert.SerializeObject(response);
 
                     context.Response.ContentType = "application/json";
@@ -69,17 +61,17 @@ namespace Lightcore.Server.Sitecore.Api
         {
         }
 
-        private ServerResponseModel BuildResponseObject(Item item, string deviceName, MediaUrlMode mediaUrlMode)
+        private ServerResponseModel BuildResponseObject(Item item, string deviceName)
         {
             return new ServerResponseModel
             {
                 Item = MapItem(item),
-                Fields = MapFields(item, mediaUrlMode),
+                Fields = MapFields(item),
                 Presentation = MapPresentation(item, deviceName),
                 Children = item.GetChildren().Select(child => new ServerResponseModel
                 {
                     Item = MapItem(child),
-                    Fields = MapFields(child, mediaUrlMode),
+                    Fields = MapFields(child),
                     Presentation = null,
                     Children = Enumerable.Empty<ServerResponseModel>()
                 })
@@ -140,54 +132,39 @@ namespace Lightcore.Server.Sitecore.Api
             return presentation;
         }
 
-        private IEnumerable<FieldModel> MapFields(BaseItem item, MediaUrlMode mediaUrlMode)
+        private IEnumerable<FieldModel> MapFields(BaseItem item)
         {
             foreach (var field in item.Fields.Where(f => !f.Key.StartsWith("__")))
             {
-                yield return MapField(field, mediaUrlMode);
+                yield return MapField(field);
             }
         }
 
-        private FieldModel MapField(Field field, MediaUrlMode mediaUrlMode)
+        private FieldModel MapField(Field field)
         {
-            var value = field.Value;
-            var type = field.TypeKey;
+            string value;
 
             if (field.TypeKey.Equals("image"))
             {
                 var media = (ImageField)field;
 
-                switch (mediaUrlMode)
+                value = MediaManager.GetMediaUrl(media.MediaItem, new MediaUrlOptions
                 {
-                    case MediaUrlMode.Classic:
-
-                        value = MediaManager.GetMediaUrl(media.MediaItem, new MediaUrlOptions
-                        {
-                            AlwaysIncludeServerUrl = true,
-                            IncludeExtension = true,
-                            LowercaseUrls = true,
-                            UseItemPath = true
-                        });
-
-                        break;
-
-                    case MediaUrlMode.Lightcore:
-
-                        value = ("/-/media" + media.MediaItem.Paths.MediaPath + "?sc_database=" + field.Database.Name).ToLowerInvariant();
-
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException("mediaUrlMode", mediaUrlMode, null);
-                }
-
-                type = field.TypeKey + "-" + mediaUrlMode.ToString().ToLowerInvariant();
+                    AlwaysIncludeServerUrl = true,
+                    IncludeExtension = true,
+                    LowercaseUrls = true,
+                    UseItemPath = true
+                });
+            }
+            else
+            {
+                value = field.Value;
             }
 
             return new FieldModel
             {
                 Id = field.ID.Guid,
-                Type = type,
+                Type = field.TypeKey,
                 Key = field.Key,
                 Value = value
             };
