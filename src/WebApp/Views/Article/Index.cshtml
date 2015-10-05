@@ -2,9 +2,17 @@
 @using Lightcore.Kernel.Data
 @using Lightcore.Kernel.MVC
 @model Item
-<p>
-    <img src="@Model["Image"]" alt="Lightcore" />
-</p>
+@{
+
+    var image = Model.Fields["Image"];
+}
+
+@if (image != null)
+{
+    <p>
+        <img src="@image.Value" alt="Lightcore" />
+    </p>
+}
 <article>
     <h2>@Model["Title"]</h2>
     @Html.Raw(Model["Text"])

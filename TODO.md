@@ -7,6 +7,12 @@
 ## Server ##
 
 - Publish event to clear cache on complete or clear single entries?  
+- Create CmEnabled bool setting that enabled/disables access to everything besides API and Media request, eases deployment and configration of Sitecore.
+- Is there a need to have a HttpModule for stripping cookies from Sitecore to minimized response payload?
+
+## Data ##
+
+- Setting for which item id/path is the "home" item.
 
 ## Kernel ##
 
@@ -53,7 +59,9 @@
 - Use Solr directly?		
 
 ## Ideas ##
-	
+
+- "Simple" Sitecore dataprovider configued for publish target database to store items/fields in a document store.
+	- Alternative, if Sitecore events has enough information a "dispatch" server should store items/field by using event data, should be simpler than a DataProvider
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
 - SignalR to know if CM is offline or slow

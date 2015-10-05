@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -55,26 +54,28 @@ namespace Lightcore.Server
 
             var getWatch = Stopwatch.StartNew();
             var url = _config.ServerUrl + "/-/lightcore/item/" + query + "?sc_database=web&sc_lang=" + language.Name + "&sc_device=default";
-            var response = await _client.GetAsync(url);
 
-            if (response.IsSuccessStatusCode)
+            using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {
-                var length = response.Content.Headers.ContentLength;
-                var content = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    var length = response.Content.Headers.ContentLength;
+                    var content = await response.Content.ReadAsStringAsync();
 
-                getWatch.Stop();
+                    getWatch.Stop();
 
-                var parseWatch = Stopwatch.StartNew();
-                var apiResponse = JsonConvert.DeserializeObject<ServerResponseModel>(content);
-                var item = Map(apiResponse.Item, apiResponse.Fields, apiResponse.Presentation, language);
+                    var parseWatch = Stopwatch.StartNew();
+                    var apiResponse = JsonConvert.DeserializeObject<ServerResponseModel>(content);
+                    var item = Map(apiResponse.Item, apiResponse.Fields, apiResponse.Presentation, language);
 
-                item.Children = apiResponse.Children.Select(child => Map(child.Item, child.Fields, child.Presentation, language));
+                    item.Children = apiResponse.Children.Select(child => Map(child.Item, child.Fields, child.Presentation, language));
 
-                parseWatch.Stop();
+                    parseWatch.Stop();
 
-                item.Trace = $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, mapped in {parseWatch.ElapsedMilliseconds} ms";
+                    item.Trace = $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, mapped in {parseWatch.ElapsedMilliseconds} ms";
 
-                return item;
+                    return item;
+                }
             }
 
             return null;
