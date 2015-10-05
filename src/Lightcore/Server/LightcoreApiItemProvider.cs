@@ -60,7 +60,7 @@ namespace Lightcore.Server
 
             using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {
-                // TODO: Rewrite to use ContinueWith...
+                // TODO: Rewrite GetAsync to use ContinueWith...
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,6 +70,8 @@ namespace Lightcore.Server
 
                     using (var stream = await response.Content.ReadAsStreamAsync())
                     {
+                        // TODO: Rewrite ReadAsStreamAsync to use ContinueWith...
+
                         using (var streamReader = new StreamReader(stream))
                         {
                             using (JsonReader jsonReader = new JsonTextReader(streamReader))
