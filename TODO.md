@@ -12,6 +12,7 @@
 
 ## Data ##
 
+- Correct the usage of HttpClient to use ContinueWith.
 - Setting for which item id/path is the "home" item.
 
 ## Kernel ##
@@ -60,7 +61,7 @@
 
 ## Ideas ##
 
-- "Simple" Sitecore dataprovider configued for publish target database to store items/fields in a document store.
+- Look into PipelineBasedItemProvider! (WORKS, but can't seem to find any nosql drivers for coreclr...)
 	- Alternative, if Sitecore events has enough information a "dispatch" server should store items/field by using event data, should be simpler than a DataProvider
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache

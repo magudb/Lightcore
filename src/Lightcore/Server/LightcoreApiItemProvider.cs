@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -19,9 +20,11 @@ namespace Lightcore.Server
         private readonly IMemoryCache _cache;
         private readonly HttpClient _client;
         private readonly LightcoreConfig _config;
+        private readonly JsonSerializer _serializer;
 
         public LightcoreApiItemProvider(IOptions<LightcoreConfig> config, IMemoryCache cache)
         {
+            _serializer = new JsonSerializer();
             _cache = cache;
             _config = config.Options;
             _client = new HttpClient(new HttpClientHandler
@@ -57,31 +60,46 @@ namespace Lightcore.Server
 
             using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {
+                // TODO: Rewrite to use ContinueWith...
+
                 if (response.IsSuccessStatusCode)
                 {
-                    var length = response.Content.Headers.ContentLength;
-                    var content = await response.Content.ReadAsStringAsync();
-
                     getWatch.Stop();
 
-                    var parseWatch = Stopwatch.StartNew();
-                    var apiResponse = JsonConvert.DeserializeObject<ServerResponseModel>(content);
-                    var item = Map(apiResponse.Item, apiResponse.Fields, apiResponse.Presentation, language);
+                    var readWatch = Stopwatch.StartNew();
 
-                    item.Children = apiResponse.Children.Select(child => Map(child.Item, child.Fields, child.Presentation, language));
+                    using (var stream = await response.Content.ReadAsStreamAsync())
+                    {
+                        using (var streamReader = new StreamReader(stream))
+                        {
+                            using (JsonReader jsonReader = new JsonTextReader(streamReader))
+                            {
+                                readWatch.Stop();
 
-                    parseWatch.Stop();
+                                var parseWatch = Stopwatch.StartNew();
 
-                    item.Trace = $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, mapped in {parseWatch.ElapsedMilliseconds} ms";
+                                var length = response.Content.Headers.ContentLength;
+                                var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
+                                var item = MapItem(apiResponse.Item, apiResponse.Fields, apiResponse.Presentation, language);
 
-                    return item;
+                                item.Children = apiResponse.Children.Select(child => MapItem(child.Item, child.Fields, child.Presentation, language));
+
+                                parseWatch.Stop();
+
+                                item.Trace =
+                                    $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, read in {readWatch.ElapsedMilliseconds} ms,  mapped in {parseWatch.ElapsedMilliseconds} ms";
+
+                                return item;
+                            }
+                        }
+                    }
                 }
             }
 
             return null;
         }
 
-        private Item Map(ItemModel apiItem, IEnumerable<FieldModel> apiFields, PresentationModel apiPresentation, Language language)
+        private Item MapItem(ItemModel apiItem, IEnumerable<FieldModel> apiFields, PresentationModel apiPresentation, Language language)
         {
             var item = new Item
             {

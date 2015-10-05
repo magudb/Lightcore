@@ -844,6 +844,11 @@
     <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\Data\Title.item" />
     <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\__Standard Values.item" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\Zoro\Experiments.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
