@@ -2,7 +2,9 @@
 
 ## Solution / Projects ##
 
-- 
+- Add Use Azure Resource Manager Project.
+	- Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
+		- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
 
 ## Server ##
 
@@ -14,6 +16,7 @@
 
 - Correct the usage of HttpClient to use ContinueWith.
 - Setting for which item id/path is the "home" item.
+- Look into if its worth it to manually do deserialization http://www.newtonsoft.com/json/help/html/performance.htm
 
 ## Kernel ##
 
@@ -33,6 +36,7 @@
 - UrlHelper ("LinkManager" / UrlService)
 - FieldHelper (also for media fields, link fields)
 - Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
+- Make "PresentationContextInfo", does ValueProviders exists in MVC 6? What are the alternative?
 
 ## Media ##
 
@@ -61,8 +65,8 @@
 
 ## Ideas ##
 
-- Look into PipelineBasedItemProvider! (WORKS, but can't seem to find any nosql drivers for coreclr...)
-	- Alternative, if Sitecore events has enough information a "dispatch" server should store items/field by using event data, should be simpler than a DataProvider
+- Look into PipelineBasedItemProvider! 
+	- WORKS!!!, but there dosn't exist any "nosql" drivers for coreclr like mongo, redis etc. ... yet...
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
 - SignalR to know if CM is offline or slow
