@@ -2,6 +2,7 @@
 
 ## Solution / Projects ##
 
+- Rename hostname to somthing without ad.codehouse.com, remeber settings files.
 - Add Use Azure Resource Manager Project.
 	- Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
 		- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
@@ -11,6 +12,7 @@
 - Publish event to clear cache on complete or clear single entries?  
 - Create CmEnabled bool setting that enabled/disables access to everything besides API and Media request, eases deployment and configration of Sitecore.
 - Is there a need to have a HttpModule for stripping cookies from Sitecore to minimized response payload?
+- Use FakeDb to test item seriaization to json.
 
 ## Data ##
 
@@ -49,7 +51,7 @@
 	- Cons: Cant combine payload=content + __renderings fields, some meta fields not needed.
 	- Pros: OOTB since Sitecore 7.2, 8.0
 - Use Sitecore.Services.Client?
-	- http://sc80-150812.ad.codehouse.com/sitecore/api/ssc/item/110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9?includeMetadata=true
+	- /sitecore/api/ssc/item/110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9?includeMetadata=true
 	- https://sdn.sitecore.net/upload/sitecore7/75/developer's_guide_to_sitecore.services.client_sc75-a4.pdf
 	- http://docs.itemserviceapi.apiary.io/
 	- Cons: 
@@ -65,7 +67,7 @@
 ## Ideas ##
 
 - Look into PipelineBasedItemProvider! 
-	- WORKS!!!, but there dosn't exist any "nosql" drivers for coreclr like mongo, redis etc. ... yet...
+	- Works, but there dosn't exist any "nosql" drivers for coreclr like mongo, redis, elastic etc. ... yet...
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
 - SignalR to know if CM is offline or slow

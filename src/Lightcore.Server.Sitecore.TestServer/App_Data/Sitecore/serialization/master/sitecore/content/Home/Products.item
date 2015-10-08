@@ -25,7 +25,7 @@ Produkter
 field: {61FB502F-AFA7-4C9D-8327-5D070BEB27EB}
 name: Text
 key: text
-content-length: 27
+content-length: 29
 
 <p>Massere af produkter</p>
 ----field----
@@ -140,7 +140,7 @@ Products
 field: {61FB502F-AFA7-4C9D-8327-5D070BEB27EB}
 name: Text
 key: text
-content-length: 12
+content-length: 14
 
 <p><br>
 </p>

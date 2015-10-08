@@ -158,7 +158,7 @@ Hjem
 field: {61FB502F-AFA7-4C9D-8327-5D070BEB27EB}
 name: Text
 key: text
-content-length: 26
+content-length: 28
 
 Velkommen til Sitecore<br>
 ----field----
@@ -219,7 +219,7 @@ Home
 field: {61FB502F-AFA7-4C9D-8327-5D070BEB27EB}
 name: Text
 key: text
-content-length: 789
+content-length: 792
 
 <p style="line-height: 22px;">From a single connected platform that also integrates with other customer-facing platforms, to a single view of the customer in a big data marketing repository, to a completely eliminating much of the complexity that has previously held marketers back, the latest version of Sitecore makes customer experience highly achievable. Learn how the latest version of Sitecore gives marketers the complete data, integrated tools, and automation capabilities to engage customers throughout an iterative lifecycle &ndash; the technology foundation absolutely necessary to win customers for life.</p>
 <p>For further information, please go to the <a href="https://doc.sitecore.net/" target="_blank" title="Sitecore Documentation site">Sitecore Documentation site</a></p>
@@ -316,7 +316,7 @@ Home
 field: {61FB502F-AFA7-4C9D-8327-5D070BEB27EB}
 name: Text
 key: text
-content-length: 38
+content-length: 40
 
 <p>woot <strong>woot </strong>woot</p>
 ----field----
