@@ -60,8 +60,6 @@ namespace Lightcore.Server
 
             using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {
-                // TODO: Rewrite GetAsync to use ContinueWith...
-
                 if (response.IsSuccessStatusCode)
                 {
                     getWatch.Stop();
@@ -70,8 +68,6 @@ namespace Lightcore.Server
 
                     using (var stream = await response.Content.ReadAsStreamAsync())
                     {
-                        // TODO: Rewrite ReadAsStreamAsync to use ContinueWith...
-
                         using (var streamReader = new StreamReader(stream))
                         {
                             using (JsonReader jsonReader = new JsonTextReader(streamReader))
@@ -88,8 +84,9 @@ namespace Lightcore.Server
 
                                 parseWatch.Stop();
 
-                                item.Trace =
-                                    $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, read in {readWatch.ElapsedMilliseconds} ms,  mapped in {parseWatch.ElapsedMilliseconds} ms";
+                                item.Trace = $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, " + 
+                                    $"read in {readWatch.ElapsedMilliseconds} ms,  " + 
+                                    $"mapped in {parseWatch.ElapsedMilliseconds} ms";
 
                                 return item;
                             }
