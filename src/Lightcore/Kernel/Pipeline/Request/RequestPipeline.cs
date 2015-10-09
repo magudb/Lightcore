@@ -8,8 +8,8 @@ namespace Lightcore.Kernel.Pipeline.Request
 {
     public class RequestPipeline : Pipeline
     {
-        private readonly IItemProvider _itemProvider;
         private readonly IOptions<LightcoreConfig> _config;
+        private readonly IItemProvider _itemProvider;
 
         public RequestPipeline(IItemProvider itemProvider, IOptions<LightcoreConfig> config)
         {

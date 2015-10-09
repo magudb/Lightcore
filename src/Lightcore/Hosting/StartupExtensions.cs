@@ -1,6 +1,8 @@
-﻿using Lightcore.Kernel.Configuration;
+﻿using System;
+using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipeline.Request;
+using Lightcore.Kernel.Pipeline.Startup;
 using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
@@ -38,18 +40,35 @@ namespace Lightcore.Hosting
 
             // Add Lightcore services
             services.AddSingleton<IItemProvider, LightcoreApiItemProvider>();
-            services.AddTransient<RequestPipeline>();
+            services.AddSingleton<StartupPipeline>();
+            services.AddSingleton<RequestPipeline>();
         }
 
         public static IApplicationBuilder UseLightcore(this IApplicationBuilder app)
         {
-            // TODO: Throw if services not added (See Mvc, they use a marker service as the last registered and check that)...
+            var startupPipeline = app.ApplicationServices.GetRequiredService<StartupPipeline>();
 
-            var requestPipeline = app.ApplicationServices.GetService<RequestPipeline>();
+            // Add startup pipeline
+            app.Use((httpContext, next) =>
+            {
+                // TODO: Handle pipeline exceptions
+                startupPipeline.Run(startupPipeline.GetArgs(httpContext));
 
-            // Use Lightcore item pipelines
+                if (startupPipeline.IsAborted)
+                {
+                    // TODO: Throw startup aborted exception
+                    throw new Exception("Startup aborted by processor...");
+                }
+
+                return next();
+            });
+
+            var requestPipeline = app.ApplicationServices.GetRequiredService<RequestPipeline>();
+
+            // Add request pipeline
             app.Use(async (httpContext, next) =>
             {
+                // TODO: Handle pipeline exceptions
                 await requestPipeline.RunAsync(requestPipeline.GetArgs(httpContext));
 
                 if (!requestPipeline.IsAborted)

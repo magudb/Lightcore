@@ -15,7 +15,20 @@ namespace Lightcore.Kernel.Pipeline
             return this;
         }
 
-        public async Task RunAsync(PipelineArgs args)
+        public virtual void Run(PipelineArgs args)
+        {
+            foreach (var processor in _processors)
+            {
+                if (!args.IsAborted)
+                {
+                    processor.Process(args);
+                }
+            }
+
+            IsAborted = args.IsAborted;
+        }
+
+        public virtual async Task RunAsync(PipelineArgs args)
         {
             foreach (var processor in _processors)
             {

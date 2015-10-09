@@ -20,8 +20,9 @@
 
 ## Kernel ##
 
+- Get languages processor
 - Rendering pipeline
-- Init pipeline (fx get system/languages)
+- Pipeline/Processor trace decorators to measure execution time
 - "LinkManager" / UrlService
 - Link field types (with title and target)
 - Media field types (with alt text)
