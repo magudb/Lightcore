@@ -16,7 +16,6 @@
 
 ## Data ##
 
-- Setting for which item id/path is the "home" item.
 - Look into if its worth it to manually do deserialization http://www.newtonsoft.com/json/help/html/performance.htm
 
 ## Kernel ##

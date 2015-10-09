@@ -9,7 +9,7 @@ namespace Lightcore.Kernel.Pipeline.Request.Processor
         {
             var requestArgs = (RequestArgs)args;
             var context = args.Context.LightcoreContext();
-            var item = await requestArgs.ItemProvider.GetItemAsync("/sitecore/content/Home" + args.Context.Request.Path.Value, context.Language);
+            var item = await requestArgs.ItemProvider.GetItemAsync(context.ContentPath, context.Language);
 
             if (item != null)
             {
