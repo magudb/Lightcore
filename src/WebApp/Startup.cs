@@ -12,15 +12,11 @@ namespace WebApp
     {
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
-            var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath);
-
-            // Configure Lightcore
-            builder.ConfigureLightcore(env);
-
-            Configuration = builder.Build();
+            // Build Lightcore configuration
+            Configuration = appEnv.BuildLightcoreConfiguration(env);
         }
 
-        public IConfigurationRoot Configuration { get; set; }
+        public IConfiguration Configuration { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {

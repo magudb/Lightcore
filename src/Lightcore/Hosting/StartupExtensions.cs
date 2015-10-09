@@ -1,10 +1,10 @@
-﻿using System.Net.Http;
-using Lightcore.Kernel.Configuration;
+﻿using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipeline.Request;
 using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 
@@ -12,8 +12,10 @@ namespace Lightcore.Hosting
 {
     public static class StartupExtensions
     {
-        public static IConfigurationBuilder ConfigureLightcore(this IConfigurationBuilder builder, IHostingEnvironment env)
+        public static IConfiguration BuildLightcoreConfiguration(this IApplicationEnvironment appEnv, IHostingEnvironment env)
         {
+            var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath);
+
             // Add main config file
             builder.AddJsonFile("lightcore.json");
 
@@ -23,7 +25,7 @@ namespace Lightcore.Hosting
             // Add environment variables, will be merged and duplicates takes precedence - Set LightcoreConfig:ServerUrl in Azure for example...
             builder.AddEnvironmentVariables();
 
-            return builder;
+            return builder.Build();
         }
 
         public static void AddLightcore(this IServiceCollection services, IConfiguration config)
