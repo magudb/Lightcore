@@ -829,9 +829,9 @@
     <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\__Standard Values.item" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\Zoro\Experiments.config">
+    <None Include="App_Config\Include\Zoro\Experiments.config.disabled">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lightcore.Server.Sitecore\Lightcore.Server.Sitecore.csproj">
