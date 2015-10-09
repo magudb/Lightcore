@@ -29,23 +29,8 @@ namespace Lightcore.Server
 
         public async Task<Item> GetItemAsync(string pathOrId, Language language)
         {
-            string query;
-
-            if (pathOrId.Equals("/") || string.IsNullOrEmpty(pathOrId))
-            {
-                query = "/sitecore/content/Home" + "?sc_database=web";
-            }
-            else if (pathOrId.Contains("/"))
-            {
-                query = pathOrId + "?sc_database=web";
-            }
-            else
-            {
-                query = "/?sc_itemid=" + pathOrId + "&sc_database=web";
-            }
-
             var getWatch = Stopwatch.StartNew();
-            var url = _config.ServerUrl + "/-/item/v1" + query + "&language=" + language.Name + "&payload=full&fields=Title|Text|__Renderings&scope=s|c";
+            var url = string.Format("{0}/-/item/v1{1}?sc_database=web&language={2}&payload=full&fields=Title|Text|__Renderings&scope=s|c", _config.ServerUrl, pathOrId, language.Name);
             var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -92,7 +77,8 @@ namespace Lightcore.Server
                 Id = sitecoreApiItem.Id,
                 Key = sitecoreApiItem.Name.ToLowerInvariant(),
                 Name = sitecoreApiItem.Name,
-                Url = "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home", ""),
+                Url =
+                    "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home", ""),
                 Path = sitecoreApiItem.Path,
                 Language = new Language(sitecoreApiItem.Language),
                 Visualization = new ItemVisualization

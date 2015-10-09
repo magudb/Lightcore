@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
-using Sitecore.Pipelines.ItemProvider.CreateItem;
+using System.IO;
+using Lightcore.Server.Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Pipelines.ItemProvider.DeleteItem;
 using Sitecore.Pipelines.ItemProvider.SaveItem;
 
@@ -9,15 +11,9 @@ namespace Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider
     {
         public override void Process(SaveItemArgs args)
         {
-            Debug.WriteLine("SaveItemProcessor: " + args.Item.Paths.FullPath + ", " + args.Item.Database.Name);
-        }
-    }
+            new ItemDiskStore().Save(args.Item);
 
-    public class CreateItemProcessor : global::Sitecore.Pipelines.ItemProvider.CreateItem.CreateItemProcessor
-    {
-        public override void Process(CreateItemArgs args)
-        {
-            Debug.WriteLine("CreateItemProcessor: " + args.ItemName + ", " + args.Destination.Database.Name);
+            Debug.WriteLine("SaveItemProcessor: " + args.Item.Paths.FullPath + ", " + args.Item.Database.Name);
         }
     }
 
@@ -25,7 +21,73 @@ namespace Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider
     {
         public override void Process(DeleteItemArgs args)
         {
+            new ItemDiskStore().Delete(args.Item);
+
             Debug.WriteLine("DeleteItemProcessor: " + args.Item.Paths.FullPath + ", " + args.Item.Database.Name);
+        }
+    }
+
+    internal class ItemDiskStore
+    {
+        private readonly ItemToJsonConverter _itemConverter;
+
+        public ItemDiskStore()
+        {
+            _itemConverter = new ItemToJsonConverter();
+        }
+
+        private string GetIdFilePath(Item item, string device)
+        {
+            var idPath = item.ID.Guid.ToString().Replace('-', '\\');
+
+            return string.Format("e:\\temp\\Lightcore\\{0}\\{1}\\{2}\\{3}", item.Database.Name, item.Language.Name, device, idPath);
+        }
+
+        private string GetFilePath(Item item, string device)
+        {
+            var path = item.Paths.FullPath;
+
+            return string.Format("e:\\temp\\Lightcore\\{0}\\{1}\\{2}\\{3}", item.Database.Name, item.Language.Name, device, path);
+        }
+
+        public void Save(Item item)
+        {
+            if (!item.Database.Name.Equals("web") || !item.Paths.IsContentItem)
+            {
+                return;
+            }
+
+            var device = "default";
+            var path = GetIdFilePath(item, device);
+
+            Directory.CreateDirectory(path);
+
+            using (var outputStream = File.Open(path + "\\item.json", FileMode.Create, FileAccess.Write))
+            {
+                _itemConverter.Write(item, outputStream, "default");
+            }
+
+            path = GetFilePath(item, device);
+
+            Directory.CreateDirectory(path);
+
+            using (var outputStream = File.Open(path + "\\item.json", FileMode.Create, FileAccess.Write))
+            {
+                _itemConverter.Write(item, outputStream, "default");
+            }
+        }
+
+        public void Delete(Item item)
+        {
+            if (!item.Database.Name.Equals("web") || !item.Paths.IsContentItem)
+            {
+                return;
+            }
+
+            var device = "default";
+            var path = GetIdFilePath(item, device);
+
+            File.Delete(path + "\\item.json");
         }
     }
 }

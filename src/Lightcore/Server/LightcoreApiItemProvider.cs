@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -40,23 +38,8 @@ namespace Lightcore.Server
 
         public async Task<Item> GetItemAsync(string pathOrId, Language language)
         {
-            string query;
-
-            if (pathOrId.Equals("/") || string.IsNullOrEmpty(pathOrId))
-            {
-                query = "/sitecore/content/Home";
-            }
-            else if (pathOrId.Contains("/"))
-            {
-                query = "/sitecore/content/Home" + pathOrId.ToLowerInvariant().Replace("/sitecore/content/home", "/");
-            }
-            else
-            {
-                query = pathOrId;
-            }
-
             var getWatch = Stopwatch.StartNew();
-            var url = _config.ServerUrl + "/-/lightcore/item/" + query + "?sc_database=web&sc_lang=" + language.Name + "&sc_device=default";
+            var url = _config.ServerUrl + "/-/lightcore/item/" + pathOrId + "?sc_database=web&sc_lang=" + language.Name + "&sc_device=default";
 
             using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {
@@ -75,18 +58,15 @@ namespace Lightcore.Server
                                 readWatch.Stop();
 
                                 var parseWatch = Stopwatch.StartNew();
-
                                 var length = response.Content.Headers.ContentLength;
                                 var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
-                                var item = MapItem(apiResponse.Item, apiResponse.Fields, apiResponse.Presentation, language);
-
-                                item.Children = apiResponse.Children.Select(child => MapItem(child.Item, child.Fields, child.Presentation, language));
+                                var item = ServerResponseModelToItemMapper.Map(apiResponse, language);
 
                                 parseWatch.Stop();
 
-                                item.Trace = $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, " + 
-                                    $"read in {readWatch.ElapsedMilliseconds} ms,  " + 
-                                    $"mapped in {parseWatch.ElapsedMilliseconds} ms";
+                                item.Trace = $"Loaded {length} bytes in {getWatch.ElapsedMilliseconds} ms, " +
+                                             $"read in {readWatch.ElapsedMilliseconds} ms,  " +
+                                             $"mapped in {parseWatch.ElapsedMilliseconds} ms";
 
                                 return item;
                             }
@@ -96,40 +76,6 @@ namespace Lightcore.Server
             }
 
             return null;
-        }
-
-        private Item MapItem(ItemModel apiItem, IEnumerable<FieldModel> apiFields, PresentationModel apiPresentation, Language language)
-        {
-            var item = new Item
-            {
-                Language = language,
-                Id = apiItem.Id,
-                Key = apiItem.Name.ToLowerInvariant(),
-                Name = apiItem.Name,
-                Path = apiItem.FullPath,
-                Url = "/" + language.Name.ToLowerInvariant() + apiItem.FullPath.ToLowerInvariant().Replace("/sitecore/content/home", ""),
-                Fields = new FieldCollection(apiFields.Select(f => new Field
-                {
-                    Key = f.Key,
-                    Type = f.Type,
-                    Value = f.Value,
-                    Id = f.Id
-                }))
-            };
-
-            if (apiPresentation != null)
-            {
-                item.Visualization = new ItemVisualization
-                {
-                    Layout = new Layout
-                    {
-                        Path = apiPresentation.Layout.Path
-                    },
-                    Renderings = apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.Controller, r.Action))
-                };
-            }
-
-            return item;
         }
     }
 }
