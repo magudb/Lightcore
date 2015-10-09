@@ -1,0 +1,18 @@
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+
+    <pipelines>
+      <group name="itemProvider" groupName="itemProvider">
+        <pipelines>
+          <deleteItem>
+            <processor type="Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider.DeleteItemProcessor, Lightcore.Server.Sitecore" />
+          </deleteItem>
+          <saveItem>
+            <processor type="Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider.SaveItemProcessor, Lightcore.Server.Sitecore" />
+          </saveItem>
+        </pipelines>
+      </group>
+    </pipelines>
+
+  </sitecore>
+</configuration>

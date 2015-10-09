@@ -20,6 +20,6 @@ Global.asax
 Web.Release.config
 
 # Ignores
-!App_Config/Include/Zoro/Common.config
+!App_Config/Include/Zoro/
 !App_Config/ConnectionStrings.config
 !App_Data/Sitecore/serialization/
