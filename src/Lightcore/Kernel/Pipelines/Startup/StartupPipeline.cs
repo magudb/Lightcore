@@ -2,20 +2,19 @@ using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.Startup.Processors;
 using Microsoft.AspNet.Http;
-using Microsoft.Framework.Caching.Memory;
 using Microsoft.Framework.OptionsModel;
 
 namespace Lightcore.Kernel.Pipelines.Startup
 {
     public class StartupPipeline : Pipeline
     {
-        private readonly LightcoreOptions _options;
         private readonly IItemProvider _itemProvider;
+        private readonly LightcoreOptions _options;
 
         private readonly object _startupLock = new object();
         private bool _isStarted;
 
-        public StartupPipeline(IItemProvider itemProvider, IOptions<LightcoreOptions> options, MemoryCacheOptions x)
+        public StartupPipeline(IItemProvider itemProvider, IOptions<LightcoreOptions> options)
         {
             _itemProvider = itemProvider;
             _options = options.Options;
