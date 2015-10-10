@@ -23,7 +23,7 @@ namespace Lightcore.Kernel.Pipeline.Request
             Add(new ResolveItemProcessor());
         }
 
-        public PipelineArgs GetArgs(HttpContext context)
+        public override PipelineArgs GetArgs(HttpContext context)
         {
             return new RequestArgs(context, _itemProvider, _config.Options);
         }

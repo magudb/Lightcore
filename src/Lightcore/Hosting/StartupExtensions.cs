@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using Lightcore.Hosting.Middleware;
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipeline.Request;
@@ -6,7 +6,6 @@ using Lightcore.Kernel.Pipeline.Startup;
 using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
@@ -47,38 +46,14 @@ namespace Lightcore.Hosting
 
         public static IApplicationBuilder UseLightcore(this IApplicationBuilder app)
         {
-            var startupPipeline = app.ApplicationServices.GetRequiredService<StartupPipeline>();
-            
-            // Add startup pipeline
-            app.Use(async (httpContext, next) =>
-            {
-                // TODO: Handle pipeline exceptions
-                startupPipeline.Run(startupPipeline.GetArgs(httpContext));
-
-                if (!startupPipeline.IsAborted)
-                {
-                    await next();
-                }
-            });
-
-            var requestPipeline = app.ApplicationServices.GetRequiredService<RequestPipeline>();
-
-            // Add request pipeline
-            app.Use(async (httpContext, next) =>
-            {
-                // TODO: Handle pipeline exceptions
-                await requestPipeline.RunAsync(requestPipeline.GetArgs(httpContext));
-
-                if (!requestPipeline.IsAborted)
-                {
-                    await next();
-                }
-            });
+            // Add pipelines that runs on each request
+            app.UseMiddleware<StartupPipelineMiddleware>();
+            app.UseMiddleware<RequestPipelineMiddleware>();
 
             // Enabled MVC
             app.UseMvc(routes =>
             {
-                // Replace default route with Lightcore controller
+                // Configure default route to always use the Lightcore controller and call the Render action
                 routes.MapRoute("default", "{*path}", new
                 {
                     controller = "Lightcore",

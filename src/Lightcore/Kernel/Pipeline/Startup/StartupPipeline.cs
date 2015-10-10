@@ -38,7 +38,7 @@ namespace Lightcore.Kernel.Pipeline.Startup
             }
         }
 
-        public PipelineArgs GetArgs(HttpContext context)
+        public override PipelineArgs GetArgs(HttpContext context)
         {
             return new StartupArgs(context, _itemProvider, _config.Options);
         }

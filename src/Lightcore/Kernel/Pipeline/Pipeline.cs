@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Http;
 
 namespace Lightcore.Kernel.Pipeline
 {
-    public class Pipeline
+    public abstract class Pipeline
     {
         private readonly List<Processor> _processors = new List<Processor>();
         public bool IsAborted { get; private set; }
@@ -40,5 +41,7 @@ namespace Lightcore.Kernel.Pipeline
 
             IsAborted = args.IsAborted;
         }
+
+        public abstract PipelineArgs GetArgs(HttpContext context);
     }
 }

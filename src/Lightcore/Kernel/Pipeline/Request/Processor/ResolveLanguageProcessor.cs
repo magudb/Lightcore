@@ -16,6 +16,8 @@ namespace Lightcore.Kernel.Pipeline.Request.Processor
             // Get current language from path
             if (!string.IsNullOrWhiteSpace(languageSegment) && languageSegment.Contains("-"))
             {
+                // TODO: Make a better check to see if it is a valid "culture" segment
+
                 context.Language = new Language(languageSegment);
 
                 requestArgs.HttpContext.Request.Path = new PathString(requestArgs.HttpContext.Request.Path.Value.Replace("/" + languageSegment, ""));
