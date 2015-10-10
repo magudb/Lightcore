@@ -17,10 +17,10 @@ namespace Lightcore.Server
     {
         private readonly IMemoryCache _cache;
         private readonly HttpClient _client;
-        private readonly LightcoreConfig _config;
+        private readonly LightcoreOptions _config;
         private readonly JsonSerializer _serializer;
 
-        public LightcoreApiItemProvider(IOptions<LightcoreConfig> config, IMemoryCache cache)
+        public LightcoreApiItemProvider(IOptions<LightcoreOptions> config, IMemoryCache cache)
         {
             _serializer = new JsonSerializer();
             _cache = cache;

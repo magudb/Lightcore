@@ -37,7 +37,7 @@ namespace Lightcore.Hosting
             services.AddMvc();
 
             // Add Lightcore configuration so it can be used as a dependency IOptions<LightcoreConfig> config
-            services.Configure<LightcoreConfig>(config.GetSection("LightcoreConfig"));
+            services.Configure<LightcoreOptions>(config.GetSection("LightcoreOptions"));
 
             // Add Lightcore services
             services.AddSingleton<IItemProvider, LightcoreApiItemProvider>();

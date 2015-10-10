@@ -1,6 +1,6 @@
 ﻿namespace Lightcore.Kernel.Configuration
 {
-    public class SitecoreSettings
+    public class SitecoreOptions
     {
         public string StartItem { get; set; }
         public string Database { get; set; }

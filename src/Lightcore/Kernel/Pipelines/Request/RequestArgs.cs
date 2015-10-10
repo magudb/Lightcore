@@ -6,16 +6,16 @@ namespace Lightcore.Kernel.Pipelines.Request
 {
     public class RequestArgs : PipelineArgs
     {
-        public RequestArgs(HttpContext httpContext, IItemProvider itemProvider, LightcoreConfig config)
+        public RequestArgs(HttpContext httpContext, IItemProvider itemProvider, LightcoreOptions options)
         {
             HttpContext = httpContext;
-            Config = config;
+            Options = options;
             ItemProvider = itemProvider;
         }
 
         public HttpContext HttpContext { get; set; }
 
-        public LightcoreConfig Config { get; }
+        public LightcoreOptions Options { get; }
 
         public IItemProvider ItemProvider { get; }
     }

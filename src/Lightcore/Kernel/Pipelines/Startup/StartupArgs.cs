@@ -6,16 +6,16 @@ namespace Lightcore.Kernel.Pipelines.Startup
 {
     public class StartupArgs : PipelineArgs
     {
-        public StartupArgs(HttpContext httpContext, IItemProvider itemProvider, LightcoreConfig config)
+        public StartupArgs(HttpContext httpContext, IItemProvider itemProvider, LightcoreOptions options)
         {
             HttpContext = httpContext;
-            Config = config;
+            Options = options;
             ItemProvider = itemProvider;
         }
 
         public HttpContext HttpContext { get; }
 
-        public LightcoreConfig Config { get; }
+        public LightcoreOptions Options { get; }
 
         public IItemProvider ItemProvider { get; }
     }

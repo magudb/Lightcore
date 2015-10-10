@@ -14,11 +14,11 @@ namespace Lightcore.Server
     public class ItemWebApiItemProvider : IItemProvider, IDisposable
     {
         private readonly HttpClient _client;
-        private readonly LightcoreConfig _config;
+        private readonly LightcoreOptions _options;
 
-        public ItemWebApiItemProvider(IOptions<LightcoreConfig> config)
+        public ItemWebApiItemProvider(LightcoreOptions options)
         {
-            _config = config.Options;
+            _options = options;
             _client = new HttpClient();
         }
 
@@ -30,7 +30,7 @@ namespace Lightcore.Server
         public async Task<Item> GetItemAsync(string pathOrId, Language language)
         {
             var getWatch = Stopwatch.StartNew();
-            var url = string.Format("{0}/-/item/v1{1}?sc_database=web&language={2}&payload=full&fields=Title|Text|__Renderings&scope=s|c", _config.ServerUrl, pathOrId, language.Name);
+            var url = string.Format("{0}/-/item/v1{1}?sc_database=web&language={2}&payload=full&fields=Title|Text|__Renderings&scope=s|c", _options.ServerUrl, pathOrId, language.Name);
             var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)

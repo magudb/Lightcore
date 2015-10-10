@@ -9,7 +9,7 @@ namespace Lightcore.Kernel.Pipelines.Request.Processors
             var requestArgs = (RequestArgs)args;
             var context = requestArgs.HttpContext.LightcoreContext();
             var contentPath =
-                string.Format("{0}/{1}", requestArgs.Config.Sitecore.StartItem.TrimEnd('/'),
+                string.Format("{0}/{1}", requestArgs.Options.Sitecore.StartItem.TrimEnd('/'),
                     requestArgs.HttpContext.Request.Path.Value.TrimStart('/'))
                       .TrimEnd('/')
                       .ToLowerInvariant();

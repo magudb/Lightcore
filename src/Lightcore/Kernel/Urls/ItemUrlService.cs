@@ -7,11 +7,11 @@ namespace Lightcore.Kernel.Urls
 {
     public class ItemUrlService : IItemUrlService
     {
-        private readonly LightcoreConfig _config;
+        private readonly LightcoreOptions _options;
 
-        public ItemUrlService(IOptions<LightcoreConfig> config)
+        public ItemUrlService(IOptions<LightcoreOptions> options)
         {
-            _config = config.Options;
+            _options = options.Options;
         }
 
         public string GetUrl(Item item)
@@ -20,7 +20,7 @@ namespace Lightcore.Kernel.Urls
 
             builder.Append("/");
             builder.Append(item.Language.Name);
-            builder.Append(item.Path.ToLowerInvariant().Replace(_config.Sitecore.StartItem.ToLowerInvariant(), ""));
+            builder.Append(item.Path.ToLowerInvariant().Replace(_options.Sitecore.StartItem.ToLowerInvariant(), ""));
 
             return builder.ToString();
         }

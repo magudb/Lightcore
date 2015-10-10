@@ -1,9 +1,12 @@
 namespace Lightcore.Kernel.Pipelines.Startup.Processors
 {
-    public class SampleStartupProcessor : Processor
+    public class VerifyConfigProcessor : Processor
     {
         public override void Process(PipelineArgs args)
         {
+            var startupArgs = (StartupArgs)args;
+
+            startupArgs.Options.Verify();
         }
     }
 }

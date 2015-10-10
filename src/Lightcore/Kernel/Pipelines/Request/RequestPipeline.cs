@@ -8,13 +8,13 @@ namespace Lightcore.Kernel.Pipelines.Request
 {
     public class RequestPipeline : Pipeline
     {
-        private readonly IOptions<LightcoreConfig> _config;
+        private readonly LightcoreOptions _options;
         private readonly IItemProvider _itemProvider;
 
-        public RequestPipeline(IItemProvider itemProvider, IOptions<LightcoreConfig> config)
+        public RequestPipeline(IItemProvider itemProvider, IOptions<LightcoreOptions> options)
         {
             _itemProvider = itemProvider;
-            _config = config;
+            _options = options.Options;
 
             Add(new FilterRequestProcessor());
             Add(new CreateContextProcessor());
@@ -26,7 +26,7 @@ namespace Lightcore.Kernel.Pipelines.Request
 
         public override PipelineArgs GetArgs(HttpContext context)
         {
-            return new RequestArgs(context, _itemProvider, _config.Options);
+            return new RequestArgs(context, _itemProvider, _options);
         }
     }
 }

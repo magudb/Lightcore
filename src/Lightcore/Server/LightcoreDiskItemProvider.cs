@@ -13,10 +13,10 @@ namespace Lightcore.Server
     public class LightcoreDiskItemProvider : IItemProvider, IDisposable
     {
         private readonly IMemoryCache _cache;
-        private readonly LightcoreConfig _config;
+        private readonly LightcoreOptions _config;
         private readonly JsonSerializer _serializer;
 
-        public LightcoreDiskItemProvider(IOptions<LightcoreConfig> config, IMemoryCache cache)
+        public LightcoreDiskItemProvider(IOptions<LightcoreOptions> config, IMemoryCache cache)
         {
             _serializer = new JsonSerializer();
             _cache = cache;
