@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Http;
@@ -9,29 +7,18 @@ namespace Lightcore.Kernel.Pipeline.Request.Processor
 {
     public class ResolveLanguageProcessor : Kernel.Pipeline.Processor
     {
-        private readonly IEnumerable<Language> _suportedLanguages;
-
-        public ResolveLanguageProcessor()
-        {
-            _suportedLanguages = new List<Language>
-            {
-                new Language("en"),
-                new Language("en-US"),
-                new Language("da-DK")
-            };
-        }
-
         public override void Process(PipelineArgs args)
         {
-            var context = args.Context.LightcoreContext();
-            var languageSegment = args.Context.Request.Path.Value.ToLowerInvariant().Split('/').Skip(1).FirstOrDefault();
+            var requestArgs = (RequestArgs)args;
+            var context = requestArgs.HttpContext.LightcoreContext();
+            var languageSegment = requestArgs.HttpContext.Request.Path.Value.ToLowerInvariant().Split('/').Skip(1).FirstOrDefault();
 
             // Get current language from path
-            if (!string.IsNullOrWhiteSpace(languageSegment) && _suportedLanguages.Any(l => l.Name.Equals(languageSegment, StringComparison.OrdinalIgnoreCase)))
+            if (!string.IsNullOrWhiteSpace(languageSegment) && languageSegment.Contains("-"))
             {
                 context.Language = new Language(languageSegment);
 
-                args.Context.Request.Path = new PathString(args.Context.Request.Path.Value.Replace("/" + languageSegment, ""));
+                requestArgs.HttpContext.Request.Path = new PathString(requestArgs.HttpContext.Request.Path.Value.Replace("/" + languageSegment, ""));
             }
             else
             {

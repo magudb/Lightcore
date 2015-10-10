@@ -6,6 +6,6 @@ namespace Lightcore.Kernel
     {
         public Language Language { get; set; }
         public Item Item { get; set; }
-        public string ContentPath { get; set; }
+        public string RequestedContentPath { get; set; }
     }
 }

@@ -4,7 +4,9 @@ namespace Lightcore.Kernel.Pipeline.Request.Processor
     {
         public override void Process(PipelineArgs args)
         {
-            args.Context.Items["LCC"] = new Context();
+            var requestArgs = (RequestArgs)args;
+
+            requestArgs.HttpContext.Items["LCC"] = new Context();
         }
     }
 }

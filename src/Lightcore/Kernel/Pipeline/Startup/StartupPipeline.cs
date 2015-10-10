@@ -19,7 +19,7 @@ namespace Lightcore.Kernel.Pipeline.Startup
             _itemProvider = itemProvider;
             _config = config;
 
-            Add(new SetupSupportedLanguagesProcessor());
+            Add(new SampleStartupProcessor());
         }
 
         public override void Run(PipelineArgs args)

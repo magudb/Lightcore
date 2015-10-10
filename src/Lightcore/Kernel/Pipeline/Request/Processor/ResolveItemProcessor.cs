@@ -8,17 +8,17 @@ namespace Lightcore.Kernel.Pipeline.Request.Processor
         public override async Task ProcessAsync(PipelineArgs args)
         {
             var requestArgs = (RequestArgs)args;
-            var context = args.Context.LightcoreContext();
-            var item = await requestArgs.ItemProvider.GetItemAsync(context.ContentPath, context.Language);
+            var context = requestArgs.HttpContext.LightcoreContext();
+            var item = await requestArgs.ItemProvider.GetItemAsync(context.RequestedContentPath, context.Language);
 
-            if (item != null)
+            if (item != null && item.HasVersion)
             {
                 context.Item = item;
             }
             else
             {
-                args.Context.Response.StatusCode = 404;
-                args.Abort();
+                requestArgs.HttpContext.Response.StatusCode = 404;
+                requestArgs.Abort();
             }
         }
     }

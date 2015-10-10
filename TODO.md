@@ -20,12 +20,13 @@
 
 ## Kernel ##
 
-- Get languages processor
+- Look into the standard RequestLocalizationMiddleware to support /language-country/ requests.
 - Rendering pipeline
 - Pipeline/Processor trace decorators to measure execution time
 - "LinkManager" / UrlService
 - Link field types (with title and target)
 - Media field types (with alt text)
+- Logging?
 - Always return direct children or split GetItem into two? 
 	- ItemProvider.GetMetaItem() returns light item with only name, path, url, id?
 	- Children only meta?

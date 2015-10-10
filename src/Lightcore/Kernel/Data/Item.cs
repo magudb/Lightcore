@@ -15,6 +15,7 @@ namespace Lightcore.Kernel.Data
         public Language Language { get; set; }
         public IEnumerable<Item> Children { get; set; }
         public FieldCollection Fields { get; set; }
+        public bool HasVersion { get; set; }
 
         public string this[string fieldName] => Fields[fieldName]?.Value;
     }

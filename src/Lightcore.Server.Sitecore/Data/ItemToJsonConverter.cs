@@ -22,7 +22,7 @@ namespace Lightcore.Server.Sitecore.Data
 
         public void Write(Item item, Stream outputStream, string device)
         {
-            var @object = ConvertToJson(item, device);
+            var @object = ConvertToReponseModel(item, device);
 
             using (TextWriter tx = new StreamWriter(outputStream))
             {
@@ -33,7 +33,7 @@ namespace Lightcore.Server.Sitecore.Data
             }
         }
 
-        private static ServerResponseModel ConvertToJson(Item item, string deviceName)
+        private static ServerResponseModel ConvertToReponseModel(Item item, string deviceName)
         {
             return new ServerResponseModel
             {
@@ -59,7 +59,8 @@ namespace Lightcore.Server.Sitecore.Data
                 Name = item.Name,
                 ParentId = item.ParentID.Guid,
                 TemplateId = item.TemplateID.Guid,
-                TemplateName = item.TemplateName
+                TemplateName = item.TemplateName,
+                HasVersion = item.Versions.Count > 0
             };
         }
 
@@ -105,8 +106,13 @@ namespace Lightcore.Server.Sitecore.Data
             return presentation;
         }
 
-        private static IEnumerable<FieldModel> MapFields(BaseItem item)
+        private static IEnumerable<FieldModel> MapFields(Item item)
         {
+            if (item.Versions.Count == 0)
+            {
+                return Enumerable.Empty<FieldModel>();
+            }
+
             return item.Fields.Where(f => !f.Key.StartsWith("__")).Select(MapField);
         }
 
