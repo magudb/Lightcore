@@ -1,10 +1,10 @@
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Pipeline.Request.Processor;
+using Lightcore.Kernel.Pipelines.Request.Processors;
 using Microsoft.AspNet.Http;
 using Microsoft.Framework.OptionsModel;
 
-namespace Lightcore.Kernel.Pipeline.Request
+namespace Lightcore.Kernel.Pipelines.Request
 {
     public class RequestPipeline : Pipeline
     {
@@ -21,6 +21,7 @@ namespace Lightcore.Kernel.Pipeline.Request
             Add(new ResolveLanguageProcessor());
             Add(new ResolveContentPathProcessor());
             Add(new ResolveItemProcessor());
+            Add(new VerifyLayoutProcessor());
         }
 
         public override PipelineArgs GetArgs(HttpContext context)

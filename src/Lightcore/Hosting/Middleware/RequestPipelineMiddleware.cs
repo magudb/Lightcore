@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Lightcore.Kernel.Pipeline.Request;
+using Lightcore.Kernel.Pipelines.Request;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 

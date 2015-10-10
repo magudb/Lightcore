@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Lightcore.Kernel.Http;
 
-namespace Lightcore.Kernel.Pipeline.Request.Processor
+namespace Lightcore.Kernel.Pipelines.Request.Processors
 {
-    public class ResolveItemProcessor : Kernel.Pipeline.Processor
+    public class ResolveItemProcessor : Processor
     {
         public override async Task ProcessAsync(PipelineArgs args)
         {

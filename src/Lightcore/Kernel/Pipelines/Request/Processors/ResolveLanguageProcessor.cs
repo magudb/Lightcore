@@ -3,9 +3,9 @@ using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Http;
 using Microsoft.AspNet.Http;
 
-namespace Lightcore.Kernel.Pipeline.Request.Processor
+namespace Lightcore.Kernel.Pipelines.Request.Processors
 {
-    public class ResolveLanguageProcessor : Kernel.Pipeline.Processor
+    public class ResolveLanguageProcessor : Processor
     {
         public override void Process(PipelineArgs args)
         {

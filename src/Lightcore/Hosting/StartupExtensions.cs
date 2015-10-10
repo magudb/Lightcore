@@ -1,8 +1,8 @@
 ﻿using Lightcore.Hosting.Middleware;
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Pipeline.Request;
-using Lightcore.Kernel.Pipeline.Startup;
+using Lightcore.Kernel.Pipelines.Request;
+using Lightcore.Kernel.Pipelines.Startup;
 using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;

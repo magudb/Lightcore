@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
 
-namespace Lightcore.Kernel.Pipeline
+namespace Lightcore.Kernel.Pipelines
 {
     public abstract class Pipeline
     {

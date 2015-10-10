@@ -1,6 +1,6 @@
 using System;
 
-namespace Lightcore.Kernel.Pipeline.Request.Processor
+namespace Lightcore.Kernel.Pipelines.Request.Processors.Exceptions
 {
     public class InvalidContentPathException : Exception
     {

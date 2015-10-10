@@ -1,6 +1,6 @@
-namespace Lightcore.Kernel.Pipeline.Request.Processor
+namespace Lightcore.Kernel.Pipelines.Request.Processors
 {
-    public class CreateContextProcessor : Kernel.Pipeline.Processor
+    public class CreateContextProcessor : Processor
     {
         public override void Process(PipelineArgs args)
         {

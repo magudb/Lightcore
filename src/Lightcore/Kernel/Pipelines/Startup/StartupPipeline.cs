@@ -1,10 +1,10 @@
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Pipeline.Startup.Processor;
+using Lightcore.Kernel.Pipelines.Startup.Processors;
 using Microsoft.AspNet.Http;
 using Microsoft.Framework.OptionsModel;
 
-namespace Lightcore.Kernel.Pipeline.Startup
+namespace Lightcore.Kernel.Pipelines.Startup
 {
     public class StartupPipeline : Pipeline
     {

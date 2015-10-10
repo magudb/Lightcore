@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Lightcore.Kernel.Pipeline.Startup;
+using Lightcore.Kernel.Pipelines.Startup;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 

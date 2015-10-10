@@ -1,5 +1,9 @@
 ﻿{
   "LightcoreConfig": {
-    "StartItem": "/sitecore/content/Home"
+    "Sitecore": {
+      "Database": "web",
+      "Device": "default",
+      "StartItem": "/sitecore/content/Home"
+    }
   }
 }

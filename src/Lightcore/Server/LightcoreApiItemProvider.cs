@@ -39,7 +39,9 @@ namespace Lightcore.Server
         public async Task<Item> GetItemAsync(string pathOrId, Language language)
         {
             var getWatch = Stopwatch.StartNew();
-            var url = _config.ServerUrl + "/-/lightcore/item/" + pathOrId + "?sc_database=web&sc_lang=" + language.Name + "&sc_device=default";
+            var device = _config.Sitecore.Device;
+            var database = _config.Sitecore.Database;
+            var url = $"{_config.ServerUrl}/-/lightcore/item/{pathOrId}?sc_database={database}&sc_lang={language.Name}&sc_device={device}";
 
             using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {

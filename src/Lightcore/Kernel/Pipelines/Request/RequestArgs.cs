@@ -2,18 +2,18 @@ using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Microsoft.AspNet.Http;
 
-namespace Lightcore.Kernel.Pipeline.Startup
+namespace Lightcore.Kernel.Pipelines.Request
 {
-    public class StartupArgs : PipelineArgs
+    public class RequestArgs : PipelineArgs
     {
-        public StartupArgs(HttpContext httpContext, IItemProvider itemProvider, LightcoreConfig config)
+        public RequestArgs(HttpContext httpContext, IItemProvider itemProvider, LightcoreConfig config)
         {
             HttpContext = httpContext;
             Config = config;
             ItemProvider = itemProvider;
         }
 
-        public HttpContext HttpContext { get; }
+        public HttpContext HttpContext { get; set; }
 
         public LightcoreConfig Config { get; }
 

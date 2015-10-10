@@ -1,4 +1,4 @@
-﻿namespace Lightcore.Kernel.Pipeline
+﻿namespace Lightcore.Kernel.Pipelines
 {
     public class PipelineArgs
     {

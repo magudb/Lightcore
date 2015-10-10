@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Lightcore.Kernel.Pipeline
+namespace Lightcore.Kernel.Pipelines
 {
     public abstract class Processor
     {
