@@ -25,7 +25,6 @@ namespace Lightcore.Server
                 Key = apiItem.Name.ToLowerInvariant(),
                 Name = apiItem.Name,
                 Path = apiItem.FullPath,
-                Url = "/" + language.Name.ToLowerInvariant() + apiItem.FullPath.ToLowerInvariant().Replace("/sitecore/content/home", ""),
                 HasVersion = apiItem.HasVersion,
                 Fields = new FieldCollection(apiFields.Select(f => new Field
                 {

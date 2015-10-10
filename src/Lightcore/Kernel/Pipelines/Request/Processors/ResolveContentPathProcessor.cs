@@ -1,4 +1,3 @@
-using Lightcore.Kernel.Http;
 using Lightcore.Kernel.Pipelines.Request.Processors.Exceptions;
 
 namespace Lightcore.Kernel.Pipelines.Request.Processors

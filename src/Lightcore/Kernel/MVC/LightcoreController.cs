@@ -1,5 +1,4 @@
-﻿using Lightcore.Kernel.Http;
-using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Mvc;
 
 namespace Lightcore.Kernel.MVC
 {

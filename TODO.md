@@ -22,7 +22,6 @@
 - Look into the standard RequestLocalizationMiddleware to support /language-country/ requests.
 - Rendering pipeline
 - Pipeline/Processor trace decorators to measure execution time
-- "LinkManager" / UrlService
 - Link field types (with title and target)
 - Media field types (with alt text)
 - Logging?
@@ -34,7 +33,6 @@
 
 - Can OutputCache be supported? 
 	- Or make Sitecore like Html cache (so we can read it from renderings)
-- UrlHelper ("LinkManager" / UrlService)
 - FieldHelper (also for media fields, link fields)
 - Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
 - Make "PresentationContextInfo", does ValueProviders exists in MVC 6? What are the alternative?

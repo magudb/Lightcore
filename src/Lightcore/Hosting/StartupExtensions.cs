@@ -3,6 +3,7 @@ using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.Request;
 using Lightcore.Kernel.Pipelines.Startup;
+using Lightcore.Kernel.Urls;
 using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
@@ -40,6 +41,7 @@ namespace Lightcore.Hosting
 
             // Add Lightcore services
             services.AddSingleton<IItemProvider, LightcoreApiItemProvider>();
+            services.AddSingleton<IItemUrlService, ItemUrlService>();
             services.AddSingleton<StartupPipeline>();
             services.AddSingleton<RequestPipeline>();
         }

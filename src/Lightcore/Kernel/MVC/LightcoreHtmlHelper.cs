@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lightcore.Kernel.Http;
 using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Lightcore.Kernel.MVC

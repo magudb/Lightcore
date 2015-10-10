@@ -1,6 +1,6 @@
+using System;
 using System.Linq;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Http;
 using Microsoft.AspNet.Http;
 
 namespace Lightcore.Kernel.Pipelines.Request.Processors
@@ -14,7 +14,7 @@ namespace Lightcore.Kernel.Pipelines.Request.Processors
             var languageSegment = requestArgs.HttpContext.Request.Path.Value.ToLowerInvariant().Split('/').Skip(1).FirstOrDefault();
 
             // Get current language from path
-            if (!string.IsNullOrWhiteSpace(languageSegment) && languageSegment.Contains("-"))
+            if (!string.IsNullOrWhiteSpace(languageSegment) && (languageSegment.Equals("en", StringComparison.OrdinalIgnoreCase) || languageSegment.Contains("-")))
             {
                 // TODO: Make a better check to see if it is a valid "culture" segment
 

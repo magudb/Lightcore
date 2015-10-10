@@ -1,4 +1,4 @@
-﻿using Lightcore.Kernel.Http;
+﻿using Lightcore.Kernel;
 using Microsoft.AspNet.Mvc;
 
 namespace WebApp.Controllers

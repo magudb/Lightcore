@@ -3,7 +3,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "da-dk/products",
+      "launchUrl": "en",
       "environmentVariables": {
         "ASPNET_ENV": "Development"
       }

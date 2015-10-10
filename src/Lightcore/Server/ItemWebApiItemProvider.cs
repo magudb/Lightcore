@@ -77,8 +77,6 @@ namespace Lightcore.Server
                 Id = sitecoreApiItem.Id,
                 Key = sitecoreApiItem.Name.ToLowerInvariant(),
                 Name = sitecoreApiItem.Name,
-                Url =
-                    "/" + sitecoreApiItem.Language.ToLowerInvariant() + sitecoreApiItem.Path.ToLowerInvariant().Replace("/sitecore/content/home", ""),
                 Path = sitecoreApiItem.Path,
                 Language = new Language(sitecoreApiItem.Language),
                 Visualization = new ItemVisualization
