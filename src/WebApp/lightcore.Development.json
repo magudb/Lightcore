@@ -1,5 +1,5 @@
 ﻿{
   "LightcoreConfig": {
-    "ServerUrl": "http://lightcore-testserver.ad.codehouse.com"
+    "ServerUrl": "http://lightcore-cm.local"
   }
 }
