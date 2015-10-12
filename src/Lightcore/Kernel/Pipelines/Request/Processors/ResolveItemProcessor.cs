@@ -17,7 +17,7 @@ namespace Lightcore.Kernel.Pipelines.Request.Processors
             else
             {
                 requestArgs.HttpContext.Response.StatusCode = 404;
-                requestArgs.Abort();
+                requestArgs.EndPipeline();
             }
         }
     }

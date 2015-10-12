@@ -2,9 +2,16 @@
 {
     public class PipelineArgs
     {
-        public bool IsAborted { get; private set; }
+        internal bool IsEnded { get; private set; }
 
-        public void Abort()
+        internal bool IsAborted { get; private set; }
+
+        public void EndPipeline()
+        {
+            IsEnded = true;
+        }
+
+        public void AbortPipeline()
         {
             IsAborted = true;
         }

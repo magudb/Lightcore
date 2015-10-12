@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
 
@@ -7,7 +8,7 @@ namespace Lightcore.Kernel.Pipelines
     public abstract class Pipeline
     {
         private readonly List<Processor> _processors = new List<Processor>();
-        public bool IsAborted { get; private set; }
+        public bool IsEnded { get; private set; }
 
         public Pipeline Add(Processor processor)
         {
@@ -20,26 +21,34 @@ namespace Lightcore.Kernel.Pipelines
         {
             foreach (var processor in _processors)
             {
-                if (!args.IsAborted)
+                if (args.IsEnded || args.IsAborted)
                 {
-                    processor.Process(args);
+                    break;
                 }
+
+                processor.Process(args);
             }
 
-            IsAborted = args.IsAborted;
+            IsEnded = args.IsEnded;
         }
 
         public virtual async Task RunAsync(PipelineArgs args)
         {
             foreach (var processor in _processors)
             {
-                if (!args.IsAborted)
+                if (args.IsEnded || args.IsAborted)
                 {
-                    await processor.ProcessAsync(args);
+                    break;
                 }
+
+                Debug.WriteLine("{0}: Running... ", new object[] {processor.GetType().Name});
+
+                await processor.ProcessAsync(args);
+
+                Debug.WriteLine("{0}: aborted:{1}, ended:{2}", processor.GetType().Name, args.IsAborted, args.IsEnded);
             }
 
-            IsAborted = args.IsAborted;
+            IsEnded = args.IsEnded;
         }
 
         public abstract PipelineArgs GetArgs(HttpContext context);

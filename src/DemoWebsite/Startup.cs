@@ -26,6 +26,9 @@ namespace WebApp
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)
         {
+            // Add static files to the request pipeline.
+            app.UseStaticFiles();
+
             // Enable Lightcore
             app.UseLightcore();
         }

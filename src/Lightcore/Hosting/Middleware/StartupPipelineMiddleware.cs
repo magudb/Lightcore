@@ -18,11 +18,9 @@ namespace Lightcore.Hosting.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            // TODO: Handle pipeline exceptions
-
             _pipeline.Run(_pipeline.GetArgs(context));
 
-            if (!_pipeline.IsAborted)
+            if (!_pipeline.IsEnded)
             {
                 await _next(context);
             }

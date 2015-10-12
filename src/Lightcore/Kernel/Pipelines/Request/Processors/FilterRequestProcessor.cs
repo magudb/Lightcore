@@ -9,7 +9,7 @@ namespace Lightcore.Kernel.Pipelines.Request.Processors
 
             if (ignoreRequest)
             {
-                args.Abort();
+                args.AbortPipeline();
             }
         }
     }

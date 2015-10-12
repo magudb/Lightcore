@@ -8,11 +8,6 @@ namespace Lightcore.Kernel.MVC
         {
             var context = Context.LightcoreContext();
 
-            if (context?.Item == null)
-            {
-                return HttpNotFound();
-            }
-
             return View(context.Item.Visualization.Layout.Path, context.Item);
         }
     }
