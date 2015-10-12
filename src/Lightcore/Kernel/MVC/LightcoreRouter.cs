@@ -18,7 +18,7 @@ namespace Lightcore.Kernel.MVC
 
             if (lightcoreContext?.Item != null)
             {
-                // Only try to run routes if Lightcore is enabled
+                // Only try to run routes if Lightcore context is present, request pipeline could be aborted
                 await _defaultHandler.RouteAsync(context);
             }
             else
