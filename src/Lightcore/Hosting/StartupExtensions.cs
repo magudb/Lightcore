@@ -53,16 +53,13 @@ namespace Lightcore.Hosting
             app.UseMiddleware<StartupPipelineMiddleware>();
             app.UseMiddleware<RequestPipelineMiddleware>();
 
-            // TODO: Find solution for static files 404...
-
             // Enabled MVC
             app.UseMvc(routes =>
             {
                 routes.DefaultHandler = new LightcoreRouter(routes.DefaultHandler);
-                // TODO: Should this be an extension and the UseMvc moved out to Startup.cs?
 
                 // Configure default route to always use the Lightcore controller and call the Render action
-                routes.MapRoute("Lightcore", "{*path}", new
+                routes.MapRoute("default", "{*path}", new
                 {
                     controller = "Lightcore",
                     action = "Render"
