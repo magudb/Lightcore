@@ -2,19 +2,9 @@
 @using Lightcore.Kernel.Data
 @using Lightcore.Kernel.MVC
 @model Item
-@{
-
-    var image = Model.Fields["Image"];
-}
-
-@if (image != null)
-{
-    <p>
-        <img src="@image.Value" alt="Lightcore" />
-    </p>
-}
+@Html.Lightcore().Field("Image")
 <article>
     <h2>@Model["Title"]</h2>
-    @Html.Raw(Model["Text"])
+    @Html.Lightcore().Field("Text")
 </article>
 @await Html.Lightcore().Placeholder("sidebar")
