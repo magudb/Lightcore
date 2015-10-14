@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.Startup.Processors;
@@ -18,8 +19,11 @@ namespace Lightcore.Kernel.Pipelines.Startup
         {
             _itemProvider = itemProvider;
             _options = options.Options;
+        }
 
-            Add(new VerifyConfigProcessor());
+        public override IEnumerable<Processor> GetProcessors()
+        {
+            yield return new VerifyConfigProcessor();
         }
 
         public override void Run(PipelineArgs args)
@@ -38,7 +42,7 @@ namespace Lightcore.Kernel.Pipelines.Startup
             }
         }
 
-        public override PipelineArgs GetArgs(HttpContext context)
+        public StartupArgs GetArgs(HttpContext context)
         {
             return new StartupArgs(context, _itemProvider, _options);
         }

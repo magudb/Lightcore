@@ -2,6 +2,7 @@
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Mvc;
+using Lightcore.Kernel.Pipelines.RenderField;
 using Lightcore.Kernel.Pipelines.Request;
 using Lightcore.Kernel.Pipelines.Startup;
 using Lightcore.Kernel.Urls;
@@ -45,6 +46,7 @@ namespace Lightcore.Hosting
             services.AddSingleton<IItemUrlService, ItemUrlService>();
             services.AddSingleton<StartupPipeline>();
             services.AddSingleton<RequestPipeline>();
+            services.AddSingleton<RenderFieldPipeline>();
         }
 
         public static IApplicationBuilder UseLightcore(this IApplicationBuilder app)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.Request.Processors;
@@ -8,25 +9,28 @@ namespace Lightcore.Kernel.Pipelines.Request
 {
     public class RequestPipeline : Pipeline
     {
-        private readonly LightcoreOptions _options;
         private readonly IItemProvider _itemProvider;
+        private readonly LightcoreOptions _options;
 
         public RequestPipeline(IItemProvider itemProvider, IOptions<LightcoreOptions> options)
         {
             _itemProvider = itemProvider;
             _options = options.Options;
-
-            Add(new FilterRequestProcessor());
-            Add(new CreateContextProcessor());
-            Add(new ResolveLanguageProcessor());
-            Add(new ResolveContentPathProcessor());
-            Add(new ResolveItemProcessor());
-            Add(new VerifyLayoutProcessor());
         }
 
-        public override PipelineArgs GetArgs(HttpContext context)
+        public RequestArgs GetArgs(HttpContext context)
         {
             return new RequestArgs(context, _itemProvider, _options);
+        }
+
+        public override IEnumerable<Processor> GetProcessors()
+        {
+            yield return new FilterRequestProcessor();
+            yield return new CreateContextProcessor();
+            yield return new ResolveLanguageProcessor();
+            yield return new ResolveContentPathProcessor();
+            yield return new ResolveItemProcessor();
+            yield return new VerifyLayoutProcessor();
         }
     }
 }

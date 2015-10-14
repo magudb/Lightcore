@@ -5,6 +5,8 @@
 - Add Use Azure Resource Manager Project.
 	- Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
 		- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
+- Test on IIS locally
+- Test on Kestrel locally
 
 ## Server ##
 
@@ -19,7 +21,6 @@
 
 ## Kernel ##
 
-- Look into the standard RequestLocalizationMiddleware to support /language-country/ requests.
 - Rendering pipeline
 - Pipeline/Processor trace decorators to measure execution time
 - Logging?
@@ -31,8 +32,7 @@
 
 - Can OutputCache be supported? 
 	- Or make Sitecore like Html cache (so we can read it from renderings)
-- FieldHelper (also for media fields, link fields)
-- Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
+- HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
 
 ## Media ##
 

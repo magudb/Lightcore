@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Urls;
+using Lightcore.Kernel.Pipelines.RenderField;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.DependencyInjection;
 
@@ -12,123 +11,32 @@ namespace Lightcore.Kernel.Mvc
     public class LightcoreHtmlHelper
     {
         private readonly IHtmlHelper _htmlHelper;
-        private readonly IItemProvider _itemProvider;
-        private readonly IItemUrlService _itemUrlService;
+        private readonly RenderFieldPipeline _renderFieldPipeline;
 
         public LightcoreHtmlHelper(IHtmlHelper htmlHelper)
         {
             _htmlHelper = htmlHelper;
-            _itemProvider = _htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IItemProvider>();
-            _itemUrlService = _htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IItemUrlService>();
+            _renderFieldPipeline = _htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<RenderFieldPipeline>();
         }
 
         public HtmlString FieldValue(string name)
         {
-            // TODO: Make some kind of field render thingy instead of checking each field type?
-
             var context = _htmlHelper.LightcoreContext();
-            var item = context.Item;
+            var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name]);
 
-            var field = item.Fields[name];
+            _renderFieldPipeline.Run(args);
 
-            if (field == null)
-            {
-                return HtmlString.Empty;
-            }
-
-            if (field.Type.Equals("image"))
-            {
-                var image = (ImageField)field;
-
-                return new HtmlString(image.Url);
-            }
-
-            if (field.Type.Equals("general link"))
-            {
-                var link = (LinkField)field;
-
-                var url = string.Empty;
-
-                if (link.TargetId != Guid.Empty)
-                {
-                    var targetItem = _itemProvider.GetItemAsync(link.TargetId.ToString(), item.Language).Result;
-
-                    if (targetItem != null)
-                    {
-                        url = _itemUrlService.GetUrl(targetItem);
-                    }
-                }
-                else
-                {
-                    url = link.TargetUrl;
-                }
-
-                return new HtmlString(url);
-            }
-
-            return new HtmlString(field.Value);
+            return new HtmlString(args.Raw);
         }
 
         public HtmlString Field(string name)
         {
-            // TODO: Make some kind of field render thingy instead of checking each field type?
-
             var context = _htmlHelper.LightcoreContext();
-            var item = context.Item;
+            var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name]);
 
-            var field = item.Fields[name];
+            _renderFieldPipeline.Run(args);
 
-            if (field == null)
-            {
-                return HtmlString.Empty;
-            }
-
-            if (field.Type.Equals("image"))
-            {
-                var builder = new StringBuilder();
-                var image = (ImageField)field;
-
-                builder.AppendFormat("<img src=\"{0}\"", image.Url);
-
-                if (!string.IsNullOrEmpty(image.Alt))
-                {
-                    builder.AppendFormat(" alt=\"{0}\"", image.Alt);
-                }
-
-                builder.Append("/>");
-
-                return new HtmlString(builder.ToString());
-            }
-
-            if (field.Type.Equals("general link"))
-            {
-                var builder = new StringBuilder();
-                var link = (LinkField)field;
-
-                var url = string.Empty;
-
-                if (link.TargetId != Guid.Empty)
-                {
-                    var targetItem = _itemProvider.GetItemAsync(link.TargetId.ToString(), item.Language).Result;
-
-                    if (targetItem != null)
-                    {
-                        url = _itemUrlService.GetUrl(targetItem);
-                    }
-                }
-                else
-                {
-                    url = link.TargetUrl;
-                }
-
-                builder.AppendFormat("<a href=\"{0}\">", url);
-                builder.Append(!string.IsNullOrEmpty(link.Description) ? link.Description : url);
-                builder.Append("</a>");
-
-                return new HtmlString(builder.ToString());
-            }
-
-            return new HtmlString(field.Value);
+            return args.Results;
         }
 
         public async Task<HtmlString> PlaceholderAsync(string name)
