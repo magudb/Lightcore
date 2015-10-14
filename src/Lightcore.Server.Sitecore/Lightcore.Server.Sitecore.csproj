@@ -90,7 +90,7 @@
     </Compile>
     <Compile Include="Api\HelpModule.cs" />
     <Compile Include="Api\ItemModule.cs" />
-    <Compile Include="Data\ItemToJsonConverter.cs" />
+    <Compile Include="Data\ItemSerializer.cs" />
     <Compile Include="Experiments\PipelineBasedItemProvider\Processors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

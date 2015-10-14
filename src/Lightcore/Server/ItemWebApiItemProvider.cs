@@ -87,9 +87,9 @@ namespace Lightcore.Server
                     },
                     Renderings = new List<Rendering>
                     {
-                        new Rendering("content", "Menu"),
-                        new Rendering("content", "Article"),
-                        new Rendering("footer", "Footer")
+                        new Rendering("content", "", "Menu"),
+                        new Rendering("content", "", "Article"),
+                        new Rendering("footer", "", "Footer")
                     }
                 },
                 Fields = new FieldCollection(),

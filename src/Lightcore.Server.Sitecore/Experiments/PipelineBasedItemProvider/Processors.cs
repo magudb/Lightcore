@@ -4,6 +4,7 @@ using Lightcore.Server.Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines.ItemProvider.DeleteItem;
 using Sitecore.Pipelines.ItemProvider.SaveItem;
+using ItemSerializer = Lightcore.Server.Sitecore.Data.ItemSerializer;
 
 namespace Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider
 {
@@ -29,11 +30,11 @@ namespace Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider
 
     internal class ItemDiskStore
     {
-        private readonly ItemToJsonConverter _itemConverter;
+        private readonly ItemSerializer _itemConverter;
 
         public ItemDiskStore()
         {
-            _itemConverter = new ItemToJsonConverter();
+            _itemConverter = new ItemSerializer();
         }
 
         private string GetIdFilePath(Item item, string device)
@@ -64,7 +65,7 @@ namespace Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider
 
             using (var outputStream = File.Open(path + "\\item.json", FileMode.Create, FileAccess.Write))
             {
-                _itemConverter.Write(item, outputStream, "default");
+                _itemConverter.Serialize(item, outputStream, "default");
             }
 
             path = GetFilePath(item, device);
@@ -73,7 +74,7 @@ namespace Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider
 
             using (var outputStream = File.Open(path + "\\item.json", FileMode.Create, FileAccess.Write))
             {
-                _itemConverter.Write(item, outputStream, "default");
+                _itemConverter.Serialize(item, outputStream, "default");
             }
         }
 

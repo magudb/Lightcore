@@ -43,7 +43,7 @@ namespace Lightcore.Server
                     {
                         Path = apiPresentation.Layout.Path
                     },
-                    Renderings = apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.Controller, r.Action))
+                    Renderings = apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.DataSource, r.Controller, r.Action))
                 };
             }
 

@@ -10,17 +10,17 @@ using Sitecore.Resources.Media;
 
 namespace Lightcore.Server.Sitecore.Data
 {
-    public class ItemToJsonConverter
+    public class ItemSerializer
     {
         private static readonly ID ControllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
         private readonly JsonSerializer _serializer;
 
-        public ItemToJsonConverter()
+        public ItemSerializer()
         {
             _serializer = new JsonSerializer();
         }
 
-        public void Write(Item item, Stream outputStream, string device)
+        public void Serialize(Item item, Stream outputStream, string device)
         {
             var @object = ConvertToReponseModel(item, device);
 
@@ -94,12 +94,14 @@ namespace Lightcore.Server.Sitecore.Data
             presentation.Renderings = controllerRenderings.Select(rendering =>
             {
                 var action = rendering.RenderingItem.InnerItem["Action"];
+                var dataSource = rendering.Settings.DataSource;
 
                 return new RenderingModel
                 {
                     Placeholder = rendering.Placeholder,
                     Controller = rendering.RenderingItem.InnerItem["Controller"],
-                    Action = !string.IsNullOrEmpty(action) ? action : "Index"
+                    Action = !string.IsNullOrEmpty(action) ? action : "Index",
+                    DataSource = !string.IsNullOrEmpty(dataSource) ? dataSource : item.ID.Guid.ToString()
                 };
             });
 

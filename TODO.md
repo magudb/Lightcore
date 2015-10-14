@@ -35,7 +35,7 @@
 	- Or make Sitecore like Html cache (so we can read it from renderings)
 - FieldHelper (also for media fields, link fields)
 - Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
-- Make "PresentationContextInfo", does ValueProviders exists in MVC 6? What are the alternative?
+- Make "PresentationContext" value provider
 
 ## Media ##
 
