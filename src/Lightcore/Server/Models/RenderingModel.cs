@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Lightcore.Server.Models
 {
     public class RenderingModel
@@ -6,5 +8,6 @@ namespace Lightcore.Server.Models
         public string Controller { get; set; }
         public string Action { get; set; }
         public string DataSource { get; set; }
+        public Dictionary<string, string> Parameters { get; set; }
     }
 }

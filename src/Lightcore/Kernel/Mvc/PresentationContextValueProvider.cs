@@ -31,7 +31,7 @@ namespace Lightcore.Kernel.Mvc
                             item.Language.Name,
                             item.TemplateId,
                             rendering.DataSource,
-                            new Dictionary<string, string>()));
+                            rendering.Parameters));
                     }
                 }
             }

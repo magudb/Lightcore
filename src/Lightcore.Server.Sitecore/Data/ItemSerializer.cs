@@ -95,13 +95,20 @@ namespace Lightcore.Server.Sitecore.Data
             {
                 var action = rendering.RenderingItem.InnerItem["Action"];
                 var dataSource = rendering.Settings.DataSource;
+                var parameters = new Dictionary<string, string>();
+
+                if (!string.IsNullOrEmpty(rendering.Settings.Parameters))
+                {
+                    parameters = rendering.Settings.Parameters.Split('&').Select(p => p.Split('=')).ToDictionary(param => param[0], param => param[1]);
+                }
 
                 return new RenderingModel
                 {
                     Placeholder = rendering.Placeholder,
                     Controller = rendering.RenderingItem.InnerItem["Controller"],
                     Action = !string.IsNullOrEmpty(action) ? action : "Index",
-                    DataSource = !string.IsNullOrEmpty(dataSource) ? dataSource : item.ID.Guid.ToString()
+                    DataSource = !string.IsNullOrEmpty(dataSource) ? dataSource : item.ID.Guid.ToString(),
+                    Parameters = parameters
                 };
             });
 
