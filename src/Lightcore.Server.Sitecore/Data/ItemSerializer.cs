@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Lightcore.Server.Models;
@@ -88,8 +89,8 @@ namespace Lightcore.Server.Sitecore.Data
                 }
             };
 
-            var controllerRenderings =
-                item.Visualization.GetRenderings(device, false).Where(r => r.RenderingItem.InnerItem.TemplateID == ControllerRenderingTemplateId);
+            var controllerRenderings = item.Visualization.GetRenderings(device, false)
+                                           .Where(r => r.RenderingItem.InnerItem.TemplateID == ControllerRenderingTemplateId);
 
             presentation.Renderings = controllerRenderings.Select(rendering =>
             {
@@ -122,24 +123,42 @@ namespace Lightcore.Server.Sitecore.Data
                 return Enumerable.Empty<FieldModel>();
             }
 
-            return item.Fields.Where(f => !f.Key.StartsWith("__")).Select(MapField);
+            return item.Fields.Where(f => !f.Key.StartsWith("__")).Select(MapField).Where(f => f != null);
         }
 
         private static FieldModel MapField(Field field)
         {
-            string value;
+            object value;
 
             if (field.TypeKey.Equals("image"))
             {
                 var media = (ImageField)field;
 
-                value = MediaManager.GetMediaUrl(media.MediaItem, new MediaUrlOptions
+                if (media.MediaItem == null)
+                {
+                    return null;
+                }
+
+                var url = MediaManager.GetMediaUrl(media.MediaItem, new MediaUrlOptions
                 {
                     AlwaysIncludeServerUrl = true,
                     IncludeExtension = true,
                     LowercaseUrls = true,
                     UseItemPath = true
                 });
+
+                value = new ImageFieldValueModel {Alt = media.Alt, Url = url};
+            }
+            else if (field.TypeKey.Equals("general link"))
+            {
+                var link = (LinkField)field;
+
+                value = new LinkFieldValueModel
+                {
+                    Description = link.Text,
+                    TargetId = link.IsInternal ? link.TargetID.Guid : Guid.Empty,
+                    TargetUrl= link.IsInternal ? "" : link.GetFriendlyUrl()
+                };
             }
             else
             {

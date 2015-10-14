@@ -6,7 +6,7 @@ namespace Lightcore.Server.Models
     {
         public Guid Id { get; set; }
         public string Key { get; set; }
-        public string Value { get; set; }
+        public object Value { get; set; }
         public string Type { get; set; }
     }
 }

@@ -5,6 +5,9 @@
 @Html.Lightcore().Field("Image")
 <article>
     <h2>@Model["Title"]</h2>
-    @Html.Lightcore().Field("Text")
+    @Html.Lightcore().FieldValue("Text")
+    <p>
+        @Html.Lightcore().Field("General Link")
+    </p>
 </article>
-@await Html.Lightcore().Placeholder("sidebar")
+@await Html.Lightcore().PlaceholderAsync("sidebar")

@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
-using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
 
 namespace Lightcore.Server
@@ -30,7 +29,8 @@ namespace Lightcore.Server
         public async Task<Item> GetItemAsync(string pathOrId, Language language)
         {
             var getWatch = Stopwatch.StartNew();
-            var url = string.Format("{0}/-/item/v1{1}?sc_database=web&language={2}&payload=full&fields=Title|Text|__Renderings&scope=s|c", _options.ServerUrl, pathOrId, language.Name);
+            var url = string.Format("{0}/-/item/v1{1}?sc_database=web&language={2}&payload=full&fields=Title|Text|__Renderings&scope=s|c",
+                _options.ServerUrl, pathOrId, language.Name);
             var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)

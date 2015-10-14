@@ -7,7 +7,6 @@ namespace Lightcore.Kernel.Data
     {
         public string Path { get; set; }
         public string Name { get; set; }
-        public string Url { get; set; }
         public string Key { get; set; }
         public string Trace { get; set; }
         public Guid Id { get; set; }

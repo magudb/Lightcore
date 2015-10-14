@@ -9,12 +9,12 @@
 </head>
 <body>
     <h1>Lightcore</h1>
-    @await Html.Lightcore().Placeholder("dummy")
+    @await Html.Lightcore().PlaceholderAsync("dummy")
     <div>
-        @await Html.Lightcore().Placeholder("content")
+        @await Html.Lightcore().PlaceholderAsync("content")
     </div>
     <footer>
-        @await Html.Lightcore().Placeholder("footer")
+        @await Html.Lightcore().PlaceholderAsync("footer")
     </footer>
     <div id="debug">
         <code>
