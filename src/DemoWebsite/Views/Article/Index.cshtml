@@ -2,12 +2,12 @@
 @using Lightcore.Kernel.Data
 @using Lightcore.Kernel.Mvc
 @model Item
-@Html.Lightcore().Field("Image")
+@Html.Lightcore().RenderField("Image")
 <article>
     <h2>@Model["Title"]</h2>
-    @Html.Lightcore().FieldValue("Text")
+    @Html.Lightcore().Field("Text")
     <p>
-        @Html.Lightcore().Field("General Link")
+        @Html.Lightcore().RenderField("General Link")
     </p>
 </article>
 @await Html.Lightcore().PlaceholderAsync("sidebar")

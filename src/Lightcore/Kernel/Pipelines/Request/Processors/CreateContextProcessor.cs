@@ -1,12 +1,10 @@
 namespace Lightcore.Kernel.Pipelines.Request.Processors
 {
-    public class CreateContextProcessor : Processor
+    public class CreateContextProcessor : Processor<RequestArgs>
     {
-        public override void Process(PipelineArgs args)
+        public override void Process(RequestArgs args)
         {
-            var requestArgs = (RequestArgs)args;
-
-            requestArgs.HttpContext.Items["LCC"] = new Context();
+            args.HttpContext.Items["LCC"] = new Context();
         }
     }
 }

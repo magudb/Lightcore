@@ -7,9 +7,9 @@ using Microsoft.AspNet.Routing;
 
 namespace Lightcore.Kernel.Pipelines.RenderPlaceholder
 {
-    public class RenderPlaceholderPipeline : Pipeline
+    public class RenderPlaceholderPipeline : Pipeline<RenderPlaceholderArgs>
     {
-        public override IEnumerable<Processor> GetProcessors()
+        public override IEnumerable<Processor<RenderPlaceholderArgs>> GetProcessors()
         {
             yield return new RenderPlaceholderProcessor();
         }

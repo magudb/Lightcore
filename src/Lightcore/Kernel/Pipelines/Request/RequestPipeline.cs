@@ -7,7 +7,7 @@ using Microsoft.Framework.OptionsModel;
 
 namespace Lightcore.Kernel.Pipelines.Request
 {
-    public class RequestPipeline : Pipeline
+    public class RequestPipeline : Pipeline<RequestArgs>
     {
         private readonly IItemProvider _itemProvider;
         private readonly LightcoreOptions _options;
@@ -23,7 +23,7 @@ namespace Lightcore.Kernel.Pipelines.Request
             return new RequestArgs(context, _itemProvider, _options);
         }
 
-        public override IEnumerable<Processor> GetProcessors()
+        public override IEnumerable<Processor<RequestArgs>> GetProcessors()
         {
             yield return new FilterRequestProcessor();
             yield return new CreateContextProcessor();

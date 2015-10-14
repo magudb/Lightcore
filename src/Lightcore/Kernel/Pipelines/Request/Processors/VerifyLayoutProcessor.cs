@@ -2,12 +2,11 @@ using Lightcore.Kernel.Pipelines.Request.Processors.Exceptions;
 
 namespace Lightcore.Kernel.Pipelines.Request.Processors
 {
-    public class VerifyLayoutProcessor : Processor
+    public class VerifyLayoutProcessor : Processor<RequestArgs>
     {
-        public override void Process(PipelineArgs args)
+        public override void Process(RequestArgs args)
         {
-            var requestArgs = (RequestArgs)args;
-            var context = requestArgs.HttpContext.LightcoreContext();
+            var context = args.HttpContext.LightcoreContext();
 
             if (string.IsNullOrEmpty(context.Item.Visualization?.Layout?.Path))
             {

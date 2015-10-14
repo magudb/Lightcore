@@ -2,13 +2,12 @@ using System.Threading.Tasks;
 
 namespace Lightcore.Kernel.Pipelines.Request.Processors
 {
-    public class ResolveItemProcessor : Processor
+    public class ResolveItemProcessor : Processor<RequestArgs>
     {
-        public override async Task ProcessAsync(PipelineArgs args)
+        public override async Task ProcessAsync(RequestArgs args)
         {
-            var requestArgs = (RequestArgs)args;
-            var context = requestArgs.HttpContext.LightcoreContext();
-            var item = await requestArgs.ItemProvider.GetItemAsync(context.RequestedContentPath, context.Language);
+            var context = args.HttpContext.LightcoreContext();
+            var item = await args.ItemProvider.GetItemAsync(context.RequestedContentPath, context.Language);
 
             if (item != null && item.HasVersion)
             {
@@ -16,8 +15,8 @@ namespace Lightcore.Kernel.Pipelines.Request.Processors
             }
             else
             {
-                requestArgs.HttpContext.Response.StatusCode = 404;
-                requestArgs.EndPipeline();
+                args.HttpContext.Response.StatusCode = 404;
+                args.EndPipeline();
             }
         }
     }

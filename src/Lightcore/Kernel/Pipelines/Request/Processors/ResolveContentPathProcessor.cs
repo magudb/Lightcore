@@ -2,17 +2,16 @@ using Lightcore.Kernel.Pipelines.Request.Processors.Exceptions;
 
 namespace Lightcore.Kernel.Pipelines.Request.Processors
 {
-    public class ResolveContentPathProcessor : Processor
+    public class ResolveContentPathProcessor : Processor<RequestArgs>
     {
-        public override void Process(PipelineArgs args)
+        public override void Process(RequestArgs args)
         {
-            var requestArgs = (RequestArgs)args;
-            var context = requestArgs.HttpContext.LightcoreContext();
-            var contentPath =
-                string.Format("{0}/{1}", requestArgs.Options.Sitecore.StartItem.TrimEnd('/'),
-                    requestArgs.HttpContext.Request.Path.Value.TrimStart('/'))
-                      .TrimEnd('/')
-                      .ToLowerInvariant();
+            var context = args.HttpContext.LightcoreContext();
+            var contentPath = string.Format("{0}/{1}",
+                args.Options.Sitecore.StartItem.TrimEnd('/'),
+                args.HttpContext.Request.Path.Value.TrimStart('/'))
+                                    .TrimEnd('/')
+                                    .ToLowerInvariant();
 
             const string mustStartWith = "/sitecore/content/";
 

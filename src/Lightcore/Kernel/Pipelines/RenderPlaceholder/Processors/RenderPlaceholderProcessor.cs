@@ -7,25 +7,23 @@ using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Lightcore.Kernel.Pipelines.RenderPlaceholder.Processors
 {
-    public class RenderPlaceholderProcessor : Processor
+    public class RenderPlaceholderProcessor : Processor<RenderPlaceholderArgs>
     {
-        public override async Task ProcessAsync(PipelineArgs args)
+        public override async Task ProcessAsync(RenderPlaceholderArgs args)
         {
-            var placeholderArgs = (RenderPlaceholderArgs)args;
             var builder = new StringBuilder();
-            var renderings =
-                placeholderArgs.Item.Visualization.Renderings.Where(
-                    r => r.Placeholder.Equals(placeholderArgs.Name, StringComparison.OrdinalIgnoreCase));
+            var renderings = args.Item.Visualization.Renderings
+                                 .Where(r => r.Placeholder.Equals(args.Name, StringComparison.OrdinalIgnoreCase));
 
             foreach (var rendering in renderings)
             {
-                var runner = new ControllerRunner(rendering.Controller, rendering.Action, placeholderArgs.HttpContext, placeholderArgs.RouteData);
+                var runner = new ControllerRunner(rendering.Controller, rendering.Action, args.HttpContext, args.RouteData);
                 var output = await runner.Execute();
 
                 builder.Append(output);
             }
 
-            placeholderArgs.Results = new HtmlString(builder.ToString());
+            args.Results = new HtmlString(builder.ToString());
         }
     }
 }

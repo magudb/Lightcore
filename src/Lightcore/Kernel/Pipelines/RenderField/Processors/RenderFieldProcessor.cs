@@ -2,16 +2,12 @@ using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Lightcore.Kernel.Pipelines.RenderField.Processors
 {
-    public class RenderFieldProcessor : Processor
+    public class RenderFieldProcessor : Processor<RenderFieldArgs>
     {
-        public override void Process(PipelineArgs args)
+        public override void Process(RenderFieldArgs args)
         {
-            var renderFieldArgs = (RenderFieldArgs)args;
-            var field = renderFieldArgs.Field;
-
-            renderFieldArgs.Results = new HtmlString(field.Value);
-            renderFieldArgs.Raw = field.Value;
-            renderFieldArgs.AbortPipeline();
+            args.Results = new HtmlString(args.Field.Value);
+            args.AbortPipeline();
         }
     }
 }

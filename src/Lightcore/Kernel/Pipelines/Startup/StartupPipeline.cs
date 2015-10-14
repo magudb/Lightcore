@@ -7,7 +7,7 @@ using Microsoft.Framework.OptionsModel;
 
 namespace Lightcore.Kernel.Pipelines.Startup
 {
-    public class StartupPipeline : Pipeline
+    public class StartupPipeline : Pipeline<StartupArgs>
     {
         private readonly IItemProvider _itemProvider;
         private readonly LightcoreOptions _options;
@@ -21,12 +21,12 @@ namespace Lightcore.Kernel.Pipelines.Startup
             _options = options.Options;
         }
 
-        public override IEnumerable<Processor> GetProcessors()
+        public override IEnumerable<Processor<StartupArgs>> GetProcessors()
         {
             yield return new VerifyConfigProcessor();
         }
 
-        public override void Run(PipelineArgs args)
+        public override void Run(StartupArgs args)
         {
             if (_isStarted == false)
             {

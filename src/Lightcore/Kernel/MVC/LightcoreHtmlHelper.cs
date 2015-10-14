@@ -15,21 +15,18 @@ namespace Lightcore.Kernel.Mvc
         public LightcoreHtmlHelper(IHtmlHelper htmlHelper)
         {
             _htmlHelper = htmlHelper;
-            _renderFieldPipeline = _htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<RenderFieldPipeline>();
-            _renderPlaceholderPipeline = _htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<RenderPlaceholderPipeline>();
-        }
-
-        public HtmlString FieldValue(string name)
-        {
-            var context = _htmlHelper.LightcoreContext();
-            var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name]);
-
-            _renderFieldPipeline.Run(args);
-
-            return new HtmlString(args.Raw);
+            _renderFieldPipeline = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<RenderFieldPipeline>();
+            _renderPlaceholderPipeline = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<RenderPlaceholderPipeline>();
         }
 
         public HtmlString Field(string name)
+        {
+            var context = _htmlHelper.LightcoreContext();
+
+            return new HtmlString(context.Item[name]);
+        }
+
+        public HtmlString RenderField(string name)
         {
             var context = _htmlHelper.LightcoreContext();
             var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name]);

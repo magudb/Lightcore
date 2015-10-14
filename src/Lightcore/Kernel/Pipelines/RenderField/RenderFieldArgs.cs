@@ -13,7 +13,6 @@ namespace Lightcore.Kernel.Pipelines.RenderField
             Item = item;
             Field = field;
             Results = HtmlString.Empty;
-            Raw = string.Empty;
         }
 
         public IItemProvider ItemProvider { get; }
@@ -22,6 +21,5 @@ namespace Lightcore.Kernel.Pipelines.RenderField
         public Field Field { get; }
 
         public HtmlString Results { get; set; }
-        public string Raw { get; set; }
     }
 }

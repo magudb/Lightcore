@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace Lightcore.Kernel.Pipelines
 {
-    public abstract class Pipeline
+    public abstract class Pipeline<T> where T: PipelineArgs
     {
-        private IEnumerable<Processor> _processors;
+        private IEnumerable<Processor<T>> _processors;
         public bool IsEnded { get; private set; }
 
-        public abstract IEnumerable<Processor> GetProcessors();
+        public abstract IEnumerable<Processor<T>> GetProcessors();
 
-        public virtual void Run(PipelineArgs args)
+        public virtual void Run(T args)
         {
             foreach (var processor in GetCoreProcessors())
             {
@@ -30,12 +30,12 @@ namespace Lightcore.Kernel.Pipelines
             IsEnded = args.IsEnded;
         }
 
-        private IEnumerable<Processor> GetCoreProcessors()
+        private IEnumerable<Processor<T>> GetCoreProcessors()
         {
             return _processors ?? (_processors = GetProcessors());
         }
 
-        public virtual async Task RunAsync(PipelineArgs args)
+        public virtual async Task RunAsync(T args)
         {
             foreach (var processor in GetCoreProcessors())
             {

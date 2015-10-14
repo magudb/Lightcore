@@ -1,11 +1,10 @@
 namespace Lightcore.Kernel.Pipelines.Request.Processors
 {
-    public class FilterRequestProcessor : Processor
+    public class FilterRequestProcessor : Processor<RequestArgs>
     {
-        public override void Process(PipelineArgs args)
+        public override void Process(RequestArgs args)
         {
-            var requestArgs = (RequestArgs)args;
-            var ignoreRequest = requestArgs.HttpContext.Request.Path.Value.Contains(".");
+            var ignoreRequest = args.HttpContext.Request.Path.Value.Contains(".");
 
             if (ignoreRequest)
             {

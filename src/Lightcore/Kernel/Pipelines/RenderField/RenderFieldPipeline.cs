@@ -6,7 +6,7 @@ using Lightcore.Kernel.Urls;
 
 namespace Lightcore.Kernel.Pipelines.RenderField
 {
-    public class RenderFieldPipeline : Pipeline
+    public class RenderFieldPipeline : Pipeline<RenderFieldArgs>
     {
         private readonly IItemProvider _itemProvider;
         private readonly IItemUrlService _itemUrlService;
@@ -17,18 +17,16 @@ namespace Lightcore.Kernel.Pipelines.RenderField
             _itemUrlService = itemUrlService;
         }
 
-        public override IEnumerable<Processor> GetProcessors()
+        public override IEnumerable<Processor<RenderFieldArgs>> GetProcessors()
         {
             yield return new RenderLinkFieldProcessor();
             yield return new RenderMediaFieldProcessor();
             yield return new RenderFieldProcessor();
         }
 
-        public override void Run(PipelineArgs args)
+        public override void Run(RenderFieldArgs args)
         {
-            var renderFieldArgs = (RenderFieldArgs)args;
-
-            if (renderFieldArgs.Field == null)
+            if (args.Field == null)
             {
                 args.AbortPipeline();
 
