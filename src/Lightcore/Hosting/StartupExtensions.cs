@@ -1,7 +1,7 @@
 ﻿using Lightcore.Hosting.Middleware;
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.MVC;
+using Lightcore.Kernel.Mvc;
 using Lightcore.Kernel.Pipelines.Request;
 using Lightcore.Kernel.Pipelines.Startup;
 using Lightcore.Kernel.Urls;
@@ -34,8 +34,8 @@ namespace Lightcore.Hosting
 
         public static void AddLightcore(this IServiceCollection services, IConfiguration config)
         {
-            // Add MVC services
-            services.AddMvc();
+            // Add standard MVC services and Lightcore ValueProvider
+            services.AddMvc(options => { options.ValueProviderFactories.Add(new PresentationContextValueProviderFactory()); });
 
             // Add Lightcore configuration so it can be used as a dependency IOptions<LightcoreConfig> config
             services.Configure<LightcoreOptions>(config.GetSection("LightcoreOptions"));
@@ -53,7 +53,7 @@ namespace Lightcore.Hosting
             app.UseMiddleware<StartupPipelineMiddleware>();
             app.UseMiddleware<RequestPipelineMiddleware>();
 
-            // Enabled MVC
+            // Enabled standard MVC
             app.UseMvc(routes =>
             {
                 routes.DefaultHandler = new LightcoreRouter(routes.DefaultHandler);

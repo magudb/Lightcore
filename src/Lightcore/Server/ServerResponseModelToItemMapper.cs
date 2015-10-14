@@ -26,6 +26,9 @@ namespace Lightcore.Server
                 Name = apiItem.Name,
                 Path = apiItem.FullPath,
                 HasVersion = apiItem.HasVersion,
+                TemplateId =  apiItem.TemplateId,
+                TemplateName = apiItem.TemplateName,
+                ParentId = apiItem.ParentId,
                 Fields = new FieldCollection(apiFields.Select(f => new Field
                 {
                     Key = f.Key,

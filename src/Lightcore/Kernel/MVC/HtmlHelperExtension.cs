@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Mvc.Rendering;
 
-namespace Lightcore.Kernel.MVC
+namespace Lightcore.Kernel.Mvc
 {
     public static class HtmlHelperExtension
     {

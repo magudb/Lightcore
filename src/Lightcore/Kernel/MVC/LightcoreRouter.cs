@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Routing;
 
-namespace Lightcore.Kernel.MVC
+namespace Lightcore.Kernel.Mvc
 {
     public class LightcoreRouter : IRouter
     {

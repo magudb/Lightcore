@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Lightcore.Kernel;
 using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Mvc;
 using Microsoft.AspNet.Mvc;
 
 namespace WebApp.Controllers
@@ -15,11 +15,10 @@ namespace WebApp.Controllers
             _itemProvider = itemProvider;
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(PresentationContext presentationContext)
         {
             var context = Context.LightcoreContext();
-            var dataSource= context.Item.Visualization.Renderings.First(r=>r.Controller=="Menu").DataSource;
-            var root = await _itemProvider.GetItemAsync(dataSource, context.Language);
+            var root = await _itemProvider.GetItemAsync(presentationContext.DataSource, context.Language);
 
             return View("/Views/Menu/Index.cshtml", root);
         }

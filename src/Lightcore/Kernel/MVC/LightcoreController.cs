@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Mvc;
 
-namespace Lightcore.Kernel.MVC
+namespace Lightcore.Kernel.Mvc
 {
     public class LightcoreController : Controller
     {
