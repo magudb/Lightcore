@@ -35,7 +35,6 @@
 	- Or make Sitecore like Html cache (so we can read it from renderings)
 - FieldHelper (also for media fields, link fields)
 - Helpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
-- Add rendering parameters to "PresentationContext"
 
 ## Media ##
 
