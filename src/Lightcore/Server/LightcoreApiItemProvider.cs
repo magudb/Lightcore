@@ -62,7 +62,7 @@ namespace Lightcore.Server
                                 var parseWatch = Stopwatch.StartNew();
                                 var length = response.Content.Headers.ContentLength;
                                 var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
-                                var item = ServerResponseModelToItemMapper.Map(apiResponse, language);
+                                var item = ModelToItemMapper.Map(apiResponse, language);
 
                                 parseWatch.Stop();
 

@@ -49,7 +49,7 @@ namespace Lightcore.Server
                         using (JsonReader jsonReader = new JsonTextReader(streamReader))
                         {
                             var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
-                            var item = ServerResponseModelToItemMapper.Map(apiResponse, language);
+                            var item = ModelToItemMapper.Map(apiResponse, language);
 
                             item.Trace = "...";
 

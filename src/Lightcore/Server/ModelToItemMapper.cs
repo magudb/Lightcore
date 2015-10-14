@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Lightcore.Server
 {
-    public static class ServerResponseModelToItemMapper
+    public static class ModelToItemMapper
     {
         public static Item Map(ServerResponseModel apiResponse, Language language)
         {
