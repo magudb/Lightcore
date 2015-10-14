@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Lightcore.Kernel.Pipelines.RenderField;
+using Lightcore.Kernel.Pipelines.RenderPlaceholder;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Framework.DependencyInjection;
 
@@ -12,11 +10,13 @@ namespace Lightcore.Kernel.Mvc
     {
         private readonly IHtmlHelper _htmlHelper;
         private readonly RenderFieldPipeline _renderFieldPipeline;
+        private readonly RenderPlaceholderPipeline _renderPlaceholderPipeline;
 
         public LightcoreHtmlHelper(IHtmlHelper htmlHelper)
         {
             _htmlHelper = htmlHelper;
             _renderFieldPipeline = _htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<RenderFieldPipeline>();
+            _renderPlaceholderPipeline = _htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<RenderPlaceholderPipeline>();
         }
 
         public HtmlString FieldValue(string name)
@@ -41,22 +41,12 @@ namespace Lightcore.Kernel.Mvc
 
         public async Task<HtmlString> PlaceholderAsync(string name)
         {
-            // TODO: Make real render pipeline...
-
-            var builder = new StringBuilder();
             var context = _htmlHelper.LightcoreContext();
+            var args = _renderPlaceholderPipeline.GetArgs(_htmlHelper.ViewContext.HttpContext, _htmlHelper.ViewContext.RouteData, context.Item, name);
 
-            foreach (var rendering in context.Item.Visualization.Renderings.Where(r => r.Placeholder.Equals(name, StringComparison.OrdinalIgnoreCase))
-                )
-            {
-                var runner = new ControllerRunner(rendering.Controller, rendering.Action, _htmlHelper.ViewContext.HttpContext,
-                    _htmlHelper.ViewContext.RouteData);
-                var output = await runner.Execute();
+            await _renderPlaceholderPipeline.RunAsync(args);
 
-                builder.Append(output);
-            }
-
-            return new HtmlString(builder.ToString());
+            return args.Results;
         }
     }
 }

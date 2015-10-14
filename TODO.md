@@ -21,7 +21,7 @@
 
 ## Kernel ##
 
-- Rendering pipeline
+- RenderRendering pipeline
 - Pipeline/Processor trace decorators to measure execution time
 - Logging?
 - Always return direct children or split GetItem into two? 
@@ -30,6 +30,7 @@
 
 ## MVC ##
 
+- Use TextWriter instead of string builder?
 - Can OutputCache be supported? 
 	- Or make Sitecore like Html cache (so we can read it from renderings)
 - HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
