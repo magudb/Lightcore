@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.RenderPlaceholder.Processors;
 using Lightcore.Kernel.Pipelines.RenderRendering;
@@ -21,12 +22,13 @@ namespace Lightcore.Kernel.Pipelines.RenderPlaceholder
             yield return new RenderPlaceholderProcessor(_renderRenderingPipeline);
         }
 
-        public RenderPlaceholderArgs GetArgs(HttpContext httpContext, RouteData routeData, Item item, string name)
+        public RenderPlaceholderArgs GetArgs(HttpContext httpContext, RouteData routeData, Item item, string name, TextWriter writer)
         {
             Requires.IsNotNull(item, nameof(item));
             Requires.IsNotNullOrEmpty(name, nameof(name));
+            Requires.IsNotNull(writer, nameof(writer));
 
-            return new RenderPlaceholderArgs(httpContext, routeData, item, name);
+            return new RenderPlaceholderArgs(httpContext, routeData, item, name, writer);
         }
     }
 }

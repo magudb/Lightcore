@@ -21,16 +21,14 @@ namespace Lightcore.Kernel.Mvc
             _routeData = routeData;
         }
 
-        public async Task<string> Execute()
+        public async Task Execute(TextWriter writer)
         {
-            string output;
-
             var routeContext = new RouteContext(_httpContext)
             {
                 RouteData = new RouteData(_routeData)
             };
 
-            // Save context
+            // Save current context
             var currentOutputStream = _httpContext.Response.Body;
             var currentRouteData = routeContext.RouteData;
 
@@ -53,8 +51,12 @@ namespace Lightcore.Kernel.Mvc
 
                     using (var reader = new StreamReader(outputStream))
                     {
-                        output = reader.ReadToEnd();
+                        var output = await reader.ReadToEndAsync();
+
+                        await writer.WriteLineAsync(output);
                     }
+
+                    routeContext.IsHandled = true;
                 }
                 finally
                 {
@@ -64,8 +66,6 @@ namespace Lightcore.Kernel.Mvc
                     _httpContext.Response.Body = currentOutputStream;
                 }
             }
-
-            return output;
         }
     }
 }

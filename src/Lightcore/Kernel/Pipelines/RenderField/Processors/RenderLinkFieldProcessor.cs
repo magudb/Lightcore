@@ -1,12 +1,12 @@
 using System;
-using System.Text;
+using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
 
 namespace Lightcore.Kernel.Pipelines.RenderField.Processors
 {
     public class RenderLinkFieldProcessor : Processor<RenderFieldArgs>
     {
-        public override void Process(RenderFieldArgs args)
+        public override async Task ProcessAsync(RenderFieldArgs args)
         {
             var field = args.Field;
             var item = args.Item;
@@ -18,10 +18,10 @@ namespace Lightcore.Kernel.Pipelines.RenderField.Processors
 
             var link = (LinkField)field;
             var url = string.Empty;
-            var builder = new StringBuilder();
+
             if (link.TargetId != Guid.Empty)
             {
-                var targetItem = args.ItemProvider.GetItemAsync(link.TargetId.ToString(), item.Language).Result;
+                var targetItem = await args.ItemProvider.GetItemAsync(link.TargetId.ToString(), item.Language);
 
                 if (targetItem != null)
                 {
@@ -33,11 +33,9 @@ namespace Lightcore.Kernel.Pipelines.RenderField.Processors
                 url = link.TargetUrl;
             }
 
-            builder.AppendFormat("<a href=\"{0}\">", url);
-            builder.Append(!string.IsNullOrEmpty(link.Description) ? link.Description : url);
-            builder.Append("</a>");
-
-            args.Results = builder.ToString();
+            args.Writer.Write("<a href=\"{0}\">", url);
+            args.Writer.Write(!string.IsNullOrEmpty(link.Description) ? link.Description : url);
+            args.Writer.Write("</a>");
             args.AbortPipeline();
         }
     }

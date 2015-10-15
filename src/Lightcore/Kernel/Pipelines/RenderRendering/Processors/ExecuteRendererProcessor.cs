@@ -9,7 +9,7 @@ namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
         {
             var runner = new ControllerRunner(args.Rendering.Controller, args.Rendering.Action, args.HttpContext, args.RouteData);
 
-            args.Results = await runner.Execute();
+            await runner.Execute(args.Writer);
         }
     }
 }

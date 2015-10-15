@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Lightcore.Kernel.Pipelines.RenderField;
 using Lightcore.Kernel.Pipelines.RenderPlaceholder;
 using Microsoft.AspNet.Mvc.Rendering;
@@ -28,22 +29,32 @@ namespace Lightcore.Kernel.Mvc
 
         public HtmlString RenderField(string name)
         {
-            var context = _htmlHelper.LightcoreContext();
-            var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name]);
+            using (var writer = new StringWriter())
+            {
+                var context = _htmlHelper.LightcoreContext();
+                var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name], writer);
 
-            _renderFieldPipeline.Run(args);
+                _renderFieldPipeline.RunAsync(args).Wait();
 
-            return new HtmlString(args.Results);
+                return new HtmlString(args.Writer.ToString());
+            }
         }
 
         public async Task<HtmlString> PlaceholderAsync(string name)
         {
-            var context = _htmlHelper.LightcoreContext();
-            var args = _renderPlaceholderPipeline.GetArgs(_htmlHelper.ViewContext.HttpContext, _htmlHelper.ViewContext.RouteData, context.Item, name);
+            using (var writer = new StringWriter())
+            {
+                var context = _htmlHelper.LightcoreContext();
+                var args = _renderPlaceholderPipeline.GetArgs(_htmlHelper.ViewContext.HttpContext,
+                    _htmlHelper.ViewContext.RouteData,
+                    context.Item,
+                    name,
+                    writer);
 
-            await _renderPlaceholderPipeline.RunAsync(args);
+                await _renderPlaceholderPipeline.RunAsync(args);
 
-            return new HtmlString(args.Results);
+                return new HtmlString(args.Writer.ToString());
+            }
         }
     }
 }

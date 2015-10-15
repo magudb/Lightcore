@@ -18,6 +18,8 @@
 ## Data ##
 
 - Look into if its worth it to manually do deserialization http://www.newtonsoft.com/json/help/html/performance.htm
+- How is performance with many languages on a item?
+- How is performance with many children?
 
 ## Kernel ##
 
@@ -29,9 +31,7 @@
 
 ## MVC ##
 
-- Use TextWriter instead of string builder?
-- Can OutputCache be supported? 
-	- Or make Sitecore like Html cache (so we can read it from renderings)
+- Make Sitecore like Html cache
 - HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
 
 ## Media ##

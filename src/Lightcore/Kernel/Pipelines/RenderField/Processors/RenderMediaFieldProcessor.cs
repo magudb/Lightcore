@@ -1,4 +1,3 @@
-using System.Text;
 using Lightcore.Kernel.Data;
 
 namespace Lightcore.Kernel.Pipelines.RenderField.Processors
@@ -14,19 +13,16 @@ namespace Lightcore.Kernel.Pipelines.RenderField.Processors
                 return;
             }
 
-            var builder = new StringBuilder();
             var image = (ImageField)field;
 
-            builder.AppendFormat("<img src=\"{0}\"", image.Url);
+            args.Writer.Write("<img src=\"{0}\"", image.Url);
 
             if (!string.IsNullOrEmpty(image.Alt))
             {
-                builder.AppendFormat(" alt=\"{0}\"", image.Alt);
+                args.Writer.Write(" alt=\"{0}\"", image.Alt);
             }
 
-            builder.Append("/>");
-
-            args.Results = builder.ToString();
+            args.Writer.Write("/>");
             args.AbortPipeline();
         }
     }

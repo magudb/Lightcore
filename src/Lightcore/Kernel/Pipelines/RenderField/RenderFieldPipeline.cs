@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.RenderField.Processors;
 using Lightcore.Kernel.Urls;
@@ -23,23 +25,24 @@ namespace Lightcore.Kernel.Pipelines.RenderField
             yield return new RenderFieldProcessor();
         }
 
-        public override void Run(RenderFieldArgs args)
+        public override Task RunAsync(RenderFieldArgs args)
         {
             if (args.Field == null)
             {
                 args.AbortPipeline();
 
-                return;
+                return Task.FromResult(0);
             }
 
-            base.Run(args);
+            return base.RunAsync(args);
         }
 
-        public RenderFieldArgs GetArgs(Item item, Field field)
+        public RenderFieldArgs GetArgs(Item item, Field field, TextWriter writer)
         {
             Requires.IsNotNull(item, nameof(item));
+            Requires.IsNotNull(writer, nameof(writer));
 
-            return new RenderFieldArgs(_itemProvider, _itemUrlService, item, field);
+            return new RenderFieldArgs(_itemProvider, _itemUrlService, item, field, writer);
         }
     }
 }
