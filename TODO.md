@@ -1,6 +1,6 @@
 # TODO's #
 
-## Solution / Projects ##
+## Solution ##
 
 - Add Use Azure Resource Manager Project.
 	- Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
@@ -34,10 +34,22 @@
 ## MVC ##
 
 - HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
+- Add dynamic options = { @class = "product"} to field render helper to decorate markup
 
 ## Media ##
 
-- Switch between CDN (or directly to endpoint) and streaming pipeline calling endpoint
+- Option to set CDN to use when server returns media urls.
+
+## Ideas ##
+
+- Look into PipelineBasedItemProvider! 
+	- Works, but there dosn't exist any "nosql" drivers for coreclr like mongo, redis, elastic etc. ... yet...
+- SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
+	- OR SingalR, broadcase published items and subscribe to refresh items in cache
+- SignalR to know if CM is offline or slow
+- Circut Breaker functionality in itemprovider
+- Backoff and retry in itemprovider, multiple api endpoints... fallback to serialized items on disk?
+- Would it be possible to cross compile and use controllers/view in Sitecore to enable the use of the Page Editor?
 
 ## Thoughts about getting Sitecore data... ##
 
@@ -58,15 +70,4 @@
 	- Cons: custom vs. builtin...
 	- Pros: Can get data exactly as we want it.
 - Use some document db and populate on publish?
-- Use Solr directly?		
-
-## Ideas ##
-
-- Look into PipelineBasedItemProvider! 
-	- Works, but there dosn't exist any "nosql" drivers for coreclr like mongo, redis, elastic etc. ... yet...
-- SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
-	- OR SingalR, broadcase published items and subscribe to refresh items in cache
-- SignalR to know if CM is offline or slow
-- Circut Breaker functionality in itemprovider
-- Backoff and retry in itemprovider, multiple api endpoints... fallback to serialized items on disk?
-- Would it be possible to cross compile and use controllers/view in Sitecore to enable the use of the Page Editor?
+- Use Solr directly?
