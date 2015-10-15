@@ -15,7 +15,6 @@ namespace Lightcore.Kernel.Data
         public FieldCollection Fields { get; set; }
         public bool HasVersion { get; set; }
         public Guid TemplateId { get; set; }
-        public string TemplateName { get; set; }
         public Guid ParentId { get; set; }
         public string this[string fieldName] => Fields[fieldName]?.Value;
     }

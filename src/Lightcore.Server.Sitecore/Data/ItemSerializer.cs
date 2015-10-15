@@ -60,7 +60,6 @@ namespace Lightcore.Server.Sitecore.Data
                 Name = item.Name,
                 ParentId = item.ParentID.Guid,
                 TemplateId = item.TemplateID.Guid,
-                TemplateName = item.TemplateName,
                 HasVersion = item.Versions.Count > 0
             };
         }

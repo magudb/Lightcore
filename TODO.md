@@ -11,7 +11,6 @@
 ## Server ##
 
 - Create CmEnabled bool setting that enabled/disables access to everything besides API and Media request, eases deployment and configration of Sitecore.
-- Is there a need to have a HttpModule for stripping cookies from Sitecore to minimized response payload?
 - Use FakeDb to test item seriaization to json.
 
 ## Data ##
