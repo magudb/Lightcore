@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.RenderField.Processors;
@@ -38,10 +37,7 @@ namespace Lightcore.Kernel.Pipelines.RenderField
 
         public RenderFieldArgs GetArgs(Item item, Field field)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
+            Requires.IsNotNull(item, nameof(item));
 
             return new RenderFieldArgs(_itemProvider, _itemUrlService, item, field);
         }

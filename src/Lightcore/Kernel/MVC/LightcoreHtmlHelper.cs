@@ -33,7 +33,7 @@ namespace Lightcore.Kernel.Mvc
 
             _renderFieldPipeline.Run(args);
 
-            return args.Results;
+            return new HtmlString(args.Results);
         }
 
         public async Task<HtmlString> PlaceholderAsync(string name)
@@ -43,7 +43,7 @@ namespace Lightcore.Kernel.Mvc
 
             await _renderPlaceholderPipeline.RunAsync(args);
 
-            return args.Results;
+            return new HtmlString(args.Results);
         }
     }
 }

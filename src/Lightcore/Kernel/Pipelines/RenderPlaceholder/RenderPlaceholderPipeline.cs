@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.RenderPlaceholder.Processors;
@@ -16,20 +15,8 @@ namespace Lightcore.Kernel.Pipelines.RenderPlaceholder
 
         public RenderPlaceholderArgs GetArgs(HttpContext httpContext, RouteData routeData, Item item, string name)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (name == null)
-            {
-                throw new ArgumentException("Was empty", nameof(name));
-            }
+            Requires.IsNotNull(item, nameof(item));
+            Requires.IsNotNullOrEmpty(name, nameof(name));
 
             return new RenderPlaceholderArgs(httpContext, routeData, item, name);
         }

@@ -1,6 +1,5 @@
 using Lightcore.Kernel.Data;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Routing;
 
 namespace Lightcore.Kernel.Pipelines.RenderPlaceholder
@@ -13,12 +12,13 @@ namespace Lightcore.Kernel.Pipelines.RenderPlaceholder
             RouteData = routeData;
             Item = item;
             Name = name;
+            Results = string.Empty;
         }
 
         public HttpContext HttpContext { get; }
         public RouteData RouteData { get; }
         public Item Item { get; }
         public string Name { get; }
-        public HtmlString Results { get; set; }
+        public string Results { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Urls;
-using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Lightcore.Kernel.Pipelines.RenderField
 {
@@ -12,7 +11,7 @@ namespace Lightcore.Kernel.Pipelines.RenderField
             ItemUrlService = itemUrlService;
             Item = item;
             Field = field;
-            Results = HtmlString.Empty;
+            Results = string.Empty;
         }
 
         public IItemProvider ItemProvider { get; }
@@ -20,6 +19,6 @@ namespace Lightcore.Kernel.Pipelines.RenderField
         public Item Item { get; }
         public Field Field { get; }
 
-        public HtmlString Results { get; set; }
+        public string Results { get; set; }
     }
 }

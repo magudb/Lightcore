@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using Lightcore.Kernel.Data;
-using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Lightcore.Kernel.Pipelines.RenderField.Processors
 {
@@ -38,7 +37,7 @@ namespace Lightcore.Kernel.Pipelines.RenderField.Processors
             builder.Append(!string.IsNullOrEmpty(link.Description) ? link.Description : url);
             builder.Append("</a>");
 
-            args.Results = new HtmlString(builder.ToString());
+            args.Results = builder.ToString();
             args.AbortPipeline();
         }
     }

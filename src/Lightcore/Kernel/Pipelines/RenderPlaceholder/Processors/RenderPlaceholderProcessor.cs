@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
 
 namespace Lightcore.Kernel.Pipelines.RenderPlaceholder.Processors
 {
@@ -23,7 +22,7 @@ namespace Lightcore.Kernel.Pipelines.RenderPlaceholder.Processors
                 builder.Append(output);
             }
 
-            args.Results = new HtmlString(builder.ToString());
+            args.Results = builder.ToString();
         }
     }
 }
