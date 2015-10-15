@@ -15,6 +15,7 @@
 
 ## Data ##
 
+- IItemProvider.GetItemVersionsAsync(string pathOrId) so we can get a list of tranlated versions for a item
 - Cache items
 	- Publish event to clear cache on complete or clear single entries?  
 	- Also clear html cache
