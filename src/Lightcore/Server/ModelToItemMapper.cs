@@ -36,14 +36,7 @@ namespace Lightcore.Server
 
             if (apiPresentation != null)
             {
-                item.Visualization = new ItemVisualization
-                {
-                    Layout = new Layout
-                    {
-                        Path = apiPresentation.Layout.Path
-                    },
-                    Renderings = MapRenderings(apiPresentation)
-                };
+                item.Visualization = new Presentation(new Layout(apiPresentation.Layout.Path), MapRenderings(apiPresentation));
             }
 
             return item;
@@ -51,63 +44,36 @@ namespace Lightcore.Server
 
         private static IEnumerable<Rendering> MapRenderings(PresentationModel apiPresentation)
         {
-            return apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.DataSource, r.Controller, r.Action, r.Parameters, new Caching
-            {
-                Cacheable = r.Caching.Cacheable,
-                VaryByItem = r.Caching.VaryByItem,
-                VaryByQueryString = r.Caching.VaryByQueryString,
-                VaryByParm = r.Caching.VaryByParm
-            }));
+            return apiPresentation.Renderings.Select(r =>
+                new Rendering(r.Placeholder, r.DataSource, r.Controller, r.Action, r.Parameters,
+                    new Caching(r.Caching.Cacheable, r.Caching.VaryByItem, r.Caching.VaryByParm, r.Caching.VaryByQueryString)));
         }
 
         private static Field MapField(FieldModel apiField)
         {
             if (apiField.Type.Equals("image"))
             {
-                var field = new ImageField
-                {
-                    Id = apiField.Id,
-                    Type = apiField.Type,
-                    Key = apiField.Key
-                };
-
                 var value = (JObject)apiField.Value;
 
-                field.Alt = value["Alt"].Value<string>();
-                field.Url = value["Url"].Value<string>();
-
-                return field;
+                return new ImageField(apiField.Key,
+                    apiField.Type,
+                    apiField.Id,
+                    value["Alt"].Value<string>(),
+                    value["Url"].Value<string>());
             }
 
             if (apiField.Type.Equals("general link"))
             {
-                var field = new LinkField
-                {
-                    Id = apiField.Id,
-                    Type = apiField.Type,
-                    Key = apiField.Key
-                };
-
                 var value = (JObject)apiField.Value;
 
-                field.TargetId = Guid.Parse(value["TargetId"].Value<string>());
-                field.TargetUrl = value["TargetUrl"].Value<string>();
-                field.Description = value["Description"].Value<string>();
-
-                return field;
+                return new LinkField(apiField.Key,
+                    apiField.Type,
+                    apiField.Id, value["Description"].Value<string>(),
+                    value["TargetUrl"].Value<string>(),
+                    Guid.Parse(value["TargetId"].Value<string>()));
             }
-            else
-            {
-                var field = new Field
-                {
-                    Id = apiField.Id,
-                    Type = apiField.Type,
-                    Key = apiField.Key,
-                    Value = apiField.Value as string
-                };
 
-                return field;
-            }
+            return new Field(apiField.Key, apiField.Key, apiField.Id, apiField.Value as string);
         }
     }
 }

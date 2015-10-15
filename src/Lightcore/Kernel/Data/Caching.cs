@@ -2,9 +2,17 @@ namespace Lightcore.Kernel.Data
 {
     public class Caching
     {
-        public bool Cacheable { get; set; }
-        public bool VaryByItem { get; set; }
-        public bool VaryByParm { get; set; }
-        public bool VaryByQueryString { get; set; }
+        public Caching(bool cacheable, bool varyByItem, bool varyByParm, bool varyByQueryString)
+        {
+            Cacheable = cacheable;
+            VaryByItem = varyByItem;
+            VaryByParm = varyByParm;
+            VaryByQueryString = varyByQueryString;
+        }
+
+        public bool Cacheable { get; }
+        public bool VaryByItem { get; }
+        public bool VaryByParm { get; }
+        public bool VaryByQueryString { get; }
     }
 }
