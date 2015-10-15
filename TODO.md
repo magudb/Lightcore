@@ -21,7 +21,6 @@
 
 ## Kernel ##
 
-- RenderRendering pipeline
 - Pipeline/Processor trace decorators to measure execution time
 - Logging?
 - Always return direct children or split GetItem into two? 

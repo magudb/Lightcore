@@ -4,6 +4,7 @@ using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Mvc;
 using Lightcore.Kernel.Pipelines.RenderField;
 using Lightcore.Kernel.Pipelines.RenderPlaceholder;
+using Lightcore.Kernel.Pipelines.RenderRendering;
 using Lightcore.Kernel.Pipelines.Request;
 using Lightcore.Kernel.Pipelines.Startup;
 using Lightcore.Kernel.Urls;
@@ -45,9 +46,12 @@ namespace Lightcore.Hosting
             // Add Lightcore services
             services.AddSingleton<IItemProvider, LightcoreApiItemProvider>();
             services.AddSingleton<IItemUrlService, ItemUrlService>();
+
+            // Add Lightcore pipelines
             services.AddSingleton<StartupPipeline>();
             services.AddSingleton<RequestPipeline>();
             services.AddSingleton<RenderFieldPipeline>();
+            services.AddSingleton<RenderRenderingPipeline>();
             services.AddSingleton<RenderPlaceholderPipeline>();
         }
 

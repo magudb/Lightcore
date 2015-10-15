@@ -2,24 +2,30 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lightcore.Kernel.Mvc;
+using Lightcore.Kernel.Pipelines.RenderRendering;
 
 namespace Lightcore.Kernel.Pipelines.RenderPlaceholder.Processors
 {
     public class RenderPlaceholderProcessor : Processor<RenderPlaceholderArgs>
     {
+        private readonly RenderRenderingPipeline _renderRenderingPipeline;
+
+        public RenderPlaceholderProcessor(RenderRenderingPipeline renderRenderingPipeline)
+        {
+            _renderRenderingPipeline = renderRenderingPipeline;
+        }
+
         public override async Task ProcessAsync(RenderPlaceholderArgs args)
         {
             var builder = new StringBuilder();
             var renderings = args.Item.Visualization.Renderings
                                  .Where(r => r.Placeholder.Equals(args.Name, StringComparison.OrdinalIgnoreCase));
 
-            foreach (var rendering in renderings)
+            foreach (var renderRenderingArgs in renderings.Select(rendering => new RenderRenderingArgs(args.HttpContext, args.RouteData, rendering)))
             {
-                var runner = new ControllerRunner(rendering.Controller, rendering.Action, args.HttpContext, args.RouteData);
-                var output = await runner.Execute();
+                await _renderRenderingPipeline.RunAsync(renderRenderingArgs);
 
-                builder.Append(output);
+                builder.Append(renderRenderingArgs.Results);
             }
 
             args.Results = builder.ToString();
