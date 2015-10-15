@@ -109,7 +109,14 @@ namespace Lightcore.Server.Sitecore.Data
                     Controller = rendering.RenderingItem.InnerItem["Controller"],
                     Action = !string.IsNullOrEmpty(action) ? action : "Index",
                     DataSource = !string.IsNullOrEmpty(dataSource) ? dataSource : item.ID.Guid.ToString(),
-                    Parameters = parameters
+                    Parameters = parameters,
+                    Caching = new RenderingCachingModel
+                    {
+                        Cacheable = rendering.Settings.Caching.Cacheable,
+                        VaryByItem = rendering.Settings.Caching.VaryByData,
+                        VaryByParm = rendering.Settings.Caching.VaryByParm,
+                        VaryByQueryString = rendering.Settings.Caching.VaryByQueryString
+                    }
                 };
             });
 
@@ -157,7 +164,7 @@ namespace Lightcore.Server.Sitecore.Data
                 {
                     Description = link.Text,
                     TargetId = link.IsInternal ? link.TargetID.Guid : Guid.Empty,
-                    TargetUrl= link.IsInternal ? "" : link.GetFriendlyUrl()
+                    TargetUrl = link.IsInternal ? "" : link.GetFriendlyUrl()
                 };
             }
             else

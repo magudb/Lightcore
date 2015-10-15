@@ -9,5 +9,6 @@ namespace Lightcore.Server.Models
         public string Action { get; set; }
         public string DataSource { get; set; }
         public Dictionary<string, string> Parameters { get; set; }
+        public RenderingCachingModel Caching { get; set; }
     }
 }

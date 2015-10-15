@@ -42,12 +42,22 @@ namespace Lightcore.Server
                     {
                         Path = apiPresentation.Layout.Path
                     },
-                    Renderings = apiPresentation.Renderings
-                                                .Select(r => new Rendering(r.Placeholder, r.DataSource, r.Controller, r.Action, r.Parameters))
+                    Renderings = MapRenderings(apiPresentation)
                 };
             }
 
             return item;
+        }
+
+        private static IEnumerable<Rendering> MapRenderings(PresentationModel apiPresentation)
+        {
+            return apiPresentation.Renderings.Select(r => new Rendering(r.Placeholder, r.DataSource, r.Controller, r.Action, r.Parameters, new Caching
+            {
+                Cacheable = r.Caching.Cacheable,
+                VaryByItem = r.Caching.VaryByItem,
+                VaryByQueryString = r.Caching.VaryByQueryString,
+                VaryByParm = r.Caching.VaryByParm
+            }));
         }
 
         private static Field MapField(FieldModel apiField)

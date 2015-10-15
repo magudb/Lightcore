@@ -73,6 +73,9 @@
     <Compile Include="..\Lightcore\Server\Models\FieldModel.cs">
       <Link>Models\FieldModel.cs</Link>
     </Compile>
+    <Compile Include="..\Lightcore\Server\Models\ImageFieldValueModel.cs">
+      <Link>Models\ImageFieldValueModel.cs</Link>
+    </Compile>
     <Compile Include="..\Lightcore\Server\Models\ItemModel.cs">
       <Link>Models\ItemModel.cs</Link>
     </Compile>
@@ -85,6 +88,9 @@
     <Compile Include="..\Lightcore\Server\Models\PresentationModel.cs">
       <Link>Models\PresentationModel.cs</Link>
     </Compile>
+    <Compile Include="..\Lightcore\Server\Models\RenderingCachingModel.cs">
+      <Link>Models\RenderingCachingModel.cs</Link>
+    </Compile>
     <Compile Include="..\Lightcore\Server\Models\RenderingModel.cs">
       <Link>Models\RenderingModel.cs</Link>
     </Compile>
@@ -95,7 +101,6 @@
     <Compile Include="Api\ItemModule.cs" />
     <Compile Include="Data\ItemSerializer.cs" />
     <Compile Include="Experiments\PipelineBasedItemProvider\Processors.cs" />
-    <Compile Include="Models\ImageFieldValueModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
