@@ -36,7 +36,7 @@ namespace Lightcore.Kernel.Mvc
 
                 _renderFieldPipeline.RunAsync(args).Wait();
 
-                return new HtmlString(args.Writer.ToString());
+                return new HtmlString(args.Output.ToString());
             }
         }
 
@@ -53,7 +53,7 @@ namespace Lightcore.Kernel.Mvc
 
                 await _renderPlaceholderPipeline.RunAsync(args);
 
-                return new HtmlString(args.Writer.ToString());
+                return new HtmlString(args.Output.ToString());
             }
         }
     }

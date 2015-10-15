@@ -18,7 +18,7 @@ namespace Lightcore.Hosting.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            _pipeline.Run(_pipeline.GetArgs(context));
+            await _pipeline.RunAsync(_pipeline.GetArgs(context));
 
             if (!_pipeline.IsEnded)
             {

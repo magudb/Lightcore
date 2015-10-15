@@ -6,19 +6,19 @@ namespace Lightcore.Kernel.Pipelines.RenderField
 {
     public class RenderFieldArgs : PipelineArgs
     {
-        public RenderFieldArgs(IItemProvider itemProvider, IItemUrlService itemUrlService, Item item, Field field, TextWriter writer)
+        public RenderFieldArgs(IItemProvider itemProvider, IItemUrlService itemUrlService, Item item, Field field, TextWriter output)
         {
             ItemProvider = itemProvider;
             ItemUrlService = itemUrlService;
             Item = item;
             Field = field;
-            Writer = writer;
+            Output = output;
         }
 
         public IItemProvider ItemProvider { get; }
         public IItemUrlService ItemUrlService { get; }
         public Item Item { get; }
         public Field Field { get; }
-        public TextWriter Writer { get; }
+        public TextWriter Output { get; }
     }
 }

@@ -37,12 +37,12 @@ namespace Lightcore.Kernel.Pipelines.RenderField
             return base.RunAsync(args);
         }
 
-        public RenderFieldArgs GetArgs(Item item, Field field, TextWriter writer)
+        public RenderFieldArgs GetArgs(Item item, Field field, TextWriter output)
         {
             Requires.IsNotNull(item, nameof(item));
-            Requires.IsNotNull(writer, nameof(writer));
+            Requires.IsNotNull(output, nameof(output));
 
-            return new RenderFieldArgs(_itemProvider, _itemUrlService, item, field, writer);
+            return new RenderFieldArgs(_itemProvider, _itemUrlService, item, field, output);
         }
     }
 }

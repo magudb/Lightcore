@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Lightcore.Kernel.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.Startup.Processors;
@@ -26,7 +27,7 @@ namespace Lightcore.Kernel.Pipelines.Startup
             yield return new VerifyConfigProcessor();
         }
 
-        public override void Run(StartupArgs args)
+        public override Task RunAsync(StartupArgs args)
         {
             if (_isStarted == false)
             {
@@ -34,12 +35,14 @@ namespace Lightcore.Kernel.Pipelines.Startup
                 {
                     if (_isStarted == false)
                     {
-                        base.Run(args);
+                        base.RunAsync(args).Wait();
 
                         _isStarted = true;
                     }
                 }
             }
+
+            return Task.FromResult(0);
         }
 
         public StartupArgs GetArgs(HttpContext context)

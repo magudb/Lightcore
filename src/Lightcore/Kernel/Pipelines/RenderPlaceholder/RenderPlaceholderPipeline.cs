@@ -22,13 +22,13 @@ namespace Lightcore.Kernel.Pipelines.RenderPlaceholder
             yield return new RenderPlaceholderProcessor(_renderRenderingPipeline);
         }
 
-        public RenderPlaceholderArgs GetArgs(HttpContext httpContext, RouteData routeData, Item item, string name, TextWriter writer)
+        public RenderPlaceholderArgs GetArgs(HttpContext httpContext, RouteData routeData, Item item, string name, TextWriter output)
         {
             Requires.IsNotNull(item, nameof(item));
             Requires.IsNotNullOrEmpty(name, nameof(name));
-            Requires.IsNotNull(writer, nameof(writer));
+            Requires.IsNotNull(output, nameof(output));
 
-            return new RenderPlaceholderArgs(httpContext, routeData, item, name, writer);
+            return new RenderPlaceholderArgs(httpContext, routeData, item, name, output);
         }
     }
 }

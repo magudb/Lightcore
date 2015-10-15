@@ -4,9 +4,7 @@ namespace Lightcore.Kernel.Pipelines.Startup.Processors
     {
         public override void Process(StartupArgs args)
         {
-            var startupArgs = (StartupArgs)args;
-
-            startupArgs.Options.Verify();
+            args.Options.Verify();
         }
     }
 }

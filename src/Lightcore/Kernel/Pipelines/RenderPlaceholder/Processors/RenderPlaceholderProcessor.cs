@@ -19,7 +19,7 @@ namespace Lightcore.Kernel.Pipelines.RenderPlaceholder.Processors
             var renderings = args.Item.Visualization.Renderings
                                  .Where(r => r.Placeholder.Equals(args.Name, StringComparison.OrdinalIgnoreCase));
 
-            foreach (var renderArgs in renderings.Select(r => new RenderRenderingArgs(args.HttpContext, args.RouteData, r, args.Writer)))
+            foreach (var renderArgs in renderings.Select(r => new RenderRenderingArgs(args.HttpContext, args.RouteData, args.Item, r, args.Output)))
             {
                 await _renderRenderingPipeline.RunAsync(renderArgs);
             }

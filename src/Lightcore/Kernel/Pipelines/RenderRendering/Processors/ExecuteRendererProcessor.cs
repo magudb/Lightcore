@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Mvc;
 
@@ -9,7 +10,13 @@ namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
         {
             var runner = new ControllerRunner(args.Rendering.Controller, args.Rendering.Action, args.HttpContext, args.RouteData);
 
-            await runner.Execute(args.Writer);
+            using (var writer = new StringWriter())
+            {
+                await runner.Execute(writer);
+
+                args.CacheableOutput = writer.ToString();
+                args.Output.Write(args.CacheableOutput);
+            }
         }
     }
 }

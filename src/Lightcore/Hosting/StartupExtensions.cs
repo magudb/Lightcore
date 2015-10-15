@@ -40,6 +40,9 @@ namespace Lightcore.Hosting
             // Add standard MVC services and Lightcore ValueProvider
             services.AddMvc(options => { options.ValueProviderFactories.Add(new PresentationContextValueProviderFactory()); });
 
+            // Add standard caching
+            services.AddCaching();
+
             // Add Lightcore configuration so it can be used as a dependency IOptions<LightcoreConfig> config
             services.Configure<LightcoreOptions>(config.GetSection("LightcoreOptions"));
 

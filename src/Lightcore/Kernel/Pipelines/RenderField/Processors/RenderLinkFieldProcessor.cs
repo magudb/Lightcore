@@ -33,9 +33,9 @@ namespace Lightcore.Kernel.Pipelines.RenderField.Processors
                 url = link.TargetUrl;
             }
 
-            args.Writer.Write("<a href=\"{0}\">", url);
-            args.Writer.Write(!string.IsNullOrEmpty(link.Description) ? link.Description : url);
-            args.Writer.Write("</a>");
+            args.Output.Write("<a href=\"{0}\">", url);
+            args.Output.Write(!string.IsNullOrEmpty(link.Description) ? link.Description : url);
+            args.Output.Write("</a>");
             args.AbortPipeline();
         }
     }

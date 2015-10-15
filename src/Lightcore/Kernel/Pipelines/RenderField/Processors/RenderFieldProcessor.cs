@@ -4,7 +4,7 @@ namespace Lightcore.Kernel.Pipelines.RenderField.Processors
     {
         public override void Process(RenderFieldArgs args)
         {
-            args.Writer.Write(args.Field.Value);
+            args.Output.Write(args.Field.Value);
             args.AbortPipeline();
         }
     }

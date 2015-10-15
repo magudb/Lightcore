@@ -10,13 +10,16 @@
 
 ## Server ##
 
-- Publish event to clear cache on complete or clear single entries?  
 - Create CmEnabled bool setting that enabled/disables access to everything besides API and Media request, eases deployment and configration of Sitecore.
 - Is there a need to have a HttpModule for stripping cookies from Sitecore to minimized response payload?
 - Use FakeDb to test item seriaization to json.
 
 ## Data ##
 
+- Cache items
+	- Publish event to clear cache on complete or clear single entries?  
+	- Also clear html cache
+- Don't depend directly on Microsoft.Framework.Caching.Memory.IMemoryCache
 - Look into if its worth it to manually do deserialization http://www.newtonsoft.com/json/help/html/performance.htm
 - How is performance with many languages on a item?
 - How is performance with many children?
@@ -31,7 +34,6 @@
 
 ## MVC ##
 
-- Make Sitecore like Html cache
 - HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
 
 ## Media ##
