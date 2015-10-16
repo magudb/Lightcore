@@ -10,6 +10,8 @@
     },
     "web": {
       "commandName": "web",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:5000/",
       "environmentVariables": {
         "ASPNET_ENV": "Development"
       }

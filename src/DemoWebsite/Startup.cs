@@ -1,6 +1,5 @@
 ﻿using Lightcore.Hosting;
 using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
@@ -27,10 +26,6 @@ namespace WebApp
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)
         {
-            loggerFactory.MinimumLevel = LogLevel.Debug;
-            loggerFactory.AddConsole();
-            loggerFactory.AddDebug();
-
             // Use detailed exception page
             app.UseDeveloperExceptionPage();
 

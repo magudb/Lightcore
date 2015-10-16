@@ -22,7 +22,7 @@ namespace Lightcore.Hosting
         public static IConfiguration BuildLightcoreConfiguration(this IApplicationEnvironment appEnv, IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder().SetBasePath(appEnv.ApplicationBasePath);
-
+            
             // Add main config file
             builder.AddJsonFile("lightcore.json");
 
