@@ -44,7 +44,7 @@ namespace Lightcore.Server
         private static IEnumerable<Rendering> MapRenderings(PresentationModel apiPresentation)
         {
             return apiPresentation.Renderings.Select(r =>
-                new Rendering(r.Placeholder, r.DataSource, r.Controller, r.Action, r.Parameters,
+                new Rendering(r.Placeholder, r.Datasource, r.Controller, r.Action, r.Parameters,
                     new Caching(r.Caching.Cacheable, r.Caching.VaryByItem, r.Caching.VaryByParm, r.Caching.VaryByQueryString)));
         }
 

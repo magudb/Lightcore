@@ -18,12 +18,7 @@ namespace Lightcore.Kernel.Configuration
             }
         };
 
-        LightcoreOptions IOptions<LightcoreOptions>.Options => this;
-
-        LightcoreOptions IOptions<LightcoreOptions>.GetNamedOptions(string name)
-        {
-            return this;
-        }
+        public LightcoreOptions Value => this;
 
         public void Verify()
         {

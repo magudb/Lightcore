@@ -6,7 +6,7 @@ namespace Lightcore.Kernel.Mvc
     {
         public ActionResult Render(string path)
         {
-            var context = Context.LightcoreContext();
+            var context = HttpContext.LightcoreContext();
 
             return View(context.Item.Visualization.Layout.Path, context.Item);
         }

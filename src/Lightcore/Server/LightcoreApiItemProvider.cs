@@ -19,11 +19,11 @@ namespace Lightcore.Server
         private readonly LightcoreOptions _config;
         private readonly JsonSerializer _serializer;
 
-        public LightcoreApiItemProvider(IOptions<LightcoreOptions> config, IMemoryCache cache)
+        public LightcoreApiItemProvider(IOptions<LightcoreOptions> options, IMemoryCache cache)
         {
             _serializer = new JsonSerializer();
             _cache = cache;
-            _config = config.Options;
+            _config = options.Value;
             _client = new HttpClient(new HttpClientHandler
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
@@ -37,6 +37,9 @@ namespace Lightcore.Server
 
         public async Task<Item> GetItemAsync(string pathOrId, Language language)
         {
+            Requires.IsNotNullOrEmpty(pathOrId, nameof(pathOrId));
+            Requires.IsNotNull(language, nameof(language));
+
             var device = _config.Sitecore.Device;
             var database = _config.Sitecore.Database;
             var url = $"{_config.ServerUrl}/-/lightcore/item/{pathOrId}?sc_database={database}&sc_lang={language.Name}&sc_device={device}";

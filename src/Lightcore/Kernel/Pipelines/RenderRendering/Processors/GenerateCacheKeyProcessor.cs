@@ -20,7 +20,7 @@ namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
 
             if (args.Rendering.Caching.VaryByItem)
             {
-                segments.Add("data", args.Rendering.DataSource);
+                segments.Add("data", args.Rendering.Datasource);
             }
 
             if (args.Rendering.Caching.VaryByParm)

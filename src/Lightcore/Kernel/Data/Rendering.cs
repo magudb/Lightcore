@@ -4,17 +4,17 @@ namespace Lightcore.Kernel.Data
 {
     public class Rendering
     {
-        public Rendering(string placeholder, string dataSource, string controller, string action, Dictionary<string, string> parameters, Caching caching)
+        public Rendering(string placeholder, string datasource, string controller, string action, Dictionary<string, string> parameters, Caching caching)
         {
             Placeholder = placeholder;
-            DataSource = dataSource;
+            Datasource = datasource;
             Controller = controller;
             Action = action;
             Parameters = parameters;
             Caching = caching;
         }
 
-        public string DataSource { get; }
+        public string Datasource { get; }
         public string Controller { get; }
         public string Action { get; }
         public Dictionary<string, string> Parameters { get; }

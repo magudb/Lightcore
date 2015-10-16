@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Infrastructure;
 using Microsoft.AspNet.Routing;
 
 namespace Lightcore.Kernel.Mvc

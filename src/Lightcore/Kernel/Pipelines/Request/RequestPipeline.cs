@@ -15,7 +15,7 @@ namespace Lightcore.Kernel.Pipelines.Request
         public RequestPipeline(IItemProvider itemProvider, IOptions<LightcoreOptions> options)
         {
             _itemProvider = itemProvider;
-            _options = options.Options;
+            _options = options.Value;
         }
 
         public RequestArgs GetArgs(HttpContext context)

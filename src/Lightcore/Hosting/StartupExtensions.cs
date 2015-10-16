@@ -21,7 +21,7 @@ namespace Lightcore.Hosting
     {
         public static IConfiguration BuildLightcoreConfiguration(this IApplicationEnvironment appEnv, IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath);
+            var builder = new ConfigurationBuilder().SetBasePath(appEnv.ApplicationBasePath);
 
             // Add main config file
             builder.AddJsonFile("lightcore.json");
@@ -38,7 +38,7 @@ namespace Lightcore.Hosting
         public static void AddLightcore(this IServiceCollection services, IConfiguration config)
         {
             // Add standard MVC services and Lightcore ValueProvider
-            services.AddMvc(options => { options.ValueProviderFactories.Add(new PresentationContextValueProviderFactory()); });
+            services.AddMvc(options => { options.ValueProviderFactories.Add(new LightcoreValueProviderFactory()); });
 
             // Add standard caching
             services.AddCaching();

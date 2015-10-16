@@ -7,7 +7,7 @@ namespace WebApp.Controllers
     {
         public ActionResult Index()
         {
-            var context = Context.LightcoreContext();
+            var context = HttpContext.LightcoreContext();
 
             return View("/Views/Footer/Index.cshtml", context.Item);
         }

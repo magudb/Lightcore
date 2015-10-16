@@ -11,7 +11,7 @@ namespace Lightcore.Kernel.Urls
 
         public ItemUrlService(IOptions<LightcoreOptions> options)
         {
-            _options = options.Options;
+            _options = options.Value;
         }
 
         public string GetUrl(Item item)

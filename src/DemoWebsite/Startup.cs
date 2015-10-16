@@ -1,5 +1,6 @@
 ﻿using Lightcore.Hosting;
 using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
@@ -26,7 +27,17 @@ namespace WebApp
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)
         {
-            // Add static file support to the request pipeline.
+            loggerFactory.MinimumLevel = LogLevel.Debug;
+            loggerFactory.AddConsole();
+            loggerFactory.AddDebug();
+
+            // Use detailed exception page
+            app.UseDeveloperExceptionPage();
+
+            // Add the platform handler to the request pipeline.
+            app.UseIISPlatformHandler();
+
+            // Add static files to the request pipeline.
             app.UseStaticFiles();
 
             // Enable Lightcore

@@ -16,11 +16,11 @@ namespace Lightcore.Server
         private readonly LightcoreOptions _config;
         private readonly JsonSerializer _serializer;
 
-        public LightcoreDiskItemProvider(IOptions<LightcoreOptions> config, IMemoryCache cache)
+        public LightcoreDiskItemProvider(IOptions<LightcoreOptions> options, IMemoryCache cache)
         {
             _serializer = new JsonSerializer();
             _cache = cache;
-            _config = config.Options;
+            _config = options.Value;
         }
 
         public void Dispose()

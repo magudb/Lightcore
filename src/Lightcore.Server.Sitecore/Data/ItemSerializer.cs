@@ -94,7 +94,7 @@ namespace Lightcore.Server.Sitecore.Data
             presentation.Renderings = controllerRenderings.Select(rendering =>
             {
                 var action = rendering.RenderingItem.InnerItem["Action"];
-                var dataSource = rendering.Settings.DataSource;
+                var datasource = rendering.Settings.DataSource;
                 var parameters = new Dictionary<string, string>();
 
                 if (!string.IsNullOrEmpty(rendering.Settings.Parameters))
@@ -107,7 +107,7 @@ namespace Lightcore.Server.Sitecore.Data
                     Placeholder = rendering.Placeholder,
                     Controller = rendering.RenderingItem.InnerItem["Controller"],
                     Action = !string.IsNullOrEmpty(action) ? action : "Index",
-                    DataSource = !string.IsNullOrEmpty(dataSource) ? dataSource : item.ID.Guid.ToString(),
+                    Datasource = !string.IsNullOrEmpty(datasource) ? datasource : item.ID.Guid.ToString(),
                     Parameters = parameters,
                     Caching = new RenderingCachingModel
                     {

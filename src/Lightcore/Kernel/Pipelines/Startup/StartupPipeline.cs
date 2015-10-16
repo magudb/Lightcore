@@ -19,7 +19,7 @@ namespace Lightcore.Kernel.Pipelines.Startup
         public StartupPipeline(IItemProvider itemProvider, IOptions<LightcoreOptions> options)
         {
             _itemProvider = itemProvider;
-            _options = options.Options;
+            _options = options.Value;
         }
 
         public override IEnumerable<Processor<StartupArgs>> GetProcessors()
