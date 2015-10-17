@@ -5,12 +5,11 @@
 - Add Use Azure Resource Manager Project.
 	- Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
 		- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
-- Test on IIS locally
+- Test on IIS
 
 ## Server ##
 
 - Create CmEnabled bool setting that enabled/disables access to everything besides API and Media request, eases deployment and configration of Sitecore.
-- Use FakeDb to test item seriaization to json.
 
 ## Data ##
 
@@ -34,7 +33,6 @@
 ## MVC ##
 
 - HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
-- Add dynamic options = { @class = "product"} to field render helper to decorate markup
 
 ## Media ##
 

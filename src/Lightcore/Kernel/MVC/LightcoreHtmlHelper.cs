@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Pipelines.RenderField;
 using Lightcore.Kernel.Pipelines.RenderPlaceholder;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Routing;
 using Microsoft.Framework.DependencyInjection;
 
 namespace Lightcore.Kernel.Mvc
@@ -27,12 +29,12 @@ namespace Lightcore.Kernel.Mvc
             return new HtmlString(context.Item[name]);
         }
 
-        public HtmlString RenderField(string name)
+        public HtmlString RenderField(string name, dynamic attributes = null)
         {
             using (var writer = new StringWriter())
             {
                 var context = _htmlHelper.LightcoreContext();
-                var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name], writer);
+                var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name], writer, ToDictionary(attributes));
 
                 _renderFieldPipeline.RunAsync(args).Wait();
 
@@ -55,6 +57,25 @@ namespace Lightcore.Kernel.Mvc
 
                 return new HtmlString(args.Output.ToString());
             }
+        }
+
+        private Dictionary<string, string> ToDictionary(dynamic @object)
+        {
+            var dictionary = new Dictionary<string, string>();
+
+            if (@object == null)
+            {
+                return dictionary;
+            }
+
+            var converter = new RouteValueDictionary(@object);
+
+            foreach (var key in converter.Keys)
+            {
+                dictionary.Add(key, converter[key].ToString());
+            }
+
+            return dictionary;
         }
     }
 }

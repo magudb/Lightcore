@@ -15,11 +15,17 @@ namespace Lightcore.Kernel.Pipelines.RenderField.Processors
 
             var image = (ImageField)field;
 
-            args.Output.Write("<img src=\"{0}\"", image.Url);
+            args.Output.Write("<img");
+            args.Attributes.Add("src", image.Url);
 
             if (!string.IsNullOrEmpty(image.Alt))
             {
-                args.Output.Write(" alt=\"{0}\"", image.Alt);
+                args.Attributes.Add("alt", image.Alt);
+            }
+
+            foreach (var option in args.Attributes)
+            {
+                args.Output.Write(" {0}=\"{1}\"", option.Key, option.Value);
             }
 
             args.Output.Write("/>");
