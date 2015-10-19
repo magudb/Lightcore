@@ -42,7 +42,8 @@ namespace Lightcore.Server
 
             var device = _config.Sitecore.Device;
             var database = _config.Sitecore.Database;
-            var url = $"{_config.ServerUrl}/-/lightcore/item/{pathOrId}?sc_database={database}&sc_lang={language.Name}&sc_device={device}";
+            var cdn= _config.Sitecore.Cdn;
+            var url = $"{_config.ServerUrl}/-/lightcore/item/{pathOrId}?sc_database={database}&sc_lang={language.Name}&sc_device={device}&cdn={cdn}";
 
             using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {

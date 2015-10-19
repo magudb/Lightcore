@@ -3,7 +3,8 @@
     "Sitecore": {
       "Database": "web",
       "Device": "default",
-      "StartItem": "/sitecore/content/Home"
+      "StartItem": "/sitecore/content/Home",
+      "Cdn": null
     }
   }
 }

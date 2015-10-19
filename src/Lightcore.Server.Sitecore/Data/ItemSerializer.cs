@@ -13,7 +13,7 @@ namespace Lightcore.Server.Sitecore.Data
 {
     public class ItemSerializer
     {
-        private static readonly ID ControllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
+        private static readonly ID _controllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
         private readonly JsonSerializer _serializer;
 
         public ItemSerializer()
@@ -21,9 +21,9 @@ namespace Lightcore.Server.Sitecore.Data
             _serializer = new JsonSerializer();
         }
 
-        public void Serialize(Item item, Stream outputStream, string device)
+        public void Serialize(Item item, Stream outputStream, string device, string mediaBaseUrl = null)
         {
-            var @object = ConvertToReponseModel(item, device);
+            var @object = ConvertToReponseModel(item, device, mediaBaseUrl);
 
             using (TextWriter tx = new StreamWriter(outputStream))
             {
@@ -34,17 +34,17 @@ namespace Lightcore.Server.Sitecore.Data
             }
         }
 
-        private static ServerResponseModel ConvertToReponseModel(Item item, string deviceName)
+        private static ServerResponseModel ConvertToReponseModel(Item item, string deviceName, string mediaBaseUrl)
         {
             return new ServerResponseModel
             {
                 Item = MapItem(item),
-                Fields = MapFields(item),
+                Fields = MapFields(item, mediaBaseUrl),
                 Presentation = MapPresentation(item, deviceName),
                 Children = item.GetChildren().Select(child => new ServerResponseModel
                 {
                     Item = MapItem(child),
-                    Fields = MapFields(child),
+                    Fields = MapFields(child, mediaBaseUrl),
                     Presentation = null,
                     Children = Enumerable.Empty<ServerResponseModel>()
                 })
@@ -89,7 +89,7 @@ namespace Lightcore.Server.Sitecore.Data
             };
 
             var controllerRenderings = item.Visualization.GetRenderings(device, false)
-                                           .Where(r => r.RenderingItem.InnerItem.TemplateID == ControllerRenderingTemplateId);
+                .Where(r => r.RenderingItem.InnerItem.TemplateID == _controllerRenderingTemplateId);
 
             presentation.Renderings = controllerRenderings.Select(rendering =>
             {
@@ -122,17 +122,17 @@ namespace Lightcore.Server.Sitecore.Data
             return presentation;
         }
 
-        private static IEnumerable<FieldModel> MapFields(Item item)
+        private static IEnumerable<FieldModel> MapFields(Item item, string mediaBaseUrl)
         {
             if (item.Versions.Count == 0)
             {
                 return Enumerable.Empty<FieldModel>();
             }
 
-            return item.Fields.Where(f => !f.Key.StartsWith("__")).Select(MapField).Where(f => f != null);
+            return item.Fields.Where(f => !f.Key.StartsWith("__")).Select(f => { return MapField(f, mediaBaseUrl); }).Where(f => f != null);
         }
 
-        private static FieldModel MapField(Field field)
+        private static FieldModel MapField(Field field, string mediaBaseUrl)
         {
             object value;
 
@@ -147,13 +147,18 @@ namespace Lightcore.Server.Sitecore.Data
 
                 var url = MediaManager.GetMediaUrl(media.MediaItem, new MediaUrlOptions
                 {
+                    MediaLinkServerUrl = mediaBaseUrl,
                     AlwaysIncludeServerUrl = true,
                     IncludeExtension = true,
                     LowercaseUrls = true,
                     UseItemPath = true
                 });
 
-                value = new ImageFieldValueModel {Alt = media.Alt, Url = url};
+                value = new ImageFieldValueModel
+                {
+                    Alt = media.Alt,
+                    Url = url
+                };
             }
             else if (field.TypeKey.Equals("general link"))
             {

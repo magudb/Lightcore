@@ -34,10 +34,6 @@
 
 - HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
 
-## Media ##
-
-- Option to set CDN to use when server returns media urls.
-
 ## Ideas ##
 
 - Look into PipelineBasedItemProvider! 

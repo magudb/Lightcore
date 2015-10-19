@@ -46,14 +46,17 @@ namespace Lightcore.Server.Sitecore.Api
                     query = "/" + cleanPath;
                 }
                 
+                //// TODO: Validate parameters...
                 var database = context.Request.QueryString["sc_database"] ?? "web";
                 var device = context.Request.QueryString["sc_device"] ?? "default";
                 var language = context.Request.QueryString["sc_lang"] ?? "en";
+                var cdn = context.Request.QueryString["cdn"];
+
                 var item = Factory.GetDatabase(database).Items.GetItem(query, Language.Parse(language));
 
                 if (item != null)
                 {
-                    _serializer.Serialize(item, context.Response.OutputStream, device);
+                    _serializer.Serialize(item, context.Response.OutputStream, device, cdn);
 
                     context.Response.ContentType = "application/json";
                 }
