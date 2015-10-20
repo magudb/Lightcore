@@ -6,6 +6,7 @@
 	- Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
 		- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
 - Test on IIS
+- Update to Sitecore 8.1
 
 ## Server ##
 
@@ -32,6 +33,8 @@
 
 ## MVC ##
 
+- Test Web API with both RouteTable and Attribute routing.
+	- Do we hit the request pipeline and should it be aborted?
 - HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
 
 ## Ideas ##
