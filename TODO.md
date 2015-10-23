@@ -12,9 +12,8 @@
 
 - Create CmEnabled bool setting that enabled/disables access to everything besides API and Media request, eases deployment and configration of Sitecore.
 
-## Data ##
+## Kernel ##
 
-- IItemProvider.GetItemVersionsAsync(string pathOrId) so we can get a list of tranlated versions for a item
 - Cache items
 	- Publish event to clear cache on complete or clear single entries?  
 	- Also clear html cache
@@ -22,13 +21,10 @@
 - Look into if its worth it to manually do deserialization http://www.newtonsoft.com/json/help/html/performance.htm
 - How is performance with many languages on a item?
 - How is performance with many children?
-
-## Kernel ##
-
 - Pipeline/Processor trace decorators to measure execution time
 - Logging?
-- IItemProvider: Overload to specify item and child fields?
 - IItemProvider: Implement Item and Chield fields on GetItemCommand
+- IItemProvider: GetItemVersionsAsync(GetItemCommand) so we can get a list of tranlated versions for a item?
 
 ## MVC ##
 
