@@ -7,7 +7,6 @@
 	- Or try https://www.tutum.co/
 - Test on IIS
 - Update to Sitecore 8.1
-- Profile with ANTS
 
 ## Server ##
 
