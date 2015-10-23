@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Providers;
 using Lightcore.Server.Models;
 using Newtonsoft.Json;
 

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Providers;
 
 namespace Lightcore.Kernel.Pipelines.Request.Processors
 {

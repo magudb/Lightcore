@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Lightcore.Kernel;
-using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Providers;
 using Microsoft.AspNet.Mvc;
 
 namespace WebApp.Controllers

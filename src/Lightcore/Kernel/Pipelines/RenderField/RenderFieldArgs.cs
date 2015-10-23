@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Fields;
+using Lightcore.Kernel.Data.Providers;
 using Lightcore.Kernel.Url;
 
 namespace Lightcore.Kernel.Pipelines.RenderField

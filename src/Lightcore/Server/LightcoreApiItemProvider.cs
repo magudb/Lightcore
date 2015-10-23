@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Providers;
 using Lightcore.Server.Models;
 using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
@@ -37,6 +38,8 @@ namespace Lightcore.Server
             var device = _config.Sitecore.Device;
             var database = _config.Sitecore.Database;
             var cdn = _config.Sitecore.Cdn;
+
+            // TODO: Send command.ItemFields and command.ChildFields
             var url = $"{_config.ServerUrl}/-/lightcore/item/{command.PathOrId}?sc_database={database}&sc_lang={command.Language.Name}&sc_device={device}&cdn={cdn}";
 
             using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))

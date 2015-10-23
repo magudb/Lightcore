@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Fields;
+using Lightcore.Kernel.Data.Providers;
 using Lightcore.Kernel.Pipelines.RenderField.Processors;
 using Lightcore.Kernel.Url;
 

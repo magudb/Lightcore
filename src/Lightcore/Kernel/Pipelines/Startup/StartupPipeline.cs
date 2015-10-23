@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Providers;
 using Lightcore.Kernel.Pipelines.Startup.Processors;
 using Microsoft.AspNet.Http;
 using Microsoft.Framework.OptionsModel;

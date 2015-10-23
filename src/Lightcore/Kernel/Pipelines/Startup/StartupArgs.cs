@@ -1,5 +1,6 @@
 using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Providers;
 using Microsoft.AspNet.Http;
 
 namespace Lightcore.Kernel.Pipelines.Startup

@@ -1,14 +1,8 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Lightcore.Kernel.Data.Globalization;
 
-namespace Lightcore.Kernel.Data
+namespace Lightcore.Kernel.Data.Providers
 {
-    public interface IItemProvider
-    {
-        Task<Item> GetItemAsync(GetItemCommand command);
-    }
-
     public class GetItemCommand
     {
         public GetItemCommand(string pathOrId, Language language)

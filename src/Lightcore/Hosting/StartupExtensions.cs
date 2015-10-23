@@ -1,6 +1,7 @@
 ﻿using Lightcore.Configuration;
 using Lightcore.Hosting.Middleware;
 using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Providers;
 using Lightcore.Kernel.Mvc;
 using Lightcore.Kernel.Pipelines.RenderField;
 using Lightcore.Kernel.Pipelines.RenderPlaceholder;
