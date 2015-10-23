@@ -1,4 +1,5 @@
 ﻿using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Globalization;
 
 namespace Lightcore.Kernel
 {
@@ -6,6 +7,6 @@ namespace Lightcore.Kernel
     {
         public Language Language { get; set; }
         public Item Item { get; set; }
-        public string RequestedContentPath { get; set; }
+        public string ContentPath { get; set; }
     }
 }

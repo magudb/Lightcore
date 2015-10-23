@@ -27,9 +27,7 @@
 
 - Pipeline/Processor trace decorators to measure execution time
 - Logging?
-- Always return direct children or split GetItem into two? 
-	- ItemProvider.GetMetaItem() returns light item with only name, path, url, id?
-	- Children only meta?
+- IItemProvider: Overload to specify item and child fields?
 
 ## MVC ##
 

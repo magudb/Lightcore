@@ -20,5 +20,8 @@
   <ItemGroup>
     <DnxInvisibleContent Include="Lightcore.Tests.v2.ncrunchproject" />
   </ItemGroup>
+  <ItemGroup>
+    <DnxInvisibleFolder Include="Properties\" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

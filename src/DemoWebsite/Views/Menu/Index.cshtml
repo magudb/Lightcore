@@ -1,19 +1,28 @@
 ﻿@using System.Threading.Tasks
-@using Lightcore.Kernel.Data
-@using Lightcore.Kernel.Urls
-@model Item
+@using Lightcore.Kernel.Url
+@model Lightcore.Kernel.Data.Item
 @inject IItemUrlService Urls
 <nav>
     <ul id="menu">
-        <li><a href="@Urls.GetUrl(Model)">@Model["Title"]</a></li>
-        @foreach (var item in @Model.Children)
+        <li>
+            <a href="@Urls.GetUrl(Model)">@Model["Title"]</a>
+        </li>
+        @foreach (var child in @Model.Children)
         {
-            <li><a href="@Urls.GetUrl(item)">@item["Title"]</a></li>
+            <li>
+                <a href="@Urls.GetUrl(child)">@child["Title"]</a>
+            </li>
         }
     </ul>
     <ul id="languages">
-        <li><a href="/en">en</a></li>
-        <li><a href="/en-us">en-US</a></li>
-        <li><a href="/da-dk">da-DK</a></li>
+        <li>
+            <a href="/en">en</a>
+        </li>
+        <li>
+            <a href="/en-us">en-US</a>
+        </li>
+        <li>
+            <a href="/da-dk">da-DK</a>
+        </li>
     </ul>
 </nav>

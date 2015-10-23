@@ -1,33 +1,33 @@
 ﻿@using Lightcore.Kernel.Mvc
-@using Lightcore.Kernel.Urls
+@using Lightcore.Kernel.Url
 @model Lightcore.Kernel.Data.Item
 @inject IItemUrlService Urls
 <html>
 <head>
     <title>@Model["Title"] - Lightcore</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 <body>
-    <h1>Lightcore</h1>
-    @await Html.Lightcore().PlaceholderAsync("dummy")
-    <div>
-        @await Html.Lightcore().PlaceholderAsync("content")
-    </div>
-    <footer>
-        @await Html.Lightcore().PlaceholderAsync("footer")
-    </footer>
-    <div id="debug">
-        <code>
-            Model.Type: @Model.GetType()<br />
-            Model.Id: @Model.Id<br />
-            Model.Language.Name: @Model.Language.Name<br />
-            Model.Path: @Model.Path<br />
-            Model.Key: @Model.Key<br />
-            Model.Name: @Model.Name<br />
-            Model.Url: @Urls.GetUrl(Model)<br />
-            Model.Fields.Count: @Model.Fields.Count()<br />
-            Model.Children.Count: @Model.Children.Count()<br />
-        </code>
-    </div>
+<h1>Lightcore</h1>
+@await Html.Lightcore().PlaceholderAsync("dummy")
+<div>
+    @await Html.Lightcore().PlaceholderAsync("content")
+</div>
+<footer>
+    @await Html.Lightcore().PlaceholderAsync("footer")
+</footer>
+<div id="debug">
+    <code>
+        Model.Type: @Model.GetType()<br/>
+        Model.Id: @Model.Id<br/>
+        Model.Language.Name: @Model.Language.Name<br/>
+        Model.Path: @Model.Path<br/>
+        Model.Key: @Model.Key<br/>
+        Model.Name: @Model.Name<br/>
+        Model.Url: @Urls.GetUrl(Model)<br/>
+        Model.Fields.Count: @Model.Fields.Count()<br/>
+        Model.Children.Count: @Model.Children.Count()<br/>
+    </code>
+</div>
 </body>
 </html>

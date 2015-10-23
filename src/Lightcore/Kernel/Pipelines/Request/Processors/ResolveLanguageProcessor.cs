@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Globalization;
 using Microsoft.AspNet.Http;
 
 namespace Lightcore.Kernel.Pipelines.Request.Processors

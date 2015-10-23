@@ -1,4 +1,4 @@
-namespace Lightcore.Kernel.Data
+namespace Lightcore.Kernel.Data.Globalization
 {
     public class Language
     {

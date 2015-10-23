@@ -18,10 +18,10 @@ namespace Lightcore.Kernel.Pipelines.Request.Processors
             if (!contentPath.StartsWith(mustStartWith))
             {
                 throw new InvalidContentPathException(
-                    $"Path did not start with '{mustStartWith}' it was '{context.RequestedContentPath}', please check your 'StartItem' setting.");
+                    $"Path did not start with '{mustStartWith}' it was '{context.ContentPath}', please check your 'StartItem' setting.");
             }
 
-            context.RequestedContentPath = contentPath;
+            context.ContentPath = contentPath;
         }
     }
 }

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace Lightcore.Kernel.Data
+namespace Lightcore.Kernel.Data.Presentation
 {
-    public class Presentation
+    public class PresentationDetails
     {
-        public Presentation(Layout layout, IEnumerable<Rendering> renderings)
+        public PresentationDetails(Layout layout, IEnumerable<Rendering> renderings)
         {
             Layout = layout;
             Renderings = renderings;

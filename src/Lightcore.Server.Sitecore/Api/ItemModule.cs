@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using Lightcore.Server.Sitecore.Data;
 using Sitecore.Configuration;
@@ -8,8 +9,9 @@ namespace Lightcore.Server.Sitecore.Api
 {
     public class ItemModule : IHttpModule
     {
-        private readonly ItemSerializer _serializer;
+        private const string ApiPathPrefix = "/-/lightcore/item/";
         private readonly Regex _guidRegex;
+        private readonly ItemSerializer _serializer;
 
         public ItemModule()
         {
@@ -22,19 +24,22 @@ namespace Lightcore.Server.Sitecore.Api
             app.BeginRequest += (sender, args) =>
             {
                 var context = ((HttpApplication)sender).Context;
+                var decodedPath = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
 
-                // ReSharper disable once PossibleNullReferenceException
-                var path = context.Server.UrlDecode(context.Request.Url.AbsolutePath).ToLowerInvariant();
+                if (decodedPath == null)
+                {
+                    throw new HttpException((int)HttpStatusCode.BadRequest, "Bad request");
+                }
 
-                if (!path.StartsWith("/-/lightcore/item/"))
+                var path = decodedPath.ToLowerInvariant();
+
+                if (!path.StartsWith(ApiPathPrefix))
                 {
                     return;
                 }
 
-                //// TODO: Should we use response codes or should we set it on json response object?
-                
-                var cleanPath = path.Replace("/-/lightcore/item/", "");
-                var isGuid =_guidRegex.Match(cleanPath);
+                var cleanPath = path.Replace(ApiPathPrefix, "");
+                var isGuid = _guidRegex.Match(cleanPath);
                 string query;
 
                 if (isGuid.Success)
@@ -45,7 +50,7 @@ namespace Lightcore.Server.Sitecore.Api
                 {
                     query = "/" + cleanPath;
                 }
-                
+
                 //// TODO: Validate parameters...
                 var database = context.Request.QueryString["sc_database"] ?? "web";
                 var device = context.Request.QueryString["sc_device"] ?? "default";
@@ -62,6 +67,7 @@ namespace Lightcore.Server.Sitecore.Api
                 }
                 else
                 {
+                    // TODO: Should we use response codes or should we set it on json response object?
                     context.Response.StatusCode = 404;
                 }
 

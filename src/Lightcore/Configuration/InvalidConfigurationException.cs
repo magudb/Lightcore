@@ -1,6 +1,6 @@
 using System;
 
-namespace Lightcore.Kernel.Configuration
+namespace Lightcore.Configuration
 {
     public class InvalidConfigurationException : Exception
     {

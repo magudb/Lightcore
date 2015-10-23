@@ -1,5 +1,5 @@
-﻿using Lightcore.Hosting.Middleware;
-using Lightcore.Kernel.Configuration;
+﻿using Lightcore.Configuration;
+using Lightcore.Hosting.Middleware;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Mvc;
 using Lightcore.Kernel.Pipelines.RenderField;
@@ -7,7 +7,7 @@ using Lightcore.Kernel.Pipelines.RenderPlaceholder;
 using Lightcore.Kernel.Pipelines.RenderRendering;
 using Lightcore.Kernel.Pipelines.Request;
 using Lightcore.Kernel.Pipelines.Startup;
-using Lightcore.Kernel.Urls;
+using Lightcore.Kernel.Url;
 using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
@@ -22,7 +22,7 @@ namespace Lightcore.Hosting
         public static IConfiguration BuildLightcoreConfiguration(this IApplicationEnvironment appEnv, IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder().SetBasePath(appEnv.ApplicationBasePath);
-            
+
             // Add main config file
             builder.AddJsonFile("lightcore.json");
 

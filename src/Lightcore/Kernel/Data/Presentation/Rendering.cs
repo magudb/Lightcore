@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace Lightcore.Kernel.Data
+namespace Lightcore.Kernel.Data.Presentation
 {
     public class Rendering
     {
-        public Rendering(string placeholder, string datasource, string controller, string action, Dictionary<string, string> parameters, Caching caching)
+        public Rendering(string placeholder, string datasource, string controller, string action, Dictionary<string, string> parameters,
+                         Caching caching)
         {
             Placeholder = placeholder;
             Datasource = datasource;

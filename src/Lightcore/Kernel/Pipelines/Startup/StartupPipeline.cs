@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Lightcore.Kernel.Configuration;
+using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.Startup.Processors;
 using Microsoft.AspNet.Http;

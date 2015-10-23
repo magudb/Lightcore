@@ -1,4 +1,4 @@
-using Lightcore.Kernel.Configuration;
+using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
 using Microsoft.AspNet.Http;
 

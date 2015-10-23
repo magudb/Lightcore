@@ -2,40 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Fields;
+using Lightcore.Kernel.Data.Globalization;
+using Lightcore.Kernel.Data.Presentation;
 using Lightcore.Server.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Lightcore.Server
 {
-    public static class ModelToItemMapper
+    internal static class ItemFactory
     {
-        public static Item Map(ServerResponseModel apiResponse, Language language)
+        public static Item Create(ServerResponseModel apiResponse, Language language)
         {
-            var item = MapItem(apiResponse.Item, apiResponse.Fields, apiResponse.Presentation, language);
+            var data = MapItemDefinition(apiResponse, language);
 
-            item.Children = apiResponse.Children.Select(child => MapItem(child.Item, child.Fields, child.Presentation, language));
+            data.Children = apiResponse.Children.Select(child => MapItemDefinition(child, language));
+
+            var item = new Item(data);
 
             return item;
         }
 
-        private static Item MapItem(ItemModel apiItem, IEnumerable<FieldModel> apiFields, PresentationModel apiPresentation, Language language)
+        private static ItemDefinition MapItemDefinition(ServerResponseModel apiResponse, Language language)
         {
-            var item = new Item
+            var item = new ItemDefinition
             {
                 Language = language,
-                Id = apiItem.Id,
-                Key = apiItem.Name.ToLowerInvariant(),
-                Name = apiItem.Name,
-                Path = apiItem.FullPath,
-                HasVersion = apiItem.HasVersion,
-                TemplateId = apiItem.TemplateId,
-                ParentId = apiItem.ParentId,
-                Fields = new FieldCollection(apiFields.Select(MapField))
+                Id = apiResponse.Item.Id,
+                Key = apiResponse.Item.Name.ToLowerInvariant(),
+                Name = apiResponse.Item.Name,
+                Path = apiResponse.Item.FullPath,
+                HasVersion = apiResponse.Item.HasVersion,
+                TemplateId = apiResponse.Item.TemplateId,
+                ParentId = apiResponse.Item.ParentId,
+                Fields = new FieldCollection(apiResponse.Fields.Select(MapField))
             };
 
-            if (apiPresentation != null)
+            if (apiResponse.Presentation != null)
             {
-                item.Visualization = new Presentation(new Layout(apiPresentation.Layout.Path), MapRenderings(apiPresentation));
+                item.Visualization = new PresentationDetails(new Layout(apiResponse.Presentation.Layout.Path), MapRenderings(apiResponse.Presentation));
             }
 
             return item;

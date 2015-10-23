@@ -1,6 +1,6 @@
 ﻿using Microsoft.Framework.OptionsModel;
 
-namespace Lightcore.Kernel.Configuration
+namespace Lightcore.Configuration
 {
     public class LightcoreOptions : IOptions<LightcoreOptions>
     {
@@ -14,7 +14,8 @@ namespace Lightcore.Kernel.Configuration
             {
                 StartItem = "/sitecore/content/Home",
                 Database = "web",
-                Device = "default"
+                Device = "default",
+                Cdn = null
             }
         };
 
@@ -22,15 +23,17 @@ namespace Lightcore.Kernel.Configuration
 
         public void Verify()
         {
+            if (string.IsNullOrEmpty(ServerUrl))
+            {
+                throw new InvalidConfigurationException($"{nameof(ServerUrl)} was empty");
+            }
+
             if (Sitecore == null)
             {
                 throw new InvalidConfigurationException($"{nameof(Sitecore)} was null");
             }
 
-            if (string.IsNullOrEmpty(ServerUrl))
-            {
-                throw new InvalidConfigurationException($"{nameof(ServerUrl)} was empty");
-            }
+            Sitecore.Verify();
         }
     }
 }

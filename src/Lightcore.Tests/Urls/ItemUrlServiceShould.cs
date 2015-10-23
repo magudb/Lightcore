@@ -1,7 +1,8 @@
 ﻿using FluentAssertions;
-using Lightcore.Kernel.Configuration;
+using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Urls;
+using Lightcore.Kernel.Data.Globalization;
+using Lightcore.Kernel.Url;
 using Xunit;
 
 namespace Lightcore.Tests.Urls
@@ -12,18 +13,18 @@ namespace Lightcore.Tests.Urls
         public void return_absolute_path_for_item()
         {
             //// Arrange
-            var item = new Item
+            var item = new Item(new ItemDefinition
             {
                 Path = "/sitecore/content/Home/Products",
                 Language = new Language("da-DK")
-            };
+            });
 
             var service = new ItemUrlService(LightcoreOptions.Default);
 
             //// Act
             var url = service.GetUrl(item);
 
-            //// Asset
+            //// Assert
             url.Should().Be("/da-dk/products");
         }
     }

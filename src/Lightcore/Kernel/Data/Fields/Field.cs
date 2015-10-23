@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lightcore.Kernel.Data
+namespace Lightcore.Kernel.Data.Fields
 {
     public class Field
     {

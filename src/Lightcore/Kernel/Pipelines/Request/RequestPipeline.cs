@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Lightcore.Kernel.Configuration;
+using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Pipelines.Request.Processors;
 using Microsoft.AspNet.Http;

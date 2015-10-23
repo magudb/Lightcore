@@ -1,9 +1,9 @@
 ﻿using System.Text;
-using Lightcore.Kernel.Configuration;
-using Lightcore.Kernel.Data;
+using Lightcore.Configuration;
+using Lightcore.Kernel.Data.Globalization;
 using Microsoft.Framework.OptionsModel;
 
-namespace Lightcore.Kernel.Urls
+namespace Lightcore.Kernel.Url
 {
     public class ItemUrlService : IItemUrlService
     {
@@ -14,13 +14,16 @@ namespace Lightcore.Kernel.Urls
             _options = options.Value;
         }
 
-        public string GetUrl(Item item)
+        public string GetUrl(Language language, string path)
         {
+            Requires.IsNotNull(language, nameof(language));
+            Requires.IsNotNullOrEmpty(path, nameof(path));
+
             var builder = new StringBuilder();
 
             builder.Append("/");
-            builder.Append(item.Language.Name);
-            builder.Append(item.Path.ToLowerInvariant().Replace(_options.Sitecore.StartItem.ToLowerInvariant(), ""));
+            builder.Append(language.Name);
+            builder.Append(path.ToLowerInvariant().Replace(_options.Sitecore.StartItem.ToLowerInvariant(), ""));
 
             return builder.ToString();
         }

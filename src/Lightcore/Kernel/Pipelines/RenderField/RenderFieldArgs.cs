@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using System.IO;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Urls;
+using Lightcore.Kernel.Data.Fields;
+using Lightcore.Kernel.Url;
 
 namespace Lightcore.Kernel.Pipelines.RenderField
 {
     public class RenderFieldArgs : PipelineArgs
     {
-        public RenderFieldArgs(IItemProvider itemProvider, IItemUrlService itemUrlService, Item item, Field field, TextWriter output, Dictionary<string, string> attributes)
+        public RenderFieldArgs(IItemProvider itemProvider, IItemUrlService itemUrlService, Item item, Field field, TextWriter output,
+                               Dictionary<string, string> attributes)
         {
             ItemProvider = itemProvider;
             ItemUrlService = itemUrlService;

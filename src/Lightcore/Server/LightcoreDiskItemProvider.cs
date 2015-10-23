@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
+using Lightcore.Kernel.Data.Globalization;
 using Lightcore.Server.Models;
 using Newtonsoft.Json;
 
@@ -43,7 +44,7 @@ namespace Lightcore.Server
                         {
                             var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
 
-                            return ModelToItemMapper.Map(apiResponse, language);
+                            return ItemFactory.Create(apiResponse, language);
                         }
                     }
                 }

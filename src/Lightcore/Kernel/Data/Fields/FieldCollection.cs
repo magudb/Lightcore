@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lightcore.Kernel.Data
+namespace Lightcore.Kernel.Data.Fields
 {
     public class FieldCollection : IEnumerable<Field>
     {

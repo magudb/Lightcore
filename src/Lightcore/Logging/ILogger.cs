@@ -1,4 +1,4 @@
-﻿namespace Lightcore.Kernel.Logging
+﻿namespace Lightcore.Logging
 {
     public interface ILogger
     {
