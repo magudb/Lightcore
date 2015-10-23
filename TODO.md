@@ -2,11 +2,12 @@
 
 ## Solution ##
 
-- Add Use Azure Resource Manager Project.
-	- Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
-		- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
+- Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
+	- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
+	- Or try https://www.tutum.co/
 - Test on IIS
 - Update to Sitecore 8.1
+- Profile with ANTS
 
 ## Server ##
 

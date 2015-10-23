@@ -16,5 +16,8 @@
     <DevelopmentServerPort>58665</DevelopmentServerPort>
     <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
   </PropertyGroup>
+  <ItemGroup>
+    <DnxInvisibleContent Include="DemoWebsite.v2.ncrunchproject" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
