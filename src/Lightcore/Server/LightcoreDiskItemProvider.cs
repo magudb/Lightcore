@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Data.Globalization;
 using Lightcore.Server.Models;
 using Newtonsoft.Json;
 
@@ -21,9 +20,9 @@ namespace Lightcore.Server
         {
         }
 
-        public async Task<Item> GetItemAsync(string pathOrId, Language language)
+        public async Task<Item> GetItemAsync(GetItemCommand command)
         {
-            var file = $"e:\\temp\\Lightcore\\web\\{language.Name}\\default\\{pathOrId}\\item.json";
+            var file = $"e:\\temp\\Lightcore\\web\\{command.Language.Name}\\default\\{command.PathOrId}\\item.json";
 
             if (!File.Exists(file))
             {
@@ -44,7 +43,7 @@ namespace Lightcore.Server
                         {
                             var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
 
-                            return ItemFactory.Create(apiResponse, language);
+                            return ItemFactory.Create(apiResponse, command.Language);
                         }
                     }
                 }

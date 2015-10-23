@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
-using Lightcore.Kernel.Data.Globalization;
 using Lightcore.Server.Models;
 using Microsoft.Framework.OptionsModel;
 using Newtonsoft.Json;
@@ -33,15 +32,12 @@ namespace Lightcore.Server
             _client?.Dispose();
         }
 
-        public async Task<Item> GetItemAsync(string pathOrId, Language language)
+        public async Task<Item> GetItemAsync(GetItemCommand command)
         {
-            Requires.IsNotNullOrEmpty(pathOrId, nameof(pathOrId));
-            Requires.IsNotNull(language, nameof(language));
-
             var device = _config.Sitecore.Device;
             var database = _config.Sitecore.Database;
             var cdn = _config.Sitecore.Cdn;
-            var url = $"{_config.ServerUrl}/-/lightcore/item/{pathOrId}?sc_database={database}&sc_lang={language.Name}&sc_device={device}&cdn={cdn}";
+            var url = $"{_config.ServerUrl}/-/lightcore/item/{command.PathOrId}?sc_database={database}&sc_lang={command.Language.Name}&sc_device={device}&cdn={cdn}";
 
             using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {
@@ -55,7 +51,7 @@ namespace Lightcore.Server
                             {
                                 var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
 
-                                return ItemFactory.Create(apiResponse, language);
+                                return ItemFactory.Create(apiResponse, command.Language);
                             }
                         }
                     }

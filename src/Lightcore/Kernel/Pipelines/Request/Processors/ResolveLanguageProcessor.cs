@@ -19,7 +19,7 @@ namespace Lightcore.Kernel.Pipelines.Request.Processors
             {
                 // TODO: Make a better check to see if it is a valid "culture" segment
 
-                context.Language = new Language(languageSegment);
+                context.Language = Language.Parse(languageSegment);
 
                 args.HttpContext.Request.Path = new PathString(args.HttpContext.Request.Path.Value.Replace("/" + languageSegment, ""));
             }

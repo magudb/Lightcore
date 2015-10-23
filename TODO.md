@@ -28,6 +28,7 @@
 - Pipeline/Processor trace decorators to measure execution time
 - Logging?
 - IItemProvider: Overload to specify item and child fields?
+- IItemProvider: Implement Item and Chield fields on GetItemCommand
 
 ## MVC ##
 

@@ -17,7 +17,7 @@ namespace WebApp.Controllers
         public async Task<ActionResult> Index(string datasource)
         {
             var context = HttpContext.LightcoreContext();
-            var root = await _itemProvider.GetItemAsync(datasource, context.Language);
+            var root = await _itemProvider.GetItemAsync(new GetItemCommand(datasource, context.Language));
 
             return View("/Views/Menu/Index.cshtml", root);
         }

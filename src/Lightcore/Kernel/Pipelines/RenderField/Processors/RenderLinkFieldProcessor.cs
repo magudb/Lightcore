@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Fields;
 using Lightcore.Kernel.Url;
 
@@ -22,7 +23,7 @@ namespace Lightcore.Kernel.Pipelines.RenderField.Processors
 
             if (link.TargetId != Guid.Empty)
             {
-                var targetItem = await args.ItemProvider.GetItemAsync(link.TargetId.ToString(), item.Language);
+                var targetItem = await args.ItemProvider.GetItemAsync(new GetItemCommand(link.TargetId.ToString(), item.Language));
 
                 if (targetItem != null)
                 {

@@ -16,7 +16,7 @@ namespace Lightcore.Tests.Urls
             var item = new Item(new ItemDefinition
             {
                 Path = "/sitecore/content/Home/Products",
-                Language = new Language("da-DK")
+                Language = Language.Parse("da-DK")
             });
 
             var service = new ItemUrlService(LightcoreOptions.Default);
