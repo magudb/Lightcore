@@ -12,35 +12,40 @@ namespace Lightcore.Server
 {
     internal static class ItemFactory
     {
-        public static Item Create(ServerResponseModel apiResponse, Language language)
+        public static IEnumerable<Item> Create(ServerResponseModel apiResponse)
         {
-            var data = MapItemDefinition(apiResponse, language);
+            var items = new List<Item>();
 
-            data.Children = apiResponse.Children.Select(child => MapItemDefinition(child, language));
+            foreach (var model in apiResponse.Items)
+            {
+                var data = MapItemDefinition(model);
 
-            var item = new Item(data);
+                data.Children = model.Children.Select(child => MapItemDefinition(child));
 
-            return item;
+                items.Add(new Item(data));
+            }
+
+            return items;
         }
 
-        private static ItemDefinition MapItemDefinition(ServerResponseModel apiResponse, Language language)
+        private static ItemDefinition MapItemDefinition(ItemModel apiItem)
         {
             var item = new ItemDefinition
             {
-                Language = language,
-                Id = apiResponse.Item.Id,
-                Key = apiResponse.Item.Name.ToLowerInvariant(),
-                Name = apiResponse.Item.Name,
-                Path = apiResponse.Item.FullPath,
-                HasVersion = apiResponse.Item.HasVersion,
-                TemplateId = apiResponse.Item.TemplateId,
-                ParentId = apiResponse.Item.ParentId,
-                Fields = new FieldCollection(apiResponse.Fields.Select(MapField))
+                Language = Language.Parse(apiItem.Properties.Language),
+                Id = apiItem.Properties.Id,
+                Key = apiItem.Properties.Name.ToLowerInvariant(),
+                Name = apiItem.Properties.Name,
+                Path = apiItem.Properties.FullPath,
+                HasVersion = apiItem.Properties.HasVersion,
+                TemplateId = apiItem.Properties.TemplateId,
+                ParentId = apiItem.Properties.ParentId,
+                Fields = new FieldCollection(apiItem.Fields.Select(MapField))
             };
 
-            if (apiResponse.Presentation != null)
+            if (apiItem.Presentation != null)
             {
-                item.Visualization = new PresentationDetails(new Layout(apiResponse.Presentation.Layout.Path), MapRenderings(apiResponse.Presentation));
+                item.Visualization = new PresentationDetails(new Layout(apiItem.Presentation.Layout.Path), MapRenderings(apiItem.Presentation));
             }
 
             return item;

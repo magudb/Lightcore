@@ -79,6 +79,9 @@
     <Compile Include="..\Lightcore\Server\Models\ItemModel.cs">
       <Link>Models\ItemModel.cs</Link>
     </Compile>
+    <Compile Include="..\Lightcore\Server\Models\ItemPropertyModel.cs">
+      <Link>Models\ItemPropertyModel.cs</Link>
+    </Compile>
     <Compile Include="..\Lightcore\Server\Models\LayoutModel.cs">
       <Link>Models\LayoutModel.cs</Link>
     </Compile>
@@ -97,6 +100,9 @@
     <Compile Include="..\Lightcore\Server\Models\ServerResponseModel.cs">
       <Link>Models\ServerResponseModel.cs</Link>
     </Compile>
+    <Compile Include="Api\Actions\ModuleAction.cs" />
+    <Compile Include="Api\Actions\VersionsAction.cs" />
+    <Compile Include="Api\Actions\ItemAction.cs" />
     <Compile Include="Api\HelpModule.cs" />
     <Compile Include="Api\ItemModule.cs" />
     <Compile Include="Data\ItemSerializer.cs" />

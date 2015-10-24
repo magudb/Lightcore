@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Providers;
@@ -44,11 +46,16 @@ namespace Lightcore.Server
                         {
                             var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
 
-                            return ItemFactory.Create(apiResponse, command.Language);
+                            return ItemFactory.Create(apiResponse).FirstOrDefault();
                         }
                     }
                 }
             }
+        }
+
+        public Task<IEnumerable<Item>> GetVersionsAsync(GetVersionsCommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -23,7 +23,6 @@
 - How is performance with many children?
 - Pipeline/Processor trace decorators to measure execution time
 - Logging?
-- IItemProvider: GetItemVersionsAsync(GetItemCommand) so we can get a list of tranlated versions for a item?
 
 ## MVC ##
 

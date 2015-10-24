@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -72,7 +73,44 @@ namespace Lightcore.Server
                             {
                                 var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
 
-                                return ItemFactory.Create(apiResponse, command.Language);
+                                return ItemFactory.Create(apiResponse).FirstOrDefault();
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public async Task<IEnumerable<Item>> GetVersionsAsync(GetVersionsCommand command)
+        {
+            var database = _config.Sitecore.Database;
+            var query = new StringBuilder();
+
+            query.Append(_config.ServerUrl);
+            query.Append("/-/lightcore/versions/");
+            query.Append(command.PathOrId);
+            query.AppendFormat("?sc_database={0}", database);
+
+            if (command.ItemFields.Any())
+            {
+                query.AppendFormat("&itemfields={0}", string.Join(",", command.ItemFields));
+            }
+
+            using (var response = await _client.GetAsync(query.ToString(), HttpCompletionOption.ResponseHeadersRead))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    using (var stream = await response.Content.ReadAsStreamAsync())
+                    {
+                        using (var streamReader = new StreamReader(stream))
+                        {
+                            using (JsonReader jsonReader = new JsonTextReader(streamReader))
+                            {
+                                var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
+
+                                return ItemFactory.Create(apiResponse);
                             }
                         }
                     }

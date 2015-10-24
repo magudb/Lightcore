@@ -18,6 +18,8 @@ namespace Lightcore.Server.Sitecore.Api
                 }
 
                 const string itemTestUrl = "/-/lightcore/item/sitecore/content/home?sc_database=web&sc_lang=en&sc_device=default";
+                const string versionsTestUrl = "/-/lightcore/versions/sitecore/content/home?sc_database=web&sc_lang=en";
+
                 var content = new StringBuilder();
 
                 content.Append("<html>");
@@ -27,6 +29,7 @@ namespace Lightcore.Server.Sitecore.Api
                 content.Append("<body>");
                 content.Append("<h1>Lightcore Server</h1>");
                 content.AppendFormat("<p>Item: <a href=\"{0}\">{0}</a></p>", itemTestUrl);
+                content.AppendFormat("<p>Versions: <a href=\"{0}\">{0}</a></p>", versionsTestUrl);
                 content.Append("</body>");
                 content.Append("</html>");
 

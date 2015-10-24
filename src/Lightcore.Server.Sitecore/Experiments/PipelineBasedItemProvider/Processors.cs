@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using Lightcore.Server.Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Pipelines.ItemProvider.DeleteItem;
 using Sitecore.Pipelines.ItemProvider.SaveItem;
@@ -65,7 +64,7 @@ namespace Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider
 
             using (var outputStream = File.Open(path + "\\item.json", FileMode.Create, FileAccess.Write))
             {
-                _itemConverter.Serialize(item, outputStream, "default");
+                _itemConverter.SerializeItem(item, outputStream, "default");
             }
 
             path = GetFilePath(item, device);
@@ -74,7 +73,7 @@ namespace Lightcore.Server.Sitecore.Experiments.PipelineBasedItemProvider
 
             using (var outputStream = File.Open(path + "\\item.json", FileMode.Create, FileAccess.Write))
             {
-                _itemConverter.Serialize(item, outputStream, "default");
+                _itemConverter.SerializeItem(item, outputStream, "default");
             }
         }
 

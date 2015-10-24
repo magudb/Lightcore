@@ -21,43 +21,89 @@ namespace Lightcore.Server.Sitecore.Data
             _serializer = new JsonSerializer();
         }
 
-        public void Serialize(Item item, Stream outputStream, string device,
-                              string[] itemFields = null,
-                              string[] childFields = null,
-                              string mediaBaseUrl = null)
+        public void SerializeItem(Item item, Stream outputStream, string device,
+                                  string[] itemFields = null,
+                                  string[] childFields = null,
+                                  string mediaBaseUrl = null)
         {
-            var @object = CreateResponseModel(item, device, itemFields, childFields, mediaBaseUrl);
+            var @object = CreateResponseModelForItem(item, device, itemFields, childFields, mediaBaseUrl);
 
-            using (TextWriter tx = new StreamWriter(outputStream))
+            using (TextWriter textWriter = new StreamWriter(outputStream))
             {
-                using (var writer = new JsonTextWriter(tx))
+                using (var jsonWriter = new JsonTextWriter(textWriter))
                 {
-                    _serializer.Serialize(writer, @object);
+                    _serializer.Serialize(jsonWriter, @object);
                 }
             }
         }
 
-        private ServerResponseModel CreateResponseModel(Item item, string device, string[] itemFields, string[] childFields, string mediaBaseUrl)
+        public void SerializeVersions(IEnumerable<Item> items, Stream outputStream,
+                                      string[] itemFields = null,
+                                      string mediaBaseUrl = null)
+        {
+            var @object = CreateResponseModelForVersions(items, itemFields, mediaBaseUrl);
+
+            using (TextWriter textWriter = new StreamWriter(outputStream))
+            {
+                using (var jsonWriter = new JsonTextWriter(textWriter))
+                {
+                    _serializer.Serialize(jsonWriter, @object);
+                }
+            }
+        }
+
+        private ServerResponseModel CreateResponseModelForItem(Item item, string device,
+                                                               string[] itemFields,
+                                                               string[] childFields,
+                                                               string mediaBaseUrl)
         {
             return new ServerResponseModel
             {
-                Item = MapItem(item),
-                Fields = MapFields(item, itemFields, mediaBaseUrl),
-                Presentation = MapPresentation(item, device),
-                Children = item.GetChildren().Select(child => new ServerResponseModel
+                Items = new[]
                 {
-                    Item = MapItem(child),
-                    Fields = MapFields(child, childFields, mediaBaseUrl)
-                })
+                    new ItemModel
+                    {
+                        Properties = MapItem(item),
+                        Fields = MapFields(item, itemFields, mediaBaseUrl),
+                        Presentation = MapPresentation(item, device),
+                        Children = item.GetChildren().Select(child => new ItemModel
+                        {
+                            Properties = MapItem(child),
+                            Fields = MapFields(child, childFields, mediaBaseUrl)
+                        })
+                    }
+                }
             };
         }
 
-        private ItemModel MapItem(Item item)
+        private ServerResponseModel CreateResponseModelForVersions(IEnumerable<Item> items, string[] itemFields, string mediaBaseUrl)
         {
-            return new ItemModel
+            var itemModels = new List<ItemModel>();
+
+            foreach (var item in items)
+            {
+                itemModels.Add(new ItemModel
+                {
+                    Properties = MapItem(item),
+                    Fields = MapFields(item, itemFields, mediaBaseUrl),
+                    Presentation = null,
+                    Children = Enumerable.Empty<ItemModel>()
+                });
+            }
+
+            return new ServerResponseModel
+            {
+                Items = itemModels.ToArray()
+            };
+        }
+
+        private ItemPropertyModel MapItem(Item item)
+        {
+            return new ItemPropertyModel
             {
                 Id = item.ID.Guid,
                 FullPath = item.Paths.FullPath.ToLowerInvariant(),
+                Language = item.Language.Name,
                 Name = item.Name,
                 ParentId = item.ParentID.Guid,
                 TemplateId = item.TemplateID.Guid,
