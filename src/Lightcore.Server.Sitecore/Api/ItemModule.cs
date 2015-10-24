@@ -9,7 +9,7 @@ namespace Lightcore.Server.Sitecore.Api
 {
     public class ItemModule : IHttpModule
     {
-        private const string ApiPathPrefix = "/-/lightcore/item/";
+        private readonly string _apiPathPrefix = "/-/lightcore/item/";
         private readonly Regex _guidRegex;
         private readonly ItemSerializer _serializer;
 
@@ -33,12 +33,12 @@ namespace Lightcore.Server.Sitecore.Api
 
                 var path = decodedPath.ToLowerInvariant();
 
-                if (!path.StartsWith(ApiPathPrefix))
+                if (!path.StartsWith(_apiPathPrefix))
                 {
                     return;
                 }
 
-                var cleanPath = path.Replace(ApiPathPrefix, "");
+                var cleanPath = path.Replace(_apiPathPrefix, "");
                 var isGuid = _guidRegex.Match(cleanPath);
                 string query;
 
@@ -51,17 +51,21 @@ namespace Lightcore.Server.Sitecore.Api
                     query = "/" + cleanPath;
                 }
 
+                var queryString = context.Request.QueryString;
+
                 //// TODO: Validate parameters...
-                var database = context.Request.QueryString["sc_database"] ?? "web";
-                var device = context.Request.QueryString["sc_device"] ?? "default";
-                var language = context.Request.QueryString["sc_lang"] ?? "en";
-                var cdn = context.Request.QueryString["cdn"];
+                var database = queryString["sc_database"] ?? "web";
+                var device = queryString["sc_device"] ?? "default";
+                var language = queryString["sc_lang"] ?? "en";
+                var cdn = queryString["cdn"];
+                var itemFields = queryString["itemfields"] != null ? queryString["itemfields"].Split(',') : new string[] {};
+                var childFields = queryString["childfields"] != null ? queryString["childfields"].Split(',') : new string[] {};
 
                 var item = Factory.GetDatabase(database).Items.GetItem(query, Language.Parse(language));
 
                 if (item != null)
                 {
-                    _serializer.Serialize(item, context.Response.OutputStream, device, cdn);
+                    _serializer.Serialize(item, context.Response.OutputStream, device, itemFields, childFields, cdn);
 
                     context.Response.ContentType = "application/json";
                 }

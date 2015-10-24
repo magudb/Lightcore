@@ -13,7 +13,7 @@ namespace Lightcore.Server.Sitecore.Data
 {
     public class ItemSerializer
     {
-        private static readonly ID ControllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
+        private readonly ID _controllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
         private readonly JsonSerializer _serializer;
 
         public ItemSerializer()
@@ -21,9 +21,12 @@ namespace Lightcore.Server.Sitecore.Data
             _serializer = new JsonSerializer();
         }
 
-        public void Serialize(Item item, Stream outputStream, string device, string mediaBaseUrl = null)
+        public void Serialize(Item item, Stream outputStream, string device,
+                              string[] itemFields = null,
+                              string[] childFields = null,
+                              string mediaBaseUrl = null)
         {
-            var @object = ConvertToReponseModel(item, device, mediaBaseUrl);
+            var @object = CreateResponseModel(item, device, itemFields, childFields, mediaBaseUrl);
 
             using (TextWriter tx = new StreamWriter(outputStream))
             {
@@ -34,22 +37,22 @@ namespace Lightcore.Server.Sitecore.Data
             }
         }
 
-        private static ServerResponseModel ConvertToReponseModel(Item item, string deviceName, string mediaBaseUrl)
+        private ServerResponseModel CreateResponseModel(Item item, string device, string[] itemFields, string[] childFields, string mediaBaseUrl)
         {
             return new ServerResponseModel
             {
                 Item = MapItem(item),
-                Fields = MapFields(item, mediaBaseUrl),
-                Presentation = MapPresentation(item, deviceName),
+                Fields = MapFields(item, itemFields, mediaBaseUrl),
+                Presentation = MapPresentation(item, device),
                 Children = item.GetChildren().Select(child => new ServerResponseModel
                 {
                     Item = MapItem(child),
-                    Fields = MapFields(child, mediaBaseUrl)
+                    Fields = MapFields(child, childFields, mediaBaseUrl)
                 })
             };
         }
 
-        private static ItemModel MapItem(Item item)
+        private ItemModel MapItem(Item item)
         {
             return new ItemModel
             {
@@ -62,16 +65,16 @@ namespace Lightcore.Server.Sitecore.Data
             };
         }
 
-        private static PresentationModel MapPresentation(Item item, string deviceName)
+        private PresentationModel MapPresentation(Item item, string device)
         {
-            var device = item.Database.Resources.Devices["/sitecore/layout/devices/" + deviceName];
+            var deviceItem = item.Database.Resources.Devices["/sitecore/layout/devices/" + device];
 
-            if (device == null)
+            if (deviceItem == null)
             {
                 return null;
             }
 
-            var layout = item.Visualization.GetLayout(device);
+            var layout = item.Visualization.GetLayout(deviceItem);
 
             if (layout == null)
             {
@@ -86,8 +89,8 @@ namespace Lightcore.Server.Sitecore.Data
                 }
             };
 
-            var controllerRenderings = item.Visualization.GetRenderings(device, false)
-                                           .Where(r => r.RenderingItem.InnerItem.TemplateID == ControllerRenderingTemplateId);
+            var controllerRenderings = item.Visualization.GetRenderings(deviceItem, false)
+                                           .Where(r => r.RenderingItem.InnerItem.TemplateID == _controllerRenderingTemplateId);
 
             presentation.Renderings = controllerRenderings.Select(rendering =>
             {
@@ -120,17 +123,34 @@ namespace Lightcore.Server.Sitecore.Data
             return presentation;
         }
 
-        private static IEnumerable<FieldModel> MapFields(Item item, string mediaBaseUrl)
+        private IEnumerable<FieldModel> MapFields(Item item, string[] specificFields, string mediaBaseUrl)
         {
             if (item.Versions.Count == 0)
             {
                 return Enumerable.Empty<FieldModel>();
             }
 
-            return item.Fields.Where(f => !f.Key.StartsWith("__")).Select(f => MapField(f, mediaBaseUrl)).Where(f => f != null);
+            var fields = new List<FieldModel>();
+
+            if (!specificFields.Any())
+            {
+                return item.Fields.Where(f => !f.Key.StartsWith("__")).Select(f => MapField(f, mediaBaseUrl)).Where(f => f != null);
+            }
+
+            foreach (var key in specificFields)
+            {
+                var f = item.Fields[key.Trim()];
+
+                if (f != null)
+                {
+                    fields.Add(MapField(f, mediaBaseUrl));
+                }
+            }
+
+            return fields.Where(f => f != null);
         }
 
-        private static FieldModel MapField(Field field, string mediaBaseUrl)
+        private FieldModel MapField(Field field, string mediaBaseUrl)
         {
             object value;
 

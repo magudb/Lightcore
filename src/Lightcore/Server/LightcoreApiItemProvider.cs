@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
@@ -38,11 +40,27 @@ namespace Lightcore.Server
             var device = _config.Sitecore.Device;
             var database = _config.Sitecore.Database;
             var cdn = _config.Sitecore.Cdn;
+            var query = new StringBuilder();
 
-            // TODO: Send command.ItemFields and command.ChildFields
-            var url = $"{_config.ServerUrl}/-/lightcore/item/{command.PathOrId}?sc_database={database}&sc_lang={command.Language.Name}&sc_device={device}&cdn={cdn}";
+            query.Append(_config.ServerUrl);
+            query.Append("/-/lightcore/item/");
+            query.Append(command.PathOrId);
+            query.AppendFormat("?sc_database={0}", database);
+            query.AppendFormat("&sc_lang={0}", command.Language.Name);
+            query.AppendFormat("&sc_device={0}", device);
+            query.AppendFormat("&cdn={0}", cdn);
 
-            using (var response = await _client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
+            if (command.ItemFields.Any())
+            {
+                query.AppendFormat("&itemfields={0}", string.Join(",", command.ItemFields));
+            }
+
+            if (command.ChildFields.Any())
+            {
+                query.AppendFormat("&childfields={0}", string.Join(",", command.ChildFields));
+            }
+
+            using (var response = await _client.GetAsync(query.ToString(), HttpCompletionOption.ResponseHeadersRead))
             {
                 if (response.IsSuccessStatusCode)
                 {

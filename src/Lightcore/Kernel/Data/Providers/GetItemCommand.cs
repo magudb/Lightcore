@@ -5,6 +5,9 @@ namespace Lightcore.Kernel.Data.Providers
 {
     public class GetItemCommand
     {
+        private readonly List<string> _childFields = new List<string>();
+        private readonly List<string> _itemFields = new List<string>();
+
         public GetItemCommand(string pathOrId, Language language)
         {
             Requires.IsNotNullOrEmpty(pathOrId, nameof(pathOrId));
@@ -20,7 +23,21 @@ namespace Lightcore.Kernel.Data.Providers
 
         public string PathOrId { get; }
         public Language Language { get; }
-        public IEnumerable<string> ItemFields { get; set; }
-        public IEnumerable<string> ChieldFields { get; set; }
+        public IEnumerable<string> ItemFields => _itemFields;
+        public IEnumerable<string> ChildFields => _childFields;
+
+        public GetItemCommand OnlyChildFields(params string[] fields)
+        {
+            _childFields.AddRange(fields);
+
+            return this;
+        }
+
+        public GetItemCommand OnlyItemFields(params string[] fields)
+        {
+            _itemFields.AddRange(fields);
+
+            return this;
+        }
     }
 }
