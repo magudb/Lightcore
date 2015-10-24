@@ -20,7 +20,7 @@ namespace Lightcore.Server
             {
                 var data = MapItemDefinition(model);
 
-                data.Children = model.Children.Select(child => MapItemDefinition(child));
+                data.Children = model.Children.Select(MapItemDefinition);
 
                 items.Add(new Item(data));
             }

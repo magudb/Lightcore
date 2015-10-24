@@ -61,26 +61,7 @@ namespace Lightcore.Server
                 query.AppendFormat("&childfields={0}", string.Join(",", command.ChildFields));
             }
 
-            using (var response = await _client.GetAsync(query.ToString(), HttpCompletionOption.ResponseHeadersRead))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    using (var stream = await response.Content.ReadAsStreamAsync())
-                    {
-                        using (var streamReader = new StreamReader(stream))
-                        {
-                            using (JsonReader jsonReader = new JsonTextReader(streamReader))
-                            {
-                                var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
-
-                                return ItemFactory.Create(apiResponse).FirstOrDefault();
-                            }
-                        }
-                    }
-                }
-            }
-
-            return null;
+            return ItemFactory.Create(await GetAsync(query.ToString())).FirstOrDefault();
         }
 
         public async Task<IEnumerable<Item>> GetVersionsAsync(GetVersionsCommand command)
@@ -98,26 +79,29 @@ namespace Lightcore.Server
                 query.AppendFormat("&itemfields={0}", string.Join(",", command.ItemFields));
             }
 
-            using (var response = await _client.GetAsync(query.ToString(), HttpCompletionOption.ResponseHeadersRead))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    using (var stream = await response.Content.ReadAsStreamAsync())
-                    {
-                        using (var streamReader = new StreamReader(stream))
-                        {
-                            using (JsonReader jsonReader = new JsonTextReader(streamReader))
-                            {
-                                var apiResponse = _serializer.Deserialize<ServerResponseModel>(jsonReader);
+            return ItemFactory.Create(await GetAsync(query.ToString()));
+        }
 
-                                return ItemFactory.Create(apiResponse);
-                            }
+        private async Task<ServerResponseModel> GetAsync(string query)
+        {
+            using (var response = await _client.GetAsync(query, HttpCompletionOption.ResponseHeadersRead))
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                using (var stream = await response.Content.ReadAsStreamAsync())
+                {
+                    using (var streamReader = new StreamReader(stream))
+                    {
+                        using (JsonReader jsonReader = new JsonTextReader(streamReader))
+                        {
+                            return _serializer.Deserialize<ServerResponseModel>(jsonReader);
                         }
                     }
                 }
             }
-
-            return null;
         }
     }
 }
