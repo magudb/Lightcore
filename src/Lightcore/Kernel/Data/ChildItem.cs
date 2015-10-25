@@ -4,7 +4,7 @@ using Lightcore.Kernel.Data.Globalization;
 
 namespace Lightcore.Kernel.Data
 {
-    public class ChildItem
+    public class ChildItem : IItem
     {
         private readonly ItemDefinition _itemDefinition;
 
@@ -21,6 +21,6 @@ namespace Lightcore.Kernel.Data
         public FieldCollection Fields => _itemDefinition.Fields;
         public bool HasVersion => _itemDefinition.HasVersion;
         public Guid TemplateId => _itemDefinition.TemplateId;
-        public string this[string fieldName] => Fields[fieldName]?.Value;
+        public string this[string fieldName] => _itemDefinition.Fields[fieldName]?.Value;
     }
 }

@@ -29,6 +29,7 @@ namespace Lightcore.Server
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             });
+            _client.DefaultRequestHeaders.UserAgent.ParseAdd("Lightcore");
         }
 
         public void Dispose()

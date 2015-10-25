@@ -7,7 +7,7 @@ using Lightcore.Kernel.Data.Presentation;
 
 namespace Lightcore.Kernel.Data
 {
-    public class Item
+    public class Item : IItem
     {
         private readonly ItemDefinition _itemDefinition;
         private IEnumerable<ChildItem> _children;
@@ -17,22 +17,23 @@ namespace Lightcore.Kernel.Data
             _itemDefinition = itemDefinition;
         }
 
-        public string Path => _itemDefinition.Path;
-        public string Name => _itemDefinition.Name;
-        public string Key => _itemDefinition.Key;
-        public Guid Id => _itemDefinition.Id;
         public PresentationDetails Visualization => _itemDefinition.Visualization;
-        public Language Language => _itemDefinition.Language;
 
         public IEnumerable<ChildItem> Children
         {
             get { return _children ?? (_children = _itemDefinition.Children.Select(c => new ChildItem(c))); }
         }
 
+        public Guid ParentId => _itemDefinition.ParentId;
+
+        public string Path => _itemDefinition.Path;
+        public string Name => _itemDefinition.Name;
+        public string Key => _itemDefinition.Key;
+        public Guid Id => _itemDefinition.Id;
+        public Language Language => _itemDefinition.Language;
         public FieldCollection Fields => _itemDefinition.Fields;
         public bool HasVersion => _itemDefinition.HasVersion;
         public Guid TemplateId => _itemDefinition.TemplateId;
-        public Guid ParentId => _itemDefinition.ParentId;
-        public string this[string fieldName] => Fields[fieldName]?.Value;
+        public string this[string fieldName] => _itemDefinition.Fields[fieldName]?.Value;
     }
 }
