@@ -8,7 +8,7 @@ namespace Lightcore.Kernel.Pipelines.Request.Processors
         {
             var context = args.HttpContext.LightcoreContext();
 
-            if (string.IsNullOrEmpty(context.Item.Visualization?.Layout?.Path))
+            if (string.IsNullOrEmpty(context.Item.PresentationDetails?.Layout?.Path))
             {
                 throw new ItemLayoutNotDefinedException(context.Item);
             }

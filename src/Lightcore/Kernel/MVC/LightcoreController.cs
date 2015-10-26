@@ -8,7 +8,7 @@ namespace Lightcore.Kernel.Mvc
         {
             var context = HttpContext.LightcoreContext();
 
-            return View(context.Item.Visualization.Layout.Path, context.Item);
+            return View(context.Item.PresentationDetails.Layout.Path, context.Item);
         }
     }
 }

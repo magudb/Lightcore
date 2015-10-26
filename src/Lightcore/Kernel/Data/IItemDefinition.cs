@@ -4,16 +4,16 @@ using Lightcore.Kernel.Data.Globalization;
 
 namespace Lightcore.Kernel.Data
 {
-    public interface IItem
+    public interface IItemDefinition
     {
-        string Path { get; }
+        Guid TemplateId { get; }
+        Guid Id { get; }
         string Name { get; }
         string Key { get; }
-        Guid Id { get; }
+        string Path { get; }
         Language Language { get; }
-        FieldCollection Fields { get; }
         bool HasVersion { get; }
-        Guid TemplateId { get; }
+        FieldCollection Fields { get; }
         string this[string fieldName] { get; }
     }
 }

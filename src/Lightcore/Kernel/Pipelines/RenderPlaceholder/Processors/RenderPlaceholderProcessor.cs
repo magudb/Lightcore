@@ -16,7 +16,7 @@ namespace Lightcore.Kernel.Pipelines.RenderPlaceholder.Processors
 
         public override async Task ProcessAsync(RenderPlaceholderArgs args)
         {
-            var renderings = args.Item.Visualization.Renderings
+            var renderings = args.Item.PresentationDetails.Renderings
                                  .Where(r => r.Placeholder.Equals(args.Name, StringComparison.OrdinalIgnoreCase));
 
             foreach (var renderArgs in renderings.Select(r => new RenderRenderingArgs(args.HttpContext, args.RouteData, args.Item, r, args.Output)))

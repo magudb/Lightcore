@@ -5,7 +5,7 @@ namespace WebApp.Models
 {
     public class MenuModel
     {
-        public IEnumerable<IItem> MainNavigation { get; set; }
-        public IEnumerable<IItem> LanguageNavigation { get; set; }
+        public IEnumerable<IItemDefinition> MainNavigation { get; set; }
+        public IEnumerable<IItemDefinition> LanguageNavigation { get; set; }
     }
 }

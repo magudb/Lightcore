@@ -4,7 +4,7 @@ namespace Lightcore.Kernel.Url
 {
     public static class UrlExtensions
     {
-        public static string GetUrl(this IItemUrlService service, IItem item)
+        public static string GetUrl(this IItemUrlService service, IItemDefinition item)
         {
             Requires.IsNotNull(item, nameof(item));
 

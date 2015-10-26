@@ -22,7 +22,7 @@ namespace WebApp.Controllers
             var context = HttpContext.LightcoreContext();
             var root = await _itemProvider.GetItemAsync(new GetItemCommand(datasource, context.Language).OnlyChildFields("title"));
             var languages = await _itemProvider.GetVersionsAsync(new GetVersionsCommand(datasource));
-            var navigation = new List<IItem>(new[] {root});
+            var navigation = new List<IItemDefinition>(new[] {root});
 
             navigation.AddRange(root.Children);
 

@@ -20,7 +20,7 @@ namespace Lightcore.Kernel.Mvc
 
                 if (controller != null && !controller.Equals("Lightcore"))
                 {
-                    var rendering = item.Visualization.Renderings
+                    var rendering = item.PresentationDetails.Renderings
                                         .FirstOrDefault(r => r.Controller.Equals(controller, StringComparison.OrdinalIgnoreCase));
 
                     if (rendering != null)

@@ -1,39 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Lightcore.Kernel.Data.Fields;
 using Lightcore.Kernel.Data.Globalization;
 using Lightcore.Kernel.Data.Presentation;
 
 namespace Lightcore.Kernel.Data
 {
-    public class Item : IItem
+    public class Item : IItemDefinition
     {
-        private readonly ItemDefinition _itemDefinition;
-        private IEnumerable<ChildItem> _children;
+        private readonly IItemDefinition _definition;
 
-        public Item(ItemDefinition itemDefinition)
+        public Item(IItemDefinition definition, Guid parentId, IEnumerable<IItemDefinition> children, PresentationDetails details = null)
         {
-            _itemDefinition = itemDefinition;
+            _definition = definition;
+
+            ParentId = parentId;
+            Children = children;
+            PresentationDetails = details;
         }
 
-        public PresentationDetails Visualization => _itemDefinition.Visualization;
-
-        public IEnumerable<ChildItem> Children
-        {
-            get { return _children ?? (_children = _itemDefinition.Children.Select(c => new ChildItem(c))); }
-        }
-
-        public Guid ParentId => _itemDefinition.ParentId;
-
-        public string Path => _itemDefinition.Path;
-        public string Name => _itemDefinition.Name;
-        public string Key => _itemDefinition.Key;
-        public Guid Id => _itemDefinition.Id;
-        public Language Language => _itemDefinition.Language;
-        public FieldCollection Fields => _itemDefinition.Fields;
-        public bool HasVersion => _itemDefinition.HasVersion;
-        public Guid TemplateId => _itemDefinition.TemplateId;
-        public string this[string fieldName] => _itemDefinition.Fields[fieldName]?.Value;
+        public Guid ParentId { get; }
+        public IEnumerable<IItemDefinition> Children { get; set; }
+        public PresentationDetails PresentationDetails { get; }
+        public string Path => _definition.Path;
+        public string Name => _definition.Name;
+        public string Key => _definition.Key;
+        public Guid Id => _definition.Id;
+        public Language Language => _definition.Language;
+        public FieldCollection Fields => _definition.Fields;
+        public bool HasVersion => _definition.HasVersion;
+        public Guid TemplateId => _definition.TemplateId;
+        public string this[string fieldName] => _definition.Fields[fieldName]?.Value;
     }
 }

@@ -14,38 +14,35 @@ namespace Lightcore.Server
     {
         public static IEnumerable<Item> Create(ServerResponseModel apiResponse)
         {
-            var items = new List<Item>();
-
-            foreach (var model in apiResponse.Items)
-            {
-                var data = MapItemDefinition(model);
-
-                data.Children = model.Children.Select(MapItemDefinition);
-
-                items.Add(new Item(data));
-            }
-
-            return items;
+            return (from apiItem in apiResponse.Items
+                    let itemDefinition = MapItemDefinition(apiItem)
+                    select MapItem(itemDefinition, apiItem)).ToList();
         }
 
         private static ItemDefinition MapItemDefinition(ItemModel apiItem)
         {
-            var item = new ItemDefinition
-            {
-                Language = Language.Parse(apiItem.Properties.Language),
-                Id = apiItem.Properties.Id,
-                Key = apiItem.Properties.Name.ToLowerInvariant(),
-                Name = apiItem.Properties.Name,
-                Path = apiItem.Properties.FullPath,
-                HasVersion = apiItem.Properties.HasVersion,
-                TemplateId = apiItem.Properties.TemplateId,
-                ParentId = apiItem.Properties.ParentId,
-                Fields = new FieldCollection(apiItem.Fields.Select(MapField))
-            };
+            return new ItemDefinition(apiItem.Properties.Id,
+                apiItem.Properties.TemplateId,
+                apiItem.Properties.Name,
+                apiItem.Properties.FullPath,
+                Language.Parse(apiItem.Properties.Language),
+                apiItem.Properties.HasVersion,
+                new FieldCollection(apiItem.Fields.Select(MapField)));
+        }
+
+        private static Item MapItem(ItemDefinition itemDefinition, ItemModel apiItem)
+        {
+            Item item;
 
             if (apiItem.Presentation != null)
             {
-                item.Visualization = new PresentationDetails(new Layout(apiItem.Presentation.Layout.Path), MapRenderings(apiItem.Presentation));
+                item = new Item(itemDefinition, apiItem.Properties.ParentId,
+                    apiItem.Children.Select(MapItemDefinition),
+                    new PresentationDetails(new Layout(apiItem.Presentation.Layout.Path), MapRenderings(apiItem.Presentation)));
+            }
+            else
+            {
+                item = new Item(itemDefinition, apiItem.Properties.ParentId, apiItem.Children.Select(MapItemDefinition));
             }
 
             return item;
