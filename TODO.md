@@ -10,7 +10,7 @@
 
 ## Server ##
 
-- Create CmEnabled bool setting that enabled/disables access to everything besides API and Media request, eases deployment and configration of Sitecore.
+- ...
 
 ## Kernel ##
 

@@ -23,6 +23,11 @@ namespace Lightcore.Server.Sitecore.Api.Actions
             get { return "/-/lightcore/versions/"; }
         }
 
+        public override bool CanHandle(string path)
+        {
+            return path.StartsWith(HandlesPath, StringComparison.OrdinalIgnoreCase);
+        }
+
         public override void Execute(HttpContext context, string query, string database, string device, string language)
         {
             var queryString = context.Request.QueryString;

@@ -38,6 +38,7 @@
       <HintPath>..\..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -100,10 +101,10 @@
     <Compile Include="..\Lightcore\Server\Models\ServerResponseModel.cs">
       <Link>Models\ServerResponseModel.cs</Link>
     </Compile>
+    <Compile Include="Api\Actions\HelpAction.cs" />
     <Compile Include="Api\Actions\ModuleAction.cs" />
     <Compile Include="Api\Actions\VersionsAction.cs" />
     <Compile Include="Api\Actions\ItemAction.cs" />
-    <Compile Include="Api\HelpModule.cs" />
     <Compile Include="Api\ItemModule.cs" />
     <Compile Include="Data\ItemSerializer.cs" />
     <Compile Include="Experiments\PipelineBasedItemProvider\Processors.cs" />

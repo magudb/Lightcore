@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using Lightcore.Server.Sitecore.Data;
 using Sitecore.Configuration;
 using Sitecore.Globalization;
@@ -17,6 +18,11 @@ namespace Lightcore.Server.Sitecore.Api.Actions
         public override string HandlesPath
         {
             get { return "/-/lightcore/item/"; }
+        }
+
+        public override bool CanHandle(string path)
+        {
+            return path.StartsWith(HandlesPath, StringComparison.OrdinalIgnoreCase);
         }
 
         public override void Execute(HttpContext context, string query, string database, string device, string language)

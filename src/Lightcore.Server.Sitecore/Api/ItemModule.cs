@@ -18,7 +18,8 @@ namespace Lightcore.Server.Sitecore.Api
             _actions = new ModuleAction[]
             {
                 new ItemAction(serializer),
-                new VersionsAction(serializer)
+                new VersionsAction(serializer),
+                new HelpAction()
             };
         }
 
@@ -36,7 +37,7 @@ namespace Lightcore.Server.Sitecore.Api
 
                 var path = decodedPath.ToLowerInvariant();
 
-                foreach (var action in _actions.Where(action => path.StartsWith(action.HandlesPath)))
+                foreach (var action in _actions.Where(action => action.CanHandle(path)))
                 {
                     action.DoExecute(context, path);
 

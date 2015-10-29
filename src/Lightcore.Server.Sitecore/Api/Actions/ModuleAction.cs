@@ -14,6 +14,8 @@ namespace Lightcore.Server.Sitecore.Api.Actions
 
         public abstract string HandlesPath { get; }
 
+        public abstract bool CanHandle(string path);
+
         public abstract void Execute(HttpContext context, string query, string database, string device, string language);
 
         internal void DoExecute(HttpContext context, string decodedPath)
