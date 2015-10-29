@@ -4,7 +4,7 @@
 
 - Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
 	- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
-	- Or try https://www.tutum.co/
+	- Or try [https://www.tutum.co/](https://www.tutum.co/)
 - Test on IIS
 - Update to Sitecore 8.1
 
@@ -18,7 +18,7 @@
 	- Publish event to clear cache on complete or clear single entries?  
 	- Also clear html cache
 - Don't depend directly on Microsoft.Framework.Caching.Memory.IMemoryCache
-- Look into if its worth it to manually do deserialization http://www.newtonsoft.com/json/help/html/performance.htm
+- Look into if its worth it to manually do deserialization [http://www.newtonsoft.com/json/help/html/performance.htm](http://www.newtonsoft.com/json/help/html/performance.htm)
 - How is performance with many languages on a item?
 - How is performance with many children?
 - Pipeline/Processor trace decorators to measure execution time
@@ -26,14 +26,13 @@
 
 ## MVC ##
 
-- Test Web API with both RouteTable and Attribute routing.
-	- Do we hit the request pipeline and should it be aborted?
-- HtmlHelpers could/should be TagHelpers? http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html
+- HtmlHelpers could/should be TagHelpers? [http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html](http://mvc.readthedocs.org/en/latest/views/tag-helpers/authoring.html)
 
 ## Ideas ##
 
 - Look into PipelineBasedItemProvider! 
-	- Works, but there dosn't exist any "nosql" drivers for coreclr like mongo, redis, elastic etc. ... yet...
+	- Works, but there dosn't exist any "nosql" drivers for coreclr like mongo, elastic etc. ... yet...
+	- Redis client! [https://github.com/StackExchange/StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
 - SignalR to know if CM is offline or slow
@@ -44,13 +43,11 @@
 ## Thoughts about getting Sitecore data... ##
 
 - Use Item Web API directly? 
-	- https://sdn.sitecore.net/upload/sdn5/modules/sitecore%20item%20web%20api/sitecore_item_web_api_developer_guide_sc66-71-a4.pdf
-	- https://github.com/thinkfreshnick/SitecoreSharedSource/blob/master/Sitecore.SharedSource.WebApiClient
 	- Cons: Cant combine payload=content + __renderings fields, some meta fields not needed.
 	- Pros: OOTB since Sitecore 7.2, 8.0
 - Use Sitecore.Services.Client?
 	- /sitecore/api/ssc/item/110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9?includeMetadata=true
-	- https://sdn.sitecore.net/upload/sitecore7/75/developer's_guide_to_sitecore.services.client_sc75-a4.pdf
+	- [https://sdn.sitecore.net/upload/sitecore7/75/developer's_guide_to_sitecore.services.client_sc75-a4.pdf](https://sdn.sitecore.net/upload/sitecore7/75/developer's_guide_to_sitecore.services.client_sc75-a4.pdf)
 	- http://docs.itemserviceapi.apiary.io/
 	- Cons: 
 		- hmm can get both item and children in one request, bummer.

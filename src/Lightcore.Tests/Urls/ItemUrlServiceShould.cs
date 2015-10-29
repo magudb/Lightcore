@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Lightcore.Configuration;
+using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Globalization;
-using Lightcore.Kernel.Testing;
 using Lightcore.Kernel.Url;
 using Xunit;
 

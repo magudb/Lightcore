@@ -1,6 +1,7 @@
 ﻿using Lightcore.Hosting;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Routing.Template;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
@@ -34,6 +35,12 @@ namespace WebApp
 
             // Add static files to the request pipeline.
             app.UseStaticFiles();
+
+            // Example of using native MVC without running the Lightcore request pipeline
+            app.Map("/api", builder =>
+            {
+                app.UseMvc();
+            });
 
             // Enable Lightcore
             app.UseLightcore();

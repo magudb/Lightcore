@@ -1,10 +1,9 @@
 using System;
 using System.Linq;
-using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Fields;
 using Lightcore.Kernel.Data.Globalization;
 
-namespace Lightcore.Kernel.Testing
+namespace Lightcore.Kernel.Data
 {
     public class MutableItemDefinition : IItemDefinition
     {
