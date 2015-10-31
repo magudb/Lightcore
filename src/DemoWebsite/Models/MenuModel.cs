@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Lightcore.Kernel.Data;
 
-namespace WebApp.Models
+namespace DemoWebsite.Models
 {
     public class MenuModel
     {

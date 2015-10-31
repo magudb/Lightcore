@@ -1,7 +1,7 @@
 ﻿using Lightcore.Kernel;
 using Microsoft.AspNet.Mvc;
 
-namespace WebApp.Controllers
+namespace DemoWebsite.Controllers
 {
     public class FooterController : Controller
     {

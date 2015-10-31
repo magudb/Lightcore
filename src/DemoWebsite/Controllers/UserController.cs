@@ -2,7 +2,7 @@
 using Lightcore.Kernel.Data.Providers;
 using Microsoft.AspNet.Mvc;
 
-namespace WebApp.Controllers
+namespace DemoWebsite.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller

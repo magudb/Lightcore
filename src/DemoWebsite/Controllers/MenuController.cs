@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DemoWebsite.Models;
 using Lightcore.Kernel;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Providers;
 using Microsoft.AspNet.Mvc;
-using WebApp.Models;
 
-namespace WebApp.Controllers
+namespace DemoWebsite.Controllers
 {
     public class MenuController : Controller
     {

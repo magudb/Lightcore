@@ -1,0 +1,5 @@
+packages/*
+bld/*
+lib/*
+src/*
+_NCrunch_*/*
