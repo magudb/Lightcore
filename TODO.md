@@ -6,6 +6,7 @@
 	- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
 	- Or try [https://www.tutum.co/](https://www.tutum.co/)
 - Update to Sitecore 8.1
+- Descripe features implemented so in README.md
 
 ## Server ##
 
