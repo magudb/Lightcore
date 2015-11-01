@@ -9,6 +9,10 @@ docker build -t $name .
 
 $localIp = Get-NetAdapter -InterfaceDescription "Hyper-V Virtual Ethernet Adapter" | Get-NetIPAddress -AddressFamily IPv4 | % { $_.IPAddress }
 
+# Stop and remove existing image
+docker stop $name
+docker rm $name
+
 # Run docker image
 docker run -p 5000:5000 -d --name=$name --add-host=lightcore-cm.local:$localIp --env=ASPNET_ENV=Development $name
 
