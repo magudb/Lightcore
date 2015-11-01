@@ -1,5 +1,7 @@
 packages/*
 bld/*
 lib/*
-src/*
 _NCrunch_*/*
+src/Lightcore.Server.Sitecore/*
+src/Lightcore.Server.Sitecore.TestServer/*
+artifacts/*

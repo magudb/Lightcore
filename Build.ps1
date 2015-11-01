@@ -1,23 +1,16 @@
 $ErrorActionPreference = "STOP"
 $VerbosePreference = "Continue"
 
-# Build code
-dnvm use -version 1.0.0-beta8 -runtime coreclr
-dnu restore .\src\Lightcore
-dnu build .\src\Lightcore
-dnu restore .\src\DemoWebsite
-dnu build .\src\DemoWebsite
-
-# Publish code
-dnu publish .\src\DemoWebsite --configuration Release --out .\artifacts\app --runtime dnx-coreclr-win-x86.1.0.0-beta8
+# Settings
+$name = "lightcore-demowebsite"
 
 # Build docker image
-docker build -t lightcore .
+docker build -t $name .
 
 $localIp = Get-NetAdapter -InterfaceDescription "Hyper-V Virtual Ethernet Adapter" | Get-NetIPAddress -AddressFamily IPv4 | % { $_.IPAddress }
 
 # Run docker image
-docker run -p 5000:5000 -d --name=lightcore --add-host=lightcore-cm.local:$localIp --env=ASPNET_ENV=Development lightcore
+docker run -p 5000:5000 -d --name=$name --add-host=lightcore-cm.local:$localIp --env=ASPNET_ENV=Development $name
 
 # Wait
 sleep -Seconds 5
