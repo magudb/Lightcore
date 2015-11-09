@@ -10,7 +10,7 @@ namespace Lightcore.Kernel.Data.Providers
         {
             Requires.IsNotNullOrEmpty(pathOrId, nameof(pathOrId));
 
-            PathOrId = pathOrId;
+            PathOrId = pathOrId.Trim('/', '{', '}');
         }
 
         public string PathOrId { get; }

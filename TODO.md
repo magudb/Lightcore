@@ -30,9 +30,9 @@
 
 ## Ideas ##
 
-- Look into PipelineBasedItemProvider! 
-	- Works, but there dosn't exist any "nosql" drivers for coreclr like mongo, elastic etc. ... yet...
-	- Redis client! [https://github.com/StackExchange/StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
+- Look into PipelineBasedItemProvider 
+	- Works, but there do not exist any "nosql" drivers for coreclr like mongo, elastic etc. ... yet...
+	- Redis client could be an option [https://github.com/StackExchange/StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
 - SignalR to know if CM is offline or slow

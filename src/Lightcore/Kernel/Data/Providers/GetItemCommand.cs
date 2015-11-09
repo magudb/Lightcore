@@ -13,7 +13,7 @@ namespace Lightcore.Kernel.Data.Providers
             Requires.IsNotNullOrEmpty(pathOrId, nameof(pathOrId));
             Requires.IsNotNull(language, nameof(language));
 
-            PathOrId = pathOrId;
+            PathOrId = pathOrId.Trim('/', '{', '}');
             Language = language;
         }
 
