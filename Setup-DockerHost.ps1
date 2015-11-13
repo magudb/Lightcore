@@ -8,7 +8,7 @@ if(!$found)
 {
     Write-Warning "Machine '$machineName' not found, creating..."
 
-    docker-machine create -d hyper-v $machineName -debug
+    docker-machine create -d hyperv $machineName
 }
 else
 {
