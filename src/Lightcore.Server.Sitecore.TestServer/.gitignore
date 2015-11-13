@@ -10,6 +10,7 @@ sitecore_files/**/*
 temp/**/*
 upload/**/*
 Views/Shared/ExperienceExplorerView.cshtml
+Views/web.config
 xsl/**/*
 Default.aspx
 default.css
@@ -21,5 +22,4 @@ Web.Release.config
 
 # Ignores
 !App_Config/Include/Zoro/
-!App_Config/ConnectionStrings.config
 !App_Data/Sitecore/serialization/

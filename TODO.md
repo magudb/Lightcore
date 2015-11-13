@@ -5,8 +5,7 @@
 - Use Azure Resource Manager instead of everything in PowerShell (also see https://resources.azure.com/)
 	- Setup SQL Server, 3 databases, 1 Web App for CM, 1 Linux VM with Docker extensions (and add at least 2 containers)
 	- Or try [https://www.tutum.co/](https://www.tutum.co/)
-- Update to Sitecore 8.1
-- Descripe features implemented so in README.md
+- Describe features implemented so far in README.md
 
 ## Server ##
 
@@ -17,6 +16,7 @@
 - Cache items
 	- Publish event to clear cache on complete or clear single entries?  
 	- Also clear html cache
+- GetItemCommand: Make "expand datasource" to minimize requests
 - Don't depend directly on Microsoft.Framework.Caching.Memory.IMemoryCache
 - Look into if its worth it to manually do deserialization [http://www.newtonsoft.com/json/help/html/performance.htm](http://www.newtonsoft.com/json/help/html/performance.htm)
 - How is performance with many languages on a item?
