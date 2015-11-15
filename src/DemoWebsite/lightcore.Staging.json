@@ -1,5 +1,5 @@
 ﻿{
   "LightcoreOptions": {
-    "ServerUrl": "http://lightcore-cm.azurewebsites.net"
+    "ServerUrl": "http://lightcore-dev-website-cm.azurewebsites.net"
   }
 }
