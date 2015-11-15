@@ -4,6 +4,9 @@ $VerbosePreference = "Continue"
 # Settings
 $name = "lightcore-demowebsite"
 
+# Set current dir to where to docker file is
+Set-Location .\..
+
 # Build docker image
 docker build -t $name .
 

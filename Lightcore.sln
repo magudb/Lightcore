@@ -10,13 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.dockerignore = .dockerignore
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		Build.ps1 = Build.ps1
 		CONTRIBUTE.md = CONTRIBUTE.md
 		Dockerfile = Dockerfile
 		global.json = global.json
 		NuGet.Config = NuGet.Config
 		README.md = README.md
-		Setup-DockerHost.ps1 = Setup-DockerHost.ps1
 		TODO.md = TODO.md
 	EndProjectSection
 EndProject
@@ -34,6 +32,15 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Lightcore.Tests", "src\Lightcore.Tests\Lightcore.Tests.xproj", "{1A1ACD78-F4E3-469C-B08E-3595A4F90D27}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DemoWebsite", "src\DemoWebsite\DemoWebsite.xproj", "{4A1EEAC7-E8A8-4941-B596-9D1792AD8539}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bld", "bld", "{E6536FBB-63E3-4B18-9790-3942B2B2A15E}"
+	ProjectSection(SolutionItems) = preProject
+		bld\ARM-CM.json = bld\ARM-CM.json
+		bld\Build.ps1 = bld\Build.ps1
+		bld\Setup-CM.ps1 = bld\Setup-CM.ps1
+		bld\Setup-Databases.ps1 = bld\Setup-Databases.ps1
+		bld\Setup-DockerHost.ps1 = bld\Setup-DockerHost.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
