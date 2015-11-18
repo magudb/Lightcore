@@ -14,8 +14,8 @@ The two main reasons, operations and developer productivity:
  	- Runs in Docker containers!
 	- Runs from the command line in its own process.
 - Very lightweight footprint compared to using Sitecore as a runtime:
-	- ~145 MB on disk (that's including the CoreCLR *and* packages, everything needed to *both* compile and run), compared to ~400 MB (~300 for Sitecore and ~100 .NET 4.5 framework).
-	- ~150 MB (32 bit) memory under load, compared to ~1 GB (32 bit).
+	- ~130 MB on disk (that's including the CoreCLR *and* packages *and* code, everything needed to *both* compile and run), compared to ~400 MB (~300 for Sitecore and ~100 .NET 4.5 framework).
+	- ~30 MB (32 bit) memory under load, compared to ~1000 MB (32 bit).
 	- Cold start-up in ~2 seconds, compared to ~30.
 	
 ### Developer productivity ###
