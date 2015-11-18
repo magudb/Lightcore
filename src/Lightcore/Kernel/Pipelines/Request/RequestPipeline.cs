@@ -3,7 +3,7 @@ using Lightcore.Configuration;
 using Lightcore.Kernel.Data.Providers;
 using Lightcore.Kernel.Pipelines.Request.Processors;
 using Microsoft.AspNet.Http;
-using Microsoft.Framework.OptionsModel;
+using Microsoft.Extensions.OptionsModel;
 
 namespace Lightcore.Kernel.Pipelines.Request
 {

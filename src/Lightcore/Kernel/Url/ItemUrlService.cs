@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Lightcore.Configuration;
 using Lightcore.Kernel.Data.Globalization;
-using Microsoft.Framework.OptionsModel;
+using Microsoft.Extensions.OptionsModel;
 
 namespace Lightcore.Kernel.Url
 {

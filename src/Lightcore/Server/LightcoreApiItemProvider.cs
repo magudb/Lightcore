@@ -10,7 +10,7 @@ using Lightcore.Configuration;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Providers;
 using Lightcore.Server.Models;
-using Microsoft.Framework.OptionsModel;
+using Microsoft.Extensions.OptionsModel;
 using Newtonsoft.Json;
 
 namespace Lightcore.Server

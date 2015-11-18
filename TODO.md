@@ -16,7 +16,7 @@
 	- Publish event to clear cache on complete or clear single entries?  
 	- Also clear html cache
 - GetItemCommand: Make "expand datasource" to minimize requests
-- Don't depend directly on Microsoft.Framework.Caching.Memory.IMemoryCache
+- Don't depend directly on Microsoft.Extensions.Caching.Memory.IMemoryCache
 - Look into if its worth it to manually do deserialization [http://www.newtonsoft.com/json/help/html/performance.htm](http://www.newtonsoft.com/json/help/html/performance.htm)
 - How is performance with many languages on a item?
 - How is performance with many children?

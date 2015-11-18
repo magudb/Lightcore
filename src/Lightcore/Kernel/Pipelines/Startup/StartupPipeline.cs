@@ -5,7 +5,7 @@ using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Providers;
 using Lightcore.Kernel.Pipelines.Startup.Processors;
 using Microsoft.AspNet.Http;
-using Microsoft.Framework.OptionsModel;
+using Microsoft.Extensions.OptionsModel;
 
 namespace Lightcore.Kernel.Pipelines.Startup
 {
