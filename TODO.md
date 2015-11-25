@@ -32,7 +32,11 @@
 - Look into PipelineBasedItemProvider 
 	- Works! Could do a append only store based on
 		- Redis client could be an option [https://github.com/StackExchange/StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
-		- Now also System.Data.SQL, Dapper and ElasticCRUD is aviable to coreclr
+		- Now also on coreclr
+			- System.Data.Sql, 
+			- Dapper
+			- ElasticCRUD
+			- RethinkDB
 		- Azure DocumentDB also has a REST API
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
