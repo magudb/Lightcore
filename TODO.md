@@ -30,9 +30,10 @@
 ## Ideas ##
 
 - Look into PipelineBasedItemProvider 
-	- Works, but there do not exist any "nosql" drivers for coreclr like mongo, elastic etc. ... yet...
-	- Redis client could be an option [https://github.com/StackExchange/StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
-	- Azure DocumentDB also has a REST API,
+	- Works! Could do a append only store based on
+		- Redis client could be an option [https://github.com/StackExchange/StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
+		- Now also System.Data.SQL, Dapper and ElasticCRUD is aviable to coreclr
+		- Azure DocumentDB also has a REST API
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
 - SignalR to know if CM is offline or slow
