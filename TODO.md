@@ -5,6 +5,7 @@
 - ARM: Add connectionstrings to CM website
 - Try [https://www.tutum.co/](https://www.tutum.co/)
 - Describe features implemented so far in README.md
+- Move deployment stuff to seperate repostory and use Git submodule perhaps?
 
 ## Server ##
 
@@ -16,6 +17,7 @@
 	- Publish event to clear cache on complete or clear single entries?  
 	- Also clear html cache
 - GetItemCommand: Make "expand datasource" to minimize requests
+- GetItemCommand: Switch to include persentation details
 - Don't depend directly on Microsoft.Extensions.Caching.Memory.IMemoryCache
 - Look into if its worth it to manually do deserialization [http://www.newtonsoft.com/json/help/html/performance.htm](http://www.newtonsoft.com/json/help/html/performance.htm)
 - How is performance with many languages on a item?
@@ -29,15 +31,15 @@
 
 ## Ideas ##
 
+- Try out Glimpse v2 beta on demo site
 - Look into PipelineBasedItemProvider 
 	- Works! Could do a append only store based on
-		- Redis client could be an option [https://github.com/StackExchange/StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
-		- Now also on coreclr
-			- System.Data.Sql, 
-			- Dapper
-			- ElasticCRUD
-			- RethinkDB
-		- Azure DocumentDB also has a REST API
+		- System.Data.Sql
+		- Dapper
+		- ElasticCRUD
+		- Redis
+		- RethinkDB
+		- Azure DocumentDB (REST API, not client yet)
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
 	- OR SingalR, broadcase published items and subscribe to refresh items in cache
 - SignalR to know if CM is offline or slow

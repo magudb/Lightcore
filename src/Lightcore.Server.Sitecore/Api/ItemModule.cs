@@ -27,8 +27,11 @@ namespace Lightcore.Server.Sitecore.Api
         {
             app.BeginRequest += (sender, args) =>
             {
-                var context = ((HttpApplication)sender).Context;
+                var context = new HttpContextWrapper(((HttpApplication)sender).Context);
+
+                // ReSharper disable PossibleNullReferenceException
                 var decodedPath = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
+                // ReSharper restore PossibleNullReferenceException
 
                 if (decodedPath == null)
                 {
