@@ -46,6 +46,7 @@
 - Circut Breaker functionality in itemprovider
 - Backoff and retry in itemprovider, multiple api endpoints... fallback to serialized items on disk?
 - Would it be possible to cross compile and use controllers/view in Sitecore to enable the use of the Page Editor?
+- Look into removing "Sitecore language dependency" in URL's, to also support mapping markets to languages...
 
 ## Thoughts about getting Sitecore data... ##
 
