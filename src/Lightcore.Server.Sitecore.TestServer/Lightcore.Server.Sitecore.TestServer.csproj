@@ -862,12 +862,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Config\Include\Zoro\Common.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Config\Include\Zoro\Lightcore.Server.SitecoreRedis.config" />
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -893,16 +892,16 @@
     <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\__Standard Values.item" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\Zoro\Experiments.config.disabled">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Lightcore.Server.SitecoreRedis\Lightcore.Server.SitecoreRedis.csproj">
+      <Project>{be5a7b4c-9778-4edd-80bb-a3b98e05954d}</Project>
+      <Name>Lightcore.Server.SitecoreRedis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lightcore.Server.Sitecore\Lightcore.Server.Sitecore.csproj">
       <Project>{e44dee6b-e8a7-4e30-87a7-47ceeeccd5bf}</Project>
       <Name>Lightcore.Server.Sitecore</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{20F96D4F-95B3-4465-AC1E-931D2C9B9C54}"
 EndProject
@@ -42,6 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bld", "bld", "{E6536FBB-63E
 		bld\Setup-DockerHost.ps1 = bld\Setup-DockerHost.ps1
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lightcore.Server.SitecoreRedis", "src\Lightcore.Server.SitecoreRedis\Lightcore.Server.SitecoreRedis.csproj", "{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{4A1EEAC7-E8A8-4941-B596-9D1792AD8539}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A1EEAC7-E8A8-4941-B596-9D1792AD8539}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A1EEAC7-E8A8-4941-B596-9D1792AD8539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +84,6 @@ Global
 		{FB8F57CB-8A55-48D0-8528-F9BC222C67D7} = {837239F1-FBCF-454F-9002-5E6E3A0BA3EC}
 		{1A1ACD78-F4E3-469C-B08E-3595A4F90D27} = {837239F1-FBCF-454F-9002-5E6E3A0BA3EC}
 		{4A1EEAC7-E8A8-4941-B596-9D1792AD8539} = {20F96D4F-95B3-4465-AC1E-931D2C9B9C54}
+		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D} = {20F96D4F-95B3-4465-AC1E-931D2C9B9C54}
 	EndGlobalSection
 EndGlobal

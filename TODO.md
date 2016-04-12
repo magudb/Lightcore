@@ -30,7 +30,7 @@
 ## Ideas ##
 
 - Look into PipelineBasedItemProvider 
-	- Works, but there do not exist any "nosql" drivers for coreclr like mongo, elastic etc. ... yet...
+	- Works! But web db is still needed, look into doing a dataprovider instead.
 	- Redis client could be an option [https://github.com/StackExchange/StackExchange.Redis](https://github.com/StackExchange/StackExchange.Redis)
 	- Azure DocumentDB also has a REST API,
 - SignalR broadcast publish end with ID and Language and subscribe to clear items from cache
