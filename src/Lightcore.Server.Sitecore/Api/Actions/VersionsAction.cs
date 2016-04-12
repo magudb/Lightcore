@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Sitecore.Configuration;
 using Sitecore.Data.Items;
-using Sitecore.Globalization;
 using ItemSerializer = Lightcore.Server.Sitecore.Data.ItemSerializer;
 
 namespace Lightcore.Server.Sitecore.Api.Actions
@@ -28,12 +26,9 @@ namespace Lightcore.Server.Sitecore.Api.Actions
             return path.StartsWith(HandlesPath, StringComparison.OrdinalIgnoreCase);
         }
 
-        public override void Execute(HttpContext context, string query, string database, string device, string language)
+        public override void Execute(HttpContextBase context, string query, Parameters parameters)
         {
-            var queryString = context.Request.QueryString;
-            var cdn = queryString["cdn"];
-            var itemFields = queryString["itemfields"] != null ? queryString["itemfields"].Split(',') : new string[] {};
-            var item = Factory.GetDatabase(database).Items.GetItem(query, Language.Parse(language));
+            var item = parameters.Database.Items.GetItem(query, parameters.Language);
 
             if (item != null)
             {
@@ -42,14 +37,14 @@ namespace Lightcore.Server.Sitecore.Api.Actions
                     item
                 };
 
-                foreach (var languageVersion in item.Languages.Where(lang => !lang.Name.Equals(language, StringComparison.OrdinalIgnoreCase)))
+                foreach (var language in item.Languages.Where(x => !x.Equals(parameters.Language)))
                 {
-                    var languageItem = item.Database.Items.GetItem(item.ID, languageVersion);
+                    var languageItem = item.Database.Items.GetItem(item.ID, language);
 
                     items.Add(languageItem);
                 }
 
-                _serializer.SerializeVersions(items, context.Response.OutputStream, itemFields, cdn);
+                _serializer.SerializeVersions(items, context.Response.OutputStream, parameters.ItemFields.ToArray(), parameters.Cdn);
 
                 context.Response.ContentType = "application/json";
             }

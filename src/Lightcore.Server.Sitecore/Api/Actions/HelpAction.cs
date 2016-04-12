@@ -1,6 +1,5 @@
 ﻿using System.Configuration;
 using System.Web;
-using Sitecore.WordOCX.Extensions;
 
 namespace Lightcore.Server.Sitecore.Api.Actions
 {
@@ -28,9 +27,9 @@ namespace Lightcore.Server.Sitecore.Api.Actions
             return true;
         }
 
-        public override void Execute(HttpContext context, string query, string database, string device, string language)
+        public override void Execute(HttpContextBase context, string query, Parameters parameters)
         {
-            context.Response.WriteLine("Help...");
+            context.Response.Write("Help...");
         }
     }
 }

@@ -102,6 +102,7 @@
     <Compile Include="..\Lightcore\Server\Models\ServerResponseModel.cs">
       <Link>Models\ServerResponseModel.cs</Link>
     </Compile>
+    <Compile Include="Api\Actions\Parameters.cs" />
     <Compile Include="Api\Actions\HelpAction.cs" />
     <Compile Include="Api\Actions\ModuleAction.cs" />
     <Compile Include="Api\Actions\VersionsAction.cs" />
