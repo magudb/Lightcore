@@ -9,7 +9,7 @@
     "test": "xunit.runner.dnx"
   },
   "dependencies": {
-    "FluentAssertions": "4.0.1",
+    "FluentAssertions": "4.3.2",
     "System.Collections": "4.0.11-beta-23409",
     "System.Linq": "4.0.1-beta-23409",
     "System.Runtime": "4.0.21-beta-23409",
