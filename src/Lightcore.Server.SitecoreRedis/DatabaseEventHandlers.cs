@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using Sitecore.Configuration;
+using Sitecore.Data;
 using Sitecore.Data.Engines.DataCommands;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
 using Sitecore.Events.Hooks;
 using StackExchange.Redis;
 
@@ -46,32 +45,32 @@ namespace Lightcore.Server.SitecoreRedis
 
         private void OnVersionAdded(object sender, ExecutedEventArgs<AddVersionCommand> e)
         {
-            Save(e.Command.Item);
+            SaveVersion(e.Command.Item);
         }
 
         private void OnVersionRemoved(object sender, ExecutedEventArgs<RemoveVersionCommand> e)
         {
-            Delete(new RedisKey[] {e.Command.Item.ID.ToRedisKey(e.Command.Item.Language)});
+            DeleteVersion(e.Command.Item.ID.ToRedisKey(e.Command.Item.Language));
         }
 
         private void OnDeleted(object sender, DeleteProcessedSingleItemEventArgs e)
         {
-            var keys = new List<RedisKey>();
+            var keys = new List<string>();
 
             foreach (var language in e.Database.Languages)
             {
                 keys.Add(e.ItemID.ToRedisKey(language));
             }
 
-            Delete(keys.ToArray());
+            Delete(e.ItemID, keys);
         }
 
         private void OnSaved(object sender, ExecutedEventArgs<SaveItemCommand> e)
         {
-            Save(e.Command.Item);
+            SaveVersion(e.Command.Item);
         }
 
-        private void Save(Item item, [CallerMemberName] string memberName = "")
+        private void SaveVersion(Item item)
         {
             if (!_acceptedPaths.Any(path => item.Paths.FullPath.StartsWith(path, StringComparison.OrdinalIgnoreCase)))
             {
@@ -80,21 +79,52 @@ namespace Lightcore.Server.SitecoreRedis
 
             var model = _itemModelFactory.GetItemModel(item);
             var value = JsonConvert.SerializeObject(model);
-            var results = RedisConnection.GetDatabase().StringSet(model.Id, value);
+            var database = RedisConnection.GetDatabase();
 
-            Log.Debug(string.Format("Redis: Handled '{0}' and saved key '{1}', response was '{2}'.", memberName, model.Id, results), this);
+            database.StringSet(model.Id, value);
+            database.HashSetAsync("item:paths", item.Paths.FullPath.ToLowerInvariant(), item.ID.ToShortID().ToString().ToLowerInvariant()).Wait();
         }
 
-        private void Delete(RedisKey[] keys, [CallerMemberName] string memberName = "")
+        private void DeleteVersion(string key)
         {
-            if (keys.Length <= 0)
+            var database = RedisConnection.GetDatabase();
+
+            database.KeyDelete(key);
+        }
+
+        private void Delete(ID itemId, IEnumerable<string> keys)
+        {
+            var redisKeys = keys.Select(key => (RedisKey)key).ToArray();
+
+            if (redisKeys.Length <= 0)
             {
                 return;
             }
 
-            var results = RedisConnection.GetDatabase().KeyDelete(keys);
+            var database = RedisConnection.GetDatabase();
 
-            Log.Debug(string.Format("Redis: Handled '{0}' and deleted keys '{1}', response was '{2}'.", memberName, string.Join(", ", keys), results), this);
+            database.KeyDelete(redisKeys);
+
+            var paths = database.HashGetAll("item:paths");
+
+            foreach (var entry in paths)
+            {
+                var value = entry.Value;
+
+                if (value.IsNullOrEmpty)
+                {
+                    continue;
+                }
+
+                if (!value.ToString().Equals(itemId.ToShortID().ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                database.HashDelete("item:paths", entry.Name);
+
+                break;
+            }
         }
     }
 }
