@@ -17,7 +17,8 @@ namespace Lightcore.Server.SitecoreRedis
         {
             return new ItemModelV2
             {
-                Id = item.ID.ToRedisKey(item.Language),
+                Id = item.ID.Guid,
+                StorageKey = item.ID.ToStorageKey(item.Language),
                 FullPath = item.Paths.FullPath.ToLowerInvariant(),
                 Language = item.Language.Name,
                 Name = item.Name,

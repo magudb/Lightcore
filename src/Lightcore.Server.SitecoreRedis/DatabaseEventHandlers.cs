@@ -50,19 +50,14 @@ namespace Lightcore.Server.SitecoreRedis
 
         private void OnVersionRemoved(object sender, ExecutedEventArgs<RemoveVersionCommand> e)
         {
-            DeleteVersion(e.Command.Item.ID.ToRedisKey(e.Command.Item.Language));
+            DeleteVersion(e.Command.Item, e.Command.Item.ID.ToStorageKey(e.Command.Item.Language));
         }
 
         private void OnDeleted(object sender, DeleteProcessedSingleItemEventArgs e)
         {
-            var keys = new List<string>();
+            var keys = e.Database.Languages.Select(language => e.ItemID.ToStorageKey(language));
 
-            foreach (var language in e.Database.Languages)
-            {
-                keys.Add(e.ItemID.ToRedisKey(language));
-            }
-
-            Delete(e.ItemID, keys);
+            DeleteItem(e.ItemID, keys);
         }
 
         private void OnSaved(object sender, ExecutedEventArgs<SaveItemCommand> e)
@@ -81,18 +76,20 @@ namespace Lightcore.Server.SitecoreRedis
             var value = JsonConvert.SerializeObject(model);
             var database = RedisConnection.GetDatabase();
 
-            database.StringSet(model.Id, value);
-            database.HashSetAsync("item:paths", item.Paths.FullPath.ToLowerInvariant(), item.ID.ToShortID().ToString().ToLowerInvariant()).Wait();
+            database.StringSet(model.StorageKey, value);
+            database.HashSetAsync("index:paths", item.Paths.FullPath.ToLowerInvariant(), item.ID.AsLowercaseGuid()).Wait();
+            database.HashSetAsync("index:versions", item.ID.AsLowercaseGuid(), item.LanguageVersionNames()).Wait();
         }
 
-        private void DeleteVersion(string key)
+        private void DeleteVersion(Item item, string key)
         {
             var database = RedisConnection.GetDatabase();
 
             database.KeyDelete(key);
+            database.HashSetAsync("index:versions", item.ID.AsLowercaseGuid(), item.LanguageVersionNames()).Wait();
         }
 
-        private void Delete(ID itemId, IEnumerable<string> keys)
+        private void DeleteItem(ID itemId, IEnumerable<string> keys)
         {
             var redisKeys = keys.Select(key => (RedisKey)key).ToArray();
 
@@ -105,7 +102,7 @@ namespace Lightcore.Server.SitecoreRedis
 
             database.KeyDelete(redisKeys);
 
-            var paths = database.HashGetAll("item:paths");
+            var paths = database.HashGetAll("index:paths");
 
             foreach (var entry in paths)
             {
@@ -116,15 +113,17 @@ namespace Lightcore.Server.SitecoreRedis
                     continue;
                 }
 
-                if (!value.ToString().Equals(itemId.ToShortID().ToString(), StringComparison.OrdinalIgnoreCase))
+                if (value.ToString() != itemId.AsLowercaseGuid())
                 {
                     continue;
                 }
 
-                database.HashDelete("item:paths", entry.Name);
+                database.HashDelete("index:paths", entry.Name);
 
                 break;
             }
+
+            database.HashDelete("index:versions", itemId.AsLowercaseGuid());
         }
     }
 }

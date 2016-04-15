@@ -14,9 +14,10 @@ namespace Lightcore.Server.Models
     public class ItemModelV2
     {
         public string Name { get; set; }
+        public string StorageKey { get; set; }
         public string FullPath { get; set; }
         public string Language { get; set; }
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public Guid ParentId { get; set; }
         public Guid TemplateId { get; set; }
         public bool HasVersion { get; set; }
