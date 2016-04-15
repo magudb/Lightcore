@@ -18,19 +18,23 @@ namespace Lightcore.Server.SitecoreRedis
         private readonly string[] _acceptedPaths;
         private readonly string _databaseName;
         private readonly ItemModelFactory _itemModelFactory;
-        private readonly string _redisConnection;
+        private readonly string _redisConfiguration;
+        private readonly string _pathIndexName;
+        private readonly string _versionsIndexName;
 
-        public DatabaseEventHandlers(string database, string paths, string connection)
+        public DatabaseEventHandlers(string database, string paths, string configuration)
         {
             _databaseName = database;
             _acceptedPaths = paths.Split('|');
-            _redisConnection = connection;
+            _redisConfiguration = configuration;
             _itemModelFactory = new ItemModelFactory();
+            _pathIndexName = "index:paths";
+            _versionsIndexName = "index:versions";
         }
 
         private IConnectionMultiplexer RedisConnection
         {
-            get { return _connection ?? (_connection = ConnectionMultiplexer.Connect(_redisConnection)); }
+            get { return _connection ?? (_connection = ConnectionMultiplexer.Connect(_redisConfiguration)); }
         }
 
         public void Initialize()
@@ -77,8 +81,8 @@ namespace Lightcore.Server.SitecoreRedis
             var database = RedisConnection.GetDatabase();
 
             database.StringSet(model.StorageKey, value);
-            database.HashSetAsync("index:paths", item.Paths.FullPath.ToLowerInvariant(), item.ID.AsLowercaseGuid()).Wait();
-            database.HashSetAsync("index:versions", item.ID.AsLowercaseGuid(), item.LanguageVersionNames()).Wait();
+            database.HashSetAsync(_pathIndexName, item.Paths.FullPath.ToLowerInvariant(), item.ID.AsLowercaseGuid()).Wait();
+            database.HashSetAsync(_versionsIndexName, item.ID.AsLowercaseGuid(), item.LanguageVersionNames()).Wait();
         }
 
         private void DeleteVersion(Item item, string key)
@@ -86,7 +90,7 @@ namespace Lightcore.Server.SitecoreRedis
             var database = RedisConnection.GetDatabase();
 
             database.KeyDelete(key);
-            database.HashSetAsync("index:versions", item.ID.AsLowercaseGuid(), item.LanguageVersionNames()).Wait();
+            database.HashSetAsync(_versionsIndexName, item.ID.AsLowercaseGuid(), item.LanguageVersionNames()).Wait();
         }
 
         private void DeleteItem(ID itemId, IEnumerable<string> keys)
@@ -102,7 +106,7 @@ namespace Lightcore.Server.SitecoreRedis
 
             database.KeyDelete(redisKeys);
 
-            var paths = database.HashGetAll("index:paths");
+            var paths = database.HashGetAll(_pathIndexName);
 
             foreach (var entry in paths)
             {
@@ -118,12 +122,12 @@ namespace Lightcore.Server.SitecoreRedis
                     continue;
                 }
 
-                database.HashDelete("index:paths", entry.Name);
+                database.HashDelete(_pathIndexName, entry.Name);
 
                 break;
             }
 
-            database.HashDelete("index:versions", itemId.AsLowercaseGuid());
+            database.HashDelete(_versionsIndexName, itemId.AsLowercaseGuid());
         }
     }
 }
