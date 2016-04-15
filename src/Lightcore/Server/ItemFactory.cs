@@ -52,7 +52,7 @@ namespace Lightcore.Server
         {
             return apiPresentation.Renderings.Select(r =>
                 new Rendering(r.Placeholder, r.Datasource, r.Controller, r.Action, r.Parameters,
-                    new Caching(r.Caching.Cacheable, r.Caching.VaryByItem, r.Caching.VaryByParm, r.Caching.VaryByQueryString)));
+                    new Caching(r.Caching.Cacheable, r.Caching.VaryByItem, r.Caching.VaryByParameter, r.Caching.VaryByQueryString)));
         }
 
         private static Field MapField(FieldModel apiField)

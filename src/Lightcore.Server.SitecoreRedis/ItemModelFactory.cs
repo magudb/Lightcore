@@ -80,7 +80,7 @@ namespace Lightcore.Server.SitecoreRedis
                     {
                         Cacheable = rendering.Settings.Caching.Cacheable,
                         VaryByItem = rendering.Settings.Caching.VaryByData,
-                        VaryByParm = rendering.Settings.Caching.VaryByParm,
+                        VaryByParameter = rendering.Settings.Caching.VaryByParm,
                         VaryByQueryString = rendering.Settings.Caching.VaryByQueryString
                     }
                 };
