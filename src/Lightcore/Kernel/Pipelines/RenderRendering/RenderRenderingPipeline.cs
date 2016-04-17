@@ -20,10 +20,10 @@ namespace Lightcore.Kernel.Pipelines.RenderRendering
 
         public override IEnumerable<Processor<RenderRenderingArgs>> GetProcessors()
         {
-            //yield return new GenerateCacheKeyProcessor();
-            //yield return new RenderFromCacheProcessor(_cache);
+            yield return new GenerateCacheKeyProcessor();
+            yield return new RenderFromCacheProcessor(_cache);
             yield return new ExecuteRendererProcessor();
-            //yield return new AddOutputToCacheProcessor(_cache);
+            yield return new AddOutputToCacheProcessor(_cache);
         }
 
         public RenderRenderingArgs GetArgs(HttpContext httpContext, RouteData routeData, Item item, Rendering rendering, TextWriter output)

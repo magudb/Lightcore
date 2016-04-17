@@ -6,5 +6,8 @@
       "StartItem": "/sitecore/content/Home",
       "Cdn": null
     }
+  },
+  "RedisItemProvider": {
+    "Configuration": "127.0.0.1:6379"
   }
 }

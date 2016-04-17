@@ -26,8 +26,8 @@ namespace DemoWebsite
             // Add Lightcore services
             services.AddLightcore(Configuration);
 
-            // Override and use Redis...
-            services.AddSingleton<IItemProvider, RedisItemProvider>();
+            // Add and use Redis...
+            services.AddRedis(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)

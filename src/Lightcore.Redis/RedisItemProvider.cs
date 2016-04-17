@@ -4,29 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Providers;
+using Microsoft.Extensions.OptionsModel;
 using StackExchange.Redis;
 
 namespace Lightcore.Redis
 {
     public class RedisItemProvider : IItemProvider, IDisposable
     {
-        private readonly IConnectionMultiplexer _connection;
+        private static IConnectionMultiplexer _connection;
+        private readonly RedisOptions _config;
 
-        public RedisItemProvider()
+        public RedisItemProvider(IOptions<RedisOptions> options)
         {
-            // TODO: Stop with the ToLowerInverant insanity!
-            // TODO: Create setting
-            _connection = ConnectionMultiplexer.Connect("127.0.0.1:6379");
+            _config = options.Value;
         }
+
+        private IConnectionMultiplexer RedisConnection => _connection ?? (_connection = ConnectionMultiplexer.Connect(_config.Value.Configuration));
 
         public void Dispose()
         {
-            _connection?.Dispose();
+            RedisConnection?.Dispose();
         }
 
         public async Task<Item> GetItemAsync(GetItemCommand command)
         {
-            var database = _connection.GetDatabase();
+            var database = RedisConnection.GetDatabase();
             var id = await GetId(command.PathOrId, database);
             var value = await database.StringGetAsync(("version:" + id + ":" + command.Language.Name).ToLowerInvariant());
 
@@ -35,14 +37,12 @@ namespace Lightcore.Redis
                 return null;
             }
 
-            // TODO: Could we store fields in a HASH instead so we can pick only those we need according to the command, content fields in one hash and system fields in another?
-
             return ItemSerializer.Deserialize(value.ToString()).FirstOrDefault();
         }
 
         public async Task<IEnumerable<Item>> GetVersionsAsync(GetVersionsCommand command)
         {
-            var database = _connection.GetDatabase();
+            var database = RedisConnection.GetDatabase();
             var id = await GetId(command.PathOrId, database);
             var versions = await database.HashGetAsync("index:versions", id);
 
@@ -72,12 +72,15 @@ namespace Lightcore.Redis
         {
             if (pathOrId.Contains("/"))
             {
-                var idValue = await database.HashGetAsync("index:paths", ("/" + pathOrId).ToLowerInvariant());
+                var path = ("/" + pathOrId).ToLowerInvariant();
+                var idValue = await database.HashGetAsync("index:paths", path);
 
                 if (!idValue.IsNullOrEmpty)
                 {
                     return idValue.ToString().ToLowerInvariant();
                 }
+
+                throw new MissingIdInIndexException($"Could not get id for path '{path}'.");
             }
 
             return pathOrId.ToLowerInvariant();
