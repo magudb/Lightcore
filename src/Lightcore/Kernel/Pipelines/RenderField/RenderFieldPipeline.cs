@@ -27,16 +27,16 @@ namespace Lightcore.Kernel.Pipelines.RenderField
             yield return new RenderFieldProcessor();
         }
 
-        public override Task RunAsync(RenderFieldArgs args)
+        public override async Task RunAsync(RenderFieldArgs args)
         {
             if (args.Field == null)
             {
                 args.AbortPipeline();
 
-                return Task.FromResult(0);
+                return;
             }
 
-            return base.RunAsync(args);
+            await base.RunAsync(args);
         }
 
         public RenderFieldArgs GetArgs(Item item, Field field, TextWriter output, Dictionary<string, string> attributes)

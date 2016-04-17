@@ -44,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bld", "bld", "{E6536FBB-63E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lightcore.Server.SitecoreRedis", "src\Lightcore.Server.SitecoreRedis\Lightcore.Server.SitecoreRedis.csproj", "{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Lightcore.Redis", "src\Lightcore.Redis\Lightcore.Redis.xproj", "{7DDC69D9-28A6-4FF4-8F05-B8F766BEB7E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DDC69D9-28A6-4FF4-8F05-B8F766BEB7E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DDC69D9-28A6-4FF4-8F05-B8F766BEB7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DDC69D9-28A6-4FF4-8F05-B8F766BEB7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DDC69D9-28A6-4FF4-8F05-B8F766BEB7E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,5 +91,6 @@ Global
 		{1A1ACD78-F4E3-469C-B08E-3595A4F90D27} = {837239F1-FBCF-454F-9002-5E6E3A0BA3EC}
 		{4A1EEAC7-E8A8-4941-B596-9D1792AD8539} = {20F96D4F-95B3-4465-AC1E-931D2C9B9C54}
 		{BE5A7B4C-9778-4EDD-80BB-A3B98E05954D} = {20F96D4F-95B3-4465-AC1E-931D2C9B9C54}
+		{7DDC69D9-28A6-4FF4-8F05-B8F766BEB7E5} = {20F96D4F-95B3-4465-AC1E-931D2C9B9C54}
 	EndGlobalSection
 EndGlobal

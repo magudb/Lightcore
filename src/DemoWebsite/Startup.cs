@@ -1,4 +1,7 @@
 ﻿using Lightcore.Hosting;
+using Lightcore.Kernel.Data.Providers;
+using Lightcore.Redis;
+using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +25,9 @@ namespace DemoWebsite
         {
             // Add Lightcore services
             services.AddLightcore(Configuration);
+
+            // Override and use Redis...
+            services.AddSingleton<IItemProvider, RedisItemProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)

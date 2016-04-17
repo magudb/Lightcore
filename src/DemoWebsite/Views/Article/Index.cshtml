@@ -1,12 +1,12 @@
 ﻿@using System.Threading.Tasks
 @using Lightcore.Kernel.Mvc
 @model Lightcore.Kernel.Data.Item
-@Html.Lightcore().RenderField("Image")
+@await Html.Lightcore().RenderFieldAsync("Image")
 <article>
     <h2>@Model["Title"]</h2>
     @Html.Lightcore().Field("Text")
     <p>
-        @Html.Lightcore().RenderField("General Link", new {@class = "pretty", title = "Click me!"})
+        @await Html.Lightcore().RenderFieldAsync("General Link", new {@class = "pretty", title = "Click me!"})
     </p>
 </article>
 @await Html.Lightcore().PlaceholderAsync("sidebar")

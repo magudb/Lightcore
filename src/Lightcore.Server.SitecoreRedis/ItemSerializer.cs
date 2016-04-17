@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lightcore.Server.Models;
+using Newtonsoft.Json;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
@@ -9,25 +10,39 @@ using Sitecore.Resources.Media;
 
 namespace Lightcore.Server.SitecoreRedis
 {
-    internal class ItemModelFactory
+    internal class ItemSerializer
     {
         private readonly ID _controllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
 
-        public ItemModelV2 GetItemModel(Item item)
+        public string Serialize(Item item, string storageKey, string[] additionalFields)
         {
-            return new ItemModelV2
+            var model = new ItemModel
+            {
+                StorageKey = storageKey,
+                Properties = MapItem(item),
+                Fields = MapFields(item, additionalFields),
+                Presentation = MapPresentation(item),
+                Children = item.GetChildren().Select(child => new ItemModel
+                {
+                    Properties = MapItem(child),
+                    Fields = MapFields(child, additionalFields)
+                })
+            };
+
+            return JsonConvert.SerializeObject(model);
+        }
+
+        private ItemPropertyModel MapItem(Item item)
+        {
+            return new ItemPropertyModel
             {
                 Id = item.ID.Guid,
-                StorageKey = item.ID.ToStorageKey(item.Language),
                 FullPath = item.Paths.FullPath.ToLowerInvariant(),
                 Language = item.Language.Name,
                 Name = item.Name,
                 ParentId = item.ParentID.Guid,
                 TemplateId = item.TemplateID.Guid,
-                HasVersion = item.Versions.Count > 0,
-                Fields = MapFields(item),
-                Presentation = MapPresentation(item),
-                ChildIds = item.Children.Select(c => c.ID.Guid),
+                HasVersion = item.Versions.Count > 0
             };
         }
 
@@ -89,16 +104,26 @@ namespace Lightcore.Server.SitecoreRedis
             return presentation;
         }
 
-        private IEnumerable<FieldModel> MapFields(Item item)
+        private IEnumerable<FieldModel> MapFields(Item item, string[] additionalFields)
         {
             if (item.Versions.Count == 0)
             {
                 return Enumerable.Empty<FieldModel>();
             }
 
-            item.Fields.ReadAll();
+            var fields = new List<FieldModel>(item.Fields.Where(f => !f.Key.StartsWith("__")).Select(MapField).Where(f => f != null));
 
-            return item.Fields.Select(MapField).Where(f => f != null);
+            foreach (var key in additionalFields)
+            {
+                var field = item.Fields[key.Trim()];
+
+                if (field != null)
+                {
+                    fields.Add(MapField(field));
+                }
+            }
+
+            return fields;
         }
 
         private FieldModel MapField(Field field)

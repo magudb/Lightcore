@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Engines.DataCommands;
@@ -17,17 +16,19 @@ namespace Lightcore.Server.SitecoreRedis
         private static ConnectionMultiplexer _connection;
         private readonly string[] _acceptedPaths;
         private readonly string _databaseName;
-        private readonly ItemModelFactory _itemModelFactory;
-        private readonly string _redisConfiguration;
+        private readonly string[] _fields;
+        private readonly ItemSerializer _itemSerializer;
         private readonly string _pathIndexName;
+        private readonly string _redisConfiguration;
         private readonly string _versionsIndexName;
 
-        public DatabaseEventHandlers(string database, string paths, string configuration)
+        public DatabaseEventHandlers(string database, string configuration, string paths, string fields)
         {
             _databaseName = database;
-            _acceptedPaths = paths.Split('|');
             _redisConfiguration = configuration;
-            _itemModelFactory = new ItemModelFactory();
+            _acceptedPaths = paths.Split('|');
+            _fields = fields.Split('|');
+            _itemSerializer = new ItemSerializer();
             _pathIndexName = "index:paths";
             _versionsIndexName = "index:versions";
         }
@@ -76,11 +77,11 @@ namespace Lightcore.Server.SitecoreRedis
                 return;
             }
 
-            var model = _itemModelFactory.GetItemModel(item);
-            var value = JsonConvert.SerializeObject(model);
+            var key = item.ID.ToStorageKey(item.Language);
+            var value = _itemSerializer.Serialize(item, key, _fields);
             var database = RedisConnection.GetDatabase();
 
-            database.StringSet(model.StorageKey, value);
+            database.StringSet(key, value);
             database.HashSetAsync(_pathIndexName, item.Paths.FullPath.ToLowerInvariant(), item.ID.AsLowercaseGuid()).Wait();
             database.HashSetAsync(_versionsIndexName, item.ID.AsLowercaseGuid(), item.LanguageVersionNames()).Wait();
         }

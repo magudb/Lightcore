@@ -29,14 +29,14 @@ namespace Lightcore.Kernel.Mvc
             return new HtmlString(context.Item[name]);
         }
 
-        public HtmlString RenderField(string name, dynamic attributes = null)
+        public async Task<HtmlString> RenderFieldAsync(string name, dynamic attributes = null)
         {
             using (var writer = new StringWriter())
             {
                 var context = _htmlHelper.LightcoreContext();
                 var args = _renderFieldPipeline.GetArgs(context.Item, context.Item.Fields[name], writer, ToDictionary(attributes));
 
-                _renderFieldPipeline.RunAsync(args).Wait();
+                await _renderFieldPipeline.RunAsync(args);
 
                 return new HtmlString(args.Output.ToString());
             }

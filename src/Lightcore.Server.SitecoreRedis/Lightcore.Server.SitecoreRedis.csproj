@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ItemExtensions.cs" />
-    <Compile Include="ItemModelFactory.cs" />
+    <Compile Include="ItemSerializer.cs" />
     <Compile Include="DatabaseEventHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
