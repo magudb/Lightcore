@@ -9,6 +9,7 @@ namespace Lightcore.Redis
         public static void AddRedis(this IServiceCollection services, IConfiguration config)
         {
             services.Configure<RedisOptions>(config.GetSection("RedisItemProvider"));
+            services.AddSingleton<RedisServer>();
             services.AddSingleton<IItemProvider, RedisItemProvider>();
         }
     }

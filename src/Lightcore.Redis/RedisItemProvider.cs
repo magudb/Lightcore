@@ -1,36 +1,31 @@
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Providers;
-using Microsoft.Extensions.OptionsModel;
 using StackExchange.Redis;
 
 namespace Lightcore.Redis
 {
-    public class RedisItemProvider : IItemProvider, IDisposable
+    public class RedisItemProvider : IItemProvider
     {
-        private static IConnectionMultiplexer _connection;
-        private readonly RedisOptions _config;
+        private readonly RedisServer _server;
 
-        public RedisItemProvider(IOptions<RedisOptions> options)
+        public RedisItemProvider(RedisServer server)
         {
-            _config = options.Value;
-        }
+            // TODO: Subscribe and handle connection failures
 
-        private IConnectionMultiplexer RedisConnection => _connection ?? (_connection = ConnectionMultiplexer.Connect(_config.Value.Configuration));
-
-        public void Dispose()
-        {
-            RedisConnection?.Dispose();
+            _server = server;
+            _server.SubscribeChangeEvents(HandleChangeEvent);
         }
 
         public async Task<Item> GetItemAsync(GetItemCommand command)
         {
-            var database = RedisConnection.GetDatabase();
+            var database = _server.Connection.GetDatabase();
             var id = await GetId(command.PathOrId, database);
-            var value = await database.StringGetAsync(("version:" + id + ":" + command.Language.Name).ToLowerInvariant());
+            var key = ("version:" + id + ":" + command.Language.Name).ToLowerInvariant();
+            var value = await database.StringGetAsync(key);
 
             if (value.IsNullOrEmpty)
             {
@@ -42,7 +37,7 @@ namespace Lightcore.Redis
 
         public async Task<IEnumerable<Item>> GetVersionsAsync(GetVersionsCommand command)
         {
-            var database = RedisConnection.GetDatabase();
+            var database = _server.Connection.GetDatabase();
             var id = await GetId(command.PathOrId, database);
             var versions = await database.HashGetAsync("index:versions", id);
 
@@ -66,6 +61,11 @@ namespace Lightcore.Redis
             }
 
             return items;
+        }
+
+        private void HandleChangeEvent(string value)
+        {
+            Debug.WriteLine("Change: " + value);
         }
 
         private async Task<string> GetId(string pathOrId, IDatabase database)

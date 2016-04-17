@@ -1,7 +1,5 @@
 ﻿using Lightcore.Hosting;
-using Lightcore.Kernel.Data.Providers;
 using Lightcore.Redis;
-using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
