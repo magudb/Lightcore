@@ -5,7 +5,7 @@ using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Fields;
 using Lightcore.Kernel.Data.Globalization;
 using Lightcore.Kernel.Data.Presentation;
-using Lightcore.Server.Models;
+using Lightcore.Redis.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

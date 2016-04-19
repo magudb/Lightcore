@@ -892,13 +892,13 @@
     <Content Include="App_Data\Sitecore\serialization\master\sitecore\templates\User Defined\Lightcore\LightcorePage\__Standard Values.item" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lightcore.Server.SitecoreHttp\Lightcore.Server.SitecoreHttp.csproj">
+      <Project>{e44dee6b-e8a7-4e30-87a7-47ceeeccd5bf}</Project>
+      <Name>Lightcore.Server.SitecoreHttp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lightcore.Server.SitecoreRedis\Lightcore.Server.SitecoreRedis.csproj">
       <Project>{be5a7b4c-9778-4edd-80bb-a3b98e05954d}</Project>
       <Name>Lightcore.Server.SitecoreRedis</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lightcore.Server.Sitecore\Lightcore.Server.Sitecore.csproj">
-      <Project>{e44dee6b-e8a7-4e30-87a7-47ceeeccd5bf}</Project>
-      <Name>Lightcore.Server.Sitecore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

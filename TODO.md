@@ -13,6 +13,7 @@
 
 ## Kernel ##
 
+- Get rid of SitecoreOptions in Lightcore, StartItem should live in the providers?
 - HtmlCache: Look into storing html by Context.Item ID so we can clear it.
 - Use ResponseCache on LightcoreController or in Middleware?
 - GetItemCommand: Make "expand datasource" to minimize requests

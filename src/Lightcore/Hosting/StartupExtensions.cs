@@ -1,7 +1,6 @@
 ﻿using Lightcore.Configuration;
 using Lightcore.Hosting.Middleware;
 using Lightcore.Kernel.Cache;
-using Lightcore.Kernel.Data.Providers;
 using Lightcore.Kernel.Mvc;
 using Lightcore.Kernel.Pipelines.RenderField;
 using Lightcore.Kernel.Pipelines.RenderPlaceholder;
@@ -9,7 +8,6 @@ using Lightcore.Kernel.Pipelines.RenderRendering;
 using Lightcore.Kernel.Pipelines.Request;
 using Lightcore.Kernel.Pipelines.Startup;
 using Lightcore.Kernel.Url;
-using Lightcore.Server;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -41,14 +39,13 @@ namespace Lightcore.Hosting
             // Add standard MVC services and Lightcore ValueProvider
             services.AddMvc(options => { options.ValueProviderFactories.Add(new LightcoreValueProviderFactory()); });
 
-            // Add Lightcore caching
-            services.AddSingleton<ICache, InMemoryCache>();
-
             // Add Lightcore configuration so it can be used as a dependency IOptions<LightcoreConfig> config
             services.Configure<LightcoreOptions>(config.GetSection("LightcoreOptions"));
 
+            // Add Lightcore caching
+            services.AddSingleton<ICache, InMemoryCache>();
+
             // Add Lightcore services
-            services.AddSingleton<IItemProvider, LightcoreApiItemProvider>();
             services.AddSingleton<IItemUrlService, ItemUrlService>();
 
             // Add Lightcore pipelines

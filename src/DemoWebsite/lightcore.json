@@ -1,9 +1,13 @@
 ﻿{
   "LightcoreOptions": {
     "Sitecore": {
+      "StartItem": "/sitecore/content/Home"
+    }
+  },
+  "HttpItemProvider": {
+    "Sitecore": {
       "Database": "web",
       "Device": "default",
-      "StartItem": "/sitecore/content/Home",
       "Cdn": null
     }
   },

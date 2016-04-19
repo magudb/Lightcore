@@ -52,16 +52,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Lightcore.Redis\Models\FieldModel.cs">
+      <Link>Models\FieldModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Lightcore.Redis\Models\ImageFieldValueModel.cs">
+      <Link>Models\ImageFieldValueModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Lightcore.Redis\Models\ItemModel.cs">
+      <Link>Models\ItemModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Lightcore.Redis\Models\ItemPropertyModel.cs">
+      <Link>Models\ItemPropertyModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Lightcore.Redis\Models\LayoutModel.cs">
+      <Link>Models\LayoutModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Lightcore.Redis\Models\LinkFieldValueModel.cs">
+      <Link>Models\LinkFieldValueModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Lightcore.Redis\Models\PresentationModel.cs">
+      <Link>Models\PresentationModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Lightcore.Redis\Models\RenderingCachingModel.cs">
+      <Link>Models\RenderingCachingModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Lightcore.Redis\Models\RenderingModel.cs">
+      <Link>Models\RenderingModel.cs</Link>
+    </Compile>
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="ItemSerializer.cs" />
     <Compile Include="DatabaseEventHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lightcore.Server.Sitecore\Lightcore.Server.Sitecore.csproj">
-      <Project>{e44dee6b-e8a7-4e30-87a7-47ceeeccd5bf}</Project>
-      <Name>Lightcore.Server.Sitecore</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
