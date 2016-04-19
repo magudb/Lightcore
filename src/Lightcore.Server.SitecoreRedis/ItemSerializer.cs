@@ -14,11 +14,10 @@ namespace Lightcore.Server.SitecoreRedis
     {
         private readonly ID _controllerRenderingTemplateId = ID.Parse("{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}");
 
-        public string Serialize(Item item, string storageKey, string[] additionalFields)
+        public string Serialize(Item item, string[] additionalFields)
         {
             var model = new ItemModel
             {
-                StorageKey = storageKey,
                 Properties = MapItem(item),
                 Fields = MapFields(item, additionalFields),
                 Presentation = MapPresentation(item),

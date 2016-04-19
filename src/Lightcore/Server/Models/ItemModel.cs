@@ -4,7 +4,6 @@ namespace Lightcore.Server.Models
 {
     public class ItemModel
     {
-        public string StorageKey { get; set; }
         public ItemPropertyModel Properties { get; set; }
         public PresentationModel Presentation { get; set; }
         public IEnumerable<FieldModel> Fields { get; set; }

@@ -31,6 +31,8 @@ namespace Lightcore.Server.SitecoreRedis
             _itemSerializer = new ItemSerializer();
             _pathsIndexName = "index:paths";
             _versionsIndexName = "index:versions";
+
+            // TODO: Try storing a item with all versions in the same value (then drop version index)
         }
 
         private IConnectionMultiplexer RedisConnection
@@ -78,7 +80,7 @@ namespace Lightcore.Server.SitecoreRedis
             }
 
             var key = item.ID.ToStorageKey(item.Language);
-            var value = _itemSerializer.Serialize(item, key, _fields);
+            var value = _itemSerializer.Serialize(item, _fields);
             var database = RedisConnection.GetDatabase();
 
             database.StringSet(key, value);
