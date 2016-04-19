@@ -7,13 +7,13 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Lightcore.Hosting.Middleware
 {
-    public class OutputCacheMiddlewareX
+    public class OutputCacheMiddleware
     {
         private readonly IMemoryCache _cache;
 
         private readonly RequestDelegate _next;
 
-        public OutputCacheMiddlewareX(RequestDelegate next, IMemoryCache cache)
+        public OutputCacheMiddleware(RequestDelegate next, IMemoryCache cache)
         {
             _next = next;
             _cache = cache;
