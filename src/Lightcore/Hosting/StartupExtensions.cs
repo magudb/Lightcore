@@ -62,7 +62,7 @@ namespace Lightcore.Hosting
         {
             // Add pipelines that runs on each request
             app.UseMiddleware<StartupPipelineMiddleware>();
-            app.UseMiddleware<OutputCacheMiddleware>();
+            app.UseMiddleware<OutputCacheMiddlewareX>();
             app.UseMiddleware<RequestPipelineMiddleware>();
 
             // Enabled standard MVC
