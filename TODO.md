@@ -13,9 +13,8 @@
 
 ## Kernel ##
 
-- Cache items
-	- Publish event to clear cache on complete or clear single entries?  
-	- Also clear html cache
+- HtmlCache: Look into storing html by Context.Item ID so we can clear it.
+- Use ResponseCache on LightcoreController or in Middleware?
 - GetItemCommand: Make "expand datasource" to minimize requests
 - GetItemCommand: Switch to include persentation details
 - Don't depend directly on Microsoft.Extensions.Caching.Memory.IMemoryCache
