@@ -17,7 +17,6 @@
 - Use ResponseCache on LightcoreController or in Middleware?
 - GetItemCommand: Make "expand datasource" to minimize requests
 - GetItemCommand: Switch to include persentation details
-- Don't depend directly on Microsoft.Extensions.Caching.Memory.IMemoryCache
 - Look into if its worth it to manually do deserialization [http://www.newtonsoft.com/json/help/html/performance.htm](http://www.newtonsoft.com/json/help/html/performance.htm)
 - How is performance with many languages on a item?
 - How is performance with many children?

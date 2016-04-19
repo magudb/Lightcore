@@ -1,5 +1,6 @@
 ﻿using Lightcore.Configuration;
 using Lightcore.Hosting.Middleware;
+using Lightcore.Kernel.Cache;
 using Lightcore.Kernel.Data.Providers;
 using Lightcore.Kernel.Mvc;
 using Lightcore.Kernel.Pipelines.RenderField;
@@ -40,8 +41,8 @@ namespace Lightcore.Hosting
             // Add standard MVC services and Lightcore ValueProvider
             services.AddMvc(options => { options.ValueProviderFactories.Add(new LightcoreValueProviderFactory()); });
 
-            // Add standard caching
-            services.AddCaching();
+            // Add Lightcore caching
+            services.AddSingleton<ICache, InMemoryCache>();
 
             // Add Lightcore configuration so it can be used as a dependency IOptions<LightcoreConfig> config
             services.Configure<LightcoreOptions>(config.GetSection("LightcoreOptions"));

@@ -1,12 +1,12 @@
-using Microsoft.Extensions.Caching.Memory;
+using Lightcore.Kernel.Cache;
 
 namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
 {
     public class RenderFromCacheProcessor : Processor<RenderRenderingArgs>
     {
-        private readonly IMemoryCache _cache;
+        private readonly ICache _cache;
 
-        public RenderFromCacheProcessor(IMemoryCache cache)
+        public RenderFromCacheProcessor(ICache cache)
         {
             _cache = cache;
         }
@@ -20,7 +20,7 @@ namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
 
             string html;
 
-            if (!_cache.TryGetValue(args.CacheKey, out html))
+            if (!_cache.TryGet(args.CacheKey, out html))
             {
                 return;
             }

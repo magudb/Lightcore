@@ -1,13 +1,12 @@
-using System;
-using Microsoft.Extensions.Caching.Memory;
+using Lightcore.Kernel.Cache;
 
 namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
 {
     public class AddOutputToCacheProcessor : Processor<RenderRenderingArgs>
     {
-        private readonly IMemoryCache _cache;
+        private readonly ICache _cache;
 
-        public AddOutputToCacheProcessor(IMemoryCache cache)
+        public AddOutputToCacheProcessor(ICache cache)
         {
             _cache = cache;
         }
@@ -19,7 +18,7 @@ namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
                 return;
             }
 
-            _cache.Set(args.CacheKey, args.CacheableOutput, new MemoryCacheEntryOptions().SetAbsoluteExpiration(DateTimeOffset.MaxValue));
+            _cache.Set(args.CacheKey, args.CacheableOutput);
         }
     }
 }

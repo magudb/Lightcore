@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Lightcore.Kernel.Cache;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.Extensions.Caching.Memory;
@@ -9,17 +10,16 @@ namespace Lightcore.Hosting.Middleware
 {
     public class OutputCacheMiddleware
     {
-        private readonly IMemoryCache _cache;
+        private readonly ICache _cache;
 
         private readonly RequestDelegate _next;
 
-        public OutputCacheMiddleware(RequestDelegate next, IMemoryCache cache)
+        public OutputCacheMiddleware(RequestDelegate next, ICache cache)
         {
             _next = next;
             _cache = cache;
 
             // TODO: Settings? Enabled, ignore url patters?
-            // TODO: Use wrapper around IMemoryCache...
             // TODO: Also use querystring as key? A setting with VaryByQueryString?
         }
 
@@ -36,7 +36,7 @@ namespace Lightcore.Hosting.Middleware
 
             CachedResponse cachedResponse;
 
-            if (_cache.TryGetValue(cacheKey, out cachedResponse))
+            if (_cache.TryGet(cacheKey, out cachedResponse))
             {
                 context.Response.Headers["X-LC-OutputCache-Key"] = cacheKey;
                 context.Response.ContentType = cachedResponse.ContentType;
@@ -67,7 +67,7 @@ namespace Lightcore.Hosting.Middleware
 
                     cachedResponse = new CachedResponse(context.Response.ContentType, content, context.Response.StatusCode);
 
-                    _cache.Set(cacheKey, cachedResponse, new MemoryCacheEntryOptions().SetAbsoluteExpiration(DateTime.Now.AddMinutes(10)));
+                    _cache.Set(cacheKey, cachedResponse, new CacheEntryOptions().SetAbsoluteExpiration(DateTime.Now.AddMinutes(10)));
                 }
             }
         }

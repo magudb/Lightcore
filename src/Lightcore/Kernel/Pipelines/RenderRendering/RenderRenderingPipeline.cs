@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using System.IO;
+using Lightcore.Kernel.Cache;
 using Lightcore.Kernel.Data;
 using Lightcore.Kernel.Data.Presentation;
 using Lightcore.Kernel.Pipelines.RenderRendering.Processors;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Routing;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Lightcore.Kernel.Pipelines.RenderRendering
 {
     public class RenderRenderingPipeline : Pipeline<RenderRenderingArgs>
     {
-        private readonly IMemoryCache _cache;
+        private readonly ICache _cache;
 
-        public RenderRenderingPipeline(IMemoryCache cache)
+        public RenderRenderingPipeline(ICache cache)
         {
             _cache = cache;
         }
