@@ -1,5 +1,4 @@
 ﻿using Lightcore.Hosting;
-using Lightcore.Kernel.Cache;
 using Lightcore.Redis;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
@@ -22,14 +21,10 @@ namespace DemoWebsite
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add Lightcore services
-            services.AddLightcore(Configuration);
-
-            // Add and use Redis...
-            services.AddRedis(Configuration);
-
-            // Overrides...
-            services.AddSingleton<ICache, NullCache>();
+            // Add Lightcore services, use Redis and caching
+            services.AddLightcore(Configuration)
+                    .EnableLightcoreRedis(Configuration)
+                    .EnableLightcoreCaching();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)

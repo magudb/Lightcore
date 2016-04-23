@@ -19,7 +19,7 @@ namespace Lightcore.Hosting.Middleware
             _next = next;
             _cache = cache;
 
-            // TODO: Settings? Enabled, ignore url patters?
+            // TODO: Settings? Enabled, ignore url patters, timeout?
             // TODO: Also use querystring as key? A setting with VaryByQueryString?
         }
 

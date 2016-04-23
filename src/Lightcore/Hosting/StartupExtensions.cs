@@ -34,7 +34,7 @@ namespace Lightcore.Hosting
             return builder.Build();
         }
 
-        public static void AddLightcore(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddLightcore(this IServiceCollection services, IConfiguration config)
         {
             // Add standard MVC services and Lightcore ValueProvider
             services.AddMvc(options => { options.ValueProviderFactories.Add(new LightcoreValueProviderFactory()); });
@@ -42,8 +42,8 @@ namespace Lightcore.Hosting
             // Add Lightcore configuration so it can be used as a dependency IOptions<LightcoreConfig> config
             services.Configure<LightcoreOptions>(config.GetSection("LightcoreOptions"));
 
-            // Add Lightcore caching
-            services.AddSingleton<ICache, InMemoryCache>();
+            // Add Lightcore default caching
+            services.AddSingleton<ICache, NullCache>();
 
             // Add Lightcore services
             services.AddSingleton<IItemUrlService, ItemUrlService>();
@@ -54,6 +54,16 @@ namespace Lightcore.Hosting
             services.AddSingleton<RenderFieldPipeline>();
             services.AddSingleton<RenderRenderingPipeline>();
             services.AddSingleton<RenderPlaceholderPipeline>();
+
+            return services;
+        }
+
+        public static IServiceCollection EnableLightcoreCaching(this IServiceCollection services)
+        {
+            // Add Lightcore default cache
+            services.AddSingleton<ICache, InMemoryCache>();
+
+            return services;
         }
 
         public static IApplicationBuilder UseLightcore(this IApplicationBuilder app)
