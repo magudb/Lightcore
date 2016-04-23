@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "Lightcore.Http Class Library",
   "authors": [ "pmb" ],
@@ -12,7 +12,7 @@
     }
   },
   "dependencies": {
-    "Newtonsoft.Json": "7.0.1",
+    "Newtonsoft.Json": "8.0.3",
     "System.Collections": "4.0.11-beta-23409",
     "System.Runtime": "4.0.21-beta-23409",
     "System.Threading": "4.0.11-beta-23409",
