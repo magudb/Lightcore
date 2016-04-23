@@ -105,11 +105,6 @@ namespace Lightcore.Server.SitecoreRedis
 
         private IEnumerable<FieldModel> MapFields(Item item, string[] additionalFields)
         {
-            if (item.Versions.Count == 0)
-            {
-                return Enumerable.Empty<FieldModel>();
-            }
-
             var fields = new List<FieldModel>(item.Fields.Where(f => !f.Key.StartsWith("__")).Select(MapField).Where(f => f != null));
 
             foreach (var key in additionalFields)

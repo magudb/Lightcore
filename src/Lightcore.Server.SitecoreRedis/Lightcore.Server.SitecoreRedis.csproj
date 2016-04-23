@@ -79,10 +79,12 @@
     <Compile Include="..\Lightcore.Redis\Models\RenderingModel.cs">
       <Link>Models\RenderingModel.cs</Link>
     </Compile>
+    <Compile Include="DeletePreviousSnapshots.cs" />
+    <Compile Include="SaveSnapshot.cs" />
     <Compile Include="ItemExtensions.cs" />
     <Compile Include="ItemSerializer.cs" />
-    <Compile Include="DatabaseEventHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublishCompletedEventHandlerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
