@@ -25,7 +25,7 @@ namespace Lightcore.Server.SitecoreRedis
             _defaultLanguage = LanguageManager.DefaultLanguage;
         }
 
-        public override void Completed(IEnumerable<DistributedPublishOptions> options)
+        public override void Completed(DistributedPublishOptions[] options)
         {
             var source = Factory.GetDatabase(options.First().TargetDatabaseName);
             var database = Connection.GetDatabase();
@@ -42,8 +42,6 @@ namespace Lightcore.Server.SitecoreRedis
                 var pathMap = processed.Select(item => new HashEntry(item.Paths.FullPath.ToLowerInvariant(), item.ID.Guid.ToString()));
 
                 database.HashSet(snapshotVersion + ":index:paths", pathMap.ToArray());
-
-                // TODO: Send message of processed items (per language?) when complete so we can clear cache etc.?  
             }
             catch
             {
@@ -51,8 +49,6 @@ namespace Lightcore.Server.SitecoreRedis
 
                 throw;
             }
-
-            Connection.GetSubscriber().Publish("events", "publish");
         }
 
         private IEnumerable<Item> ProcessItem(IDatabase database, long version, Item item)

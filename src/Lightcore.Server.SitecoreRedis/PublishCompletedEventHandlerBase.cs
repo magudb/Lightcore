@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Events;
 using Sitecore.Publishing;
@@ -20,7 +21,7 @@ namespace Lightcore.Server.SitecoreRedis
 
         protected ConnectionMultiplexer Connection { get; private set; }
 
-        public abstract void Completed(IEnumerable<DistributedPublishOptions> options);
+        public abstract void Completed(DistributedPublishOptions[] options);
 
         public void Run(object sender, EventArgs e)
         {
@@ -38,7 +39,7 @@ namespace Lightcore.Server.SitecoreRedis
                 return;
             }
 
-            Completed(options);
+            Completed(options.ToArray());
         }
     }
 }

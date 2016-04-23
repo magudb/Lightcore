@@ -6,8 +6,10 @@ namespace Lightcore.Server.SitecoreRedis
 {
     public class DeletePreviousSnapshots : PublishCompletedEventHandlerBase
     {
-        public override void Completed(IEnumerable<DistributedPublishOptions> options)
+        public override void Completed(DistributedPublishOptions[] options)
         {
+            // TODO: Should we keep a few (configured number of) versions back?
+
             var database = Connection.GetDatabase();
             var deletes = new List<RedisKey>();
             long latestSnapshotVersion;
