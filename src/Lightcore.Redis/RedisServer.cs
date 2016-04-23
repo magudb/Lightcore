@@ -15,9 +15,9 @@ namespace Lightcore.Redis
 
         public IConnectionMultiplexer Connection => _connection;
 
-        public void SubscribeChangeEvents(Action<string> handler)
+        public void SubscribeEvents(Action<string> handler)
         {
-            _connection.GetSubscriber().Subscribe("changes", (channel, value) => { handler.Invoke(value.ToString()); });
+            _connection.GetSubscriber().Subscribe("events", (channel, value) => { handler.Invoke(value.ToString()); });
         }
     }
 }

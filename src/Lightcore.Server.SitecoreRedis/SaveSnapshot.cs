@@ -70,7 +70,7 @@ namespace Lightcore.Server.SitecoreRedis
         {
             var data = new List<KeyValuePair<RedisKey, RedisValue>>();
 
-            // Make sure the default language version is always saved...
+            // Ensure the default language version is always saved...
             var versions = new List<Item>(item.Versions.GetVersions(true).Where(v => v.Language != _defaultLanguage))
             {
                 item.Database.Items.GetItem(item.ID, _defaultLanguage)
@@ -85,6 +85,7 @@ namespace Lightcore.Server.SitecoreRedis
             }
 
             database.StringSet(data.ToArray());
+            database.HashSet(snapshotVersion + ":index:versions", item.ID.Guid.ToString(), item.LanguageVersionNames());
 
             return item;
         }

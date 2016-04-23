@@ -13,13 +13,12 @@ namespace Lightcore.Redis
 {
     internal static class ItemSerializer
     {
-        public static IEnumerable<Item> Deserialize(string data)
+        public static Item Deserialize(string data)
         {
             var model = JsonConvert.DeserializeObject<ItemModel>(data);
             var itemDefinition = MapItemDefinition(model);
-            var item = MapItem(itemDefinition, model);
 
-            return new[] {item};
+            return MapItem(itemDefinition, model);
         }
 
         private static ItemDefinition MapItemDefinition(ItemModel itemModel)
