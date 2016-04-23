@@ -23,8 +23,7 @@ namespace DemoWebsite
         {
             // Add Lightcore services, use Redis and caching
             services.AddLightcore(Configuration)
-                    .EnableLightcoreRedis(Configuration)
-                    .EnableLightcoreCaching();
+                    .EnableLightcoreRedis(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationEnvironment appEnv, ILoggerFactory loggerFactory)

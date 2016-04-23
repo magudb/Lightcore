@@ -1,3 +1,4 @@
+using System;
 using Lightcore.Kernel.Cache;
 
 namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
@@ -18,7 +19,7 @@ namespace Lightcore.Kernel.Pipelines.RenderRendering.Processors
                 return;
             }
 
-            _cache.Set(args.CacheKey, args.CacheableOutput);
+            _cache.Set(args.CacheKey, args.CacheableOutput, new CacheEntryOptions().SetAbsoluteExpiration(DateTimeOffset.Now.AddHours(1)));
         }
     }
 }
